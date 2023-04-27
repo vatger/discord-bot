@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import {errorEmbed} from "../../embeds/errorEmbed";
 import {successEmbed} from "../../embeds/successEmbed";
-import {BotClient} from "../../core/client";
+import {DiscordBotClient} from "../../core/client";
 import {kickEmbed} from "../../embeds/admin/kickEmbed";
 
 export default class KickCommand extends SlashCommand {
@@ -35,7 +35,7 @@ export default class KickCommand extends SlashCommand {
             ephemeral: true
         });
 
-        const channel: Channel | undefined = BotClient.channels.cache.get("1062285471654359111");
+        const channel: Channel | undefined = DiscordBotClient.channels.cache.get("1062285471654359111");
         if (channel == null)
         {
             console.log("Tried to send kick message in channel, but not found! Channel-ID: ", "id");

@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import DiscordEvent from "../types/Event";
-import {BotClient} from "./client";
+import {DiscordBotClient} from "./client";
 import {CommandList, EventList} from "../index";
 import Command from "../types/Command";
 
@@ -22,7 +22,7 @@ async function loadEvents(dir = path.resolve(__dirname, '../events')) {
         const cmd: DiscordEvent = new loadingEvent.default();
         EventList.set(cmd.event.toString(), cmd);
 
-        cmd.register(BotClient);
+        cmd.register(DiscordBotClient);
     }
 }
 

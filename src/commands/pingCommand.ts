@@ -1,6 +1,6 @@
 import {CommandInteraction, EmbedBuilder, SlashCommandBuilder} from "discord.js";
 import SlashCommand from "../types/Command";
-import {BotClient} from "../core/client";
+import {DiscordBotClient} from "../core/client";
 import {loadingEmbed} from "../embeds/loadingEmbed";
 
 export default class PingCommand extends SlashCommand {
@@ -31,7 +31,7 @@ export default class PingCommand extends SlashCommand {
                 }
             )
             .setTimestamp()
-            .setFooter({ text: BotClient.user?.username ?? 'Bot' });
+            .setFooter({ text: DiscordBotClient.user?.username ?? 'Bot' });
 
         await interaction.editReply({
             embeds: [pingEmbed],
