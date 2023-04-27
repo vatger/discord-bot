@@ -42,7 +42,6 @@ export default class PingCommand extends SlashCommand {
     build(): any {
         return new SlashCommandBuilder()
             .setName(this.name)
-            .setDescription('Replies with pong!')
-            .addStringOption(opt => opt);
+            .setDescription('Replies with pong!');
     }
 }
