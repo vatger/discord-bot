@@ -1,7 +1,7 @@
 import DiscordEvent from "../types/Event";
 import {Events, Message} from "discord.js";
 
-export default class OnInteractionCreateEvent extends DiscordEvent {
+export default class OnMessageCreateEvent extends DiscordEvent {
     constructor() {
         super(Events.MessageCreate);
     }

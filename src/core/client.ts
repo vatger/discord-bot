@@ -28,7 +28,7 @@ function setClientActivity()
 
 async function sendOnlineMessage()
 {
-    const channel: Channel | null = await DiscordBotClient.channels.fetch(Config.BOT_STATUS_CHANNEL);
+    const channel: Channel | null = await DiscordBotClient.channels.fetch(Config.BOT_STATUS_CHANNEL_ID);
 
     if (channel == null)
     {
