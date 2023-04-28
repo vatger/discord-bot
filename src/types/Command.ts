@@ -1,5 +1,5 @@
 import {
-    CommandInteraction,
+    CommandInteraction, StringSelectMenuInteraction,
 } from "discord.js";
 
 export default class SlashCommand {
@@ -9,7 +9,7 @@ export default class SlashCommand {
         this.name = name;
     }
 
-    async run(interaction: CommandInteraction) {
+    async run(interaction: CommandInteraction | StringSelectMenuInteraction) {
         throw new Error("Interaction Handler not implemented");
     }
 

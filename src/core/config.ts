@@ -15,6 +15,8 @@ type EnvConfig = {
     ATC_NOTIFY_CHANNEL_ID: string;
 
     UPDATE_RULES: string;
+
+    RG_GROUPS: string[];
 };
 
 export const Config: EnvConfig = {
@@ -28,5 +30,11 @@ export const Config: EnvConfig = {
     BOT_STATUS_CHANNEL_ID: process.env.BOT_STATUS_CHANNEL_ID ?? '',
     WELCOME_CHANNEL_ID: process.env.WELCOME_CHANNEL_ID ?? '',
     ATC_NOTIFY_CHANNEL_ID: process.env.ATC_NOTIFY_CHANNEL_ID ?? '',
-    UPDATE_RULES: process.env.UPDATE_RULES ?? 'false'
+    UPDATE_RULES: process.env.UPDATE_RULES ?? 'false',
+
+    RG_GROUPS: [
+        'Langen FIR',
+        'Bremen FIR',
+        'München FIR'
+    ]
 };
