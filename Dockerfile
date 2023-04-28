@@ -21,4 +21,4 @@ WORKDIR /opt
 
 RUN npm install --quiet --unsafe-perm --no-progress --no-audit --include=dev
 
-CMD npm run run:prod
+CMD npm run start
