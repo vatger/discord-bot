@@ -13,23 +13,11 @@ export default class PingCommand extends SlashCommand {
 
         const pingEmbed = new EmbedBuilder()
             .setColor(0x2b3089)
-            .addFields(
-                {
-                    name: 'Uptime  |',
-                    value: `${Math.round(interaction.client.uptime / 60000)}min`,
-                    inline: true,
-                },
-                {
-                    name: 'Websocket Latency  |',
-                    value: `${interaction.client.ws.ping}ms`,
-                    inline: true,
-                },
-                {
-                    name: 'Rountrip Latency  ',
-                    value: `${sent.createdTimestamp - interaction.createdTimestamp}ms`,
-                    inline: true,
-                }
-            )
+            .setDescription(`
+                **Uptime: **${Math.round(interaction.client.uptime / 60000)}min\n
+                **Websocket Latency: **${interaction.client.ws.ping}ms\n
+                **Roundtrip Latency: **$${sent.createdTimestamp - interaction.createdTimestamp}ms
+            `)
             .setTimestamp()
             .setFooter({ text: DiscordBotClient.user?.username ?? 'Bot' });
 
