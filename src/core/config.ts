@@ -42,3 +42,7 @@ export const Config: EnvConfig = {
 
     RG_GROUPS: ['Langen FIR', 'Bremen FIR', 'München FIR'],
 };
+
+export const StaticConfig = {
+    BOT_NAME: 'VATSIM Germany',
+};

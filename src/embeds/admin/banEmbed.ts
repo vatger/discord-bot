@@ -1,5 +1,6 @@
 import { EmbedBuilder, User } from 'discord.js';
 import { DiscordBotClient } from '../../core/client';
+import { StaticConfig } from '../../core/config';
 
 export const banEmbed = (user: User, author: User, reason: string | null) =>
     new EmbedBuilder()
@@ -10,5 +11,10 @@ export const banEmbed = (user: User, author: User, reason: string | null) =>
                 author.username
             }#${author.discriminator}\n**Reason:** ${reason ?? 'N/A'}`
         )
-        .setFooter({ text: `${DiscordBotClient.user?.username}` })
-        .setTimestamp(new Date());
+        .setTimestamp()
+        .setFooter({
+            text: StaticConfig.BOT_NAME,
+            iconURL: DiscordBotClient.user?.displayAvatarURL({
+                forceStatic: true,
+            }),
+        });

@@ -1,4 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
+import { StaticConfig } from '../core/config';
+import { DiscordBotClient } from '../core/client';
 
 export const welcomeEmbed = new EmbedBuilder()
     .setColor('NotQuiteBlack')
@@ -72,12 +74,19 @@ export const additionalEmbed = new EmbedBuilder().setColor('Yellow').addFields([
     },
 ]);
 
-export const ticketEmbed = new EmbedBuilder().setColor('Green').addFields([
-    {
-        name: `📝**Further help**`,
-        value: `For further help feel free to open a ticket via the [VATGER Ticket System](https://support.vatsim-germany.org/).`,
-    },
-]);
+export const ticketEmbed = new EmbedBuilder()
+    .setColor('Green')
+    .addFields([
+        {
+            name: `📝**Further help**`,
+            value: `For further help feel free to open a ticket via the [VATGER Ticket System](https://support.vatsim-germany.org/).`,
+        },
+    ])
+    .setTimestamp()
+    .setFooter({
+        text: StaticConfig.BOT_NAME,
+        iconURL: DiscordBotClient.user?.displayAvatarURL({ forceStatic: true }),
+    });
 
 export const rulesEmbeds = [
     welcomeEmbed,

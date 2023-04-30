@@ -1,5 +1,6 @@
 import { EmbedBuilder, User } from 'discord.js';
 import { DiscordBotClient } from '../../core/client';
+import { StaticConfig } from '../../core/config';
 
 export const kickEmbed = (user: User, author: User, reason: string | null) =>
     new EmbedBuilder()
@@ -11,5 +12,10 @@ export const kickEmbed = (user: User, author: User, reason: string | null) =>
             }#${author.discriminator}\n**Reason:** ${reason ?? 'N/A'}`
         )
         .setTimestamp(new Date())
-        .setFooter({ text: `${DiscordBotClient.user?.username}` })
-        .setTimestamp();
+        .setTimestamp()
+        .setFooter({
+            text: StaticConfig.BOT_NAME,
+            iconURL: DiscordBotClient.user?.displayAvatarURL({
+                forceStatic: true,
+            }),
+        });

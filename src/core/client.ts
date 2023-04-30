@@ -14,6 +14,7 @@ export const DiscordBotClient = new Client({
         GatewayIntentBits.DirectMessages,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildPresences,
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.AutoModerationExecution,

@@ -1,5 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
 import { DiscordBotClient } from '../core/client';
+import { StaticConfig } from '../core/config';
 
 export const helpEmbed = () =>
     new EmbedBuilder()
@@ -23,5 +24,10 @@ export const helpEmbed = () =>
                 value: 'Select roles to see the respective regional group channel',
             },
         ])
-        .setFooter({ text: `${DiscordBotClient.user?.username}` })
-        .setTimestamp();
+        .setTimestamp()
+        .setFooter({
+            text: StaticConfig.BOT_NAME,
+            iconURL: DiscordBotClient.user?.displayAvatarURL({
+                forceStatic: true,
+            }),
+        });
