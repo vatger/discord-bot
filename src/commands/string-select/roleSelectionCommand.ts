@@ -1,16 +1,25 @@
-import {APIInteractionGuildMember, ActionRowBuilder, CommandInteraction, EmbedBuilder, GuildMember, Role, SlashCommandBuilder, StringSelectMenuBuilder} from "discord.js";
-import SlashCommand from "../../types/Command";
-import { errorEmbed } from "../../embeds/errorEmbed";
-import {Config} from "../../core/config";
+import {
+    APIInteractionGuildMember,
+    ActionRowBuilder,
+    CommandInteraction,
+    EmbedBuilder,
+    GuildMember,
+    Role,
+    SlashCommandBuilder,
+    StringSelectMenuBuilder,
+} from 'discord.js';
+import SlashCommand from '../../types/Command';
+import { errorEmbed } from '../../embeds/errorEmbed';
+import { Config } from '../../core/config';
 
 export default class RoleSelectionCommand extends SlashCommand {
     constructor() {
-        super("roleselection");
+        super('roleselection');
     }
 
     async run(interaction: CommandInteraction) {
         const member: GuildMember | APIInteractionGuildMember | null =
-        interaction.member;
+            interaction.member;
 
         if (member == null || !(member instanceof GuildMember)) {
             await interaction.reply({
@@ -27,13 +36,13 @@ export default class RoleSelectionCommand extends SlashCommand {
             roleArray.push(role.name);
         });
 
-        const regionalGroupOptions = Config.RG_GROUPS.map((group) => {
+        const regionalGroupOptions = Config.RG_GROUPS.map(group => {
             return {
                 label: group,
-                description: "See the respective RG Channel",
+                description: 'See the respective RG Channel',
                 value: group,
-                default: roleArray.includes(group)
-            }
+                default: roleArray.includes(group),
+            };
         });
         const regionalGroups: any = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
@@ -61,6 +70,8 @@ export default class RoleSelectionCommand extends SlashCommand {
     build(): any {
         return new SlashCommandBuilder()
             .setName(this.name)
-            .setDescription('Assign your roles, which channels you want to see');
+            .setDescription(
+                'Assign your roles, which channels you want to see'
+            );
     }
 }

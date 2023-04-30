@@ -22,7 +22,6 @@ export default class OnReadyEvent extends DiscordEvent {
 
             for (const message of messages) {
                 await message[1].delete();
-
             }
 
             // await channel.send({

@@ -1,11 +1,10 @@
-import {EmbedBuilder} from "discord.js";
-import {DiscordBotClient} from "../core/client";
+import { EmbedBuilder } from 'discord.js';
+import { DiscordBotClient } from '../core/client';
 
-export const onlineEmbed = () => new EmbedBuilder()
-    .setColor("Green")
-    .setTitle("Bot Started")
-    .setDescription(
-        `**Version: ** ${process.env.npm_package_version}`
-    )
-    .setFooter({text: `${DiscordBotClient.user?.username}`})
-    .setTimestamp();
+export const onlineEmbed = () =>
+    new EmbedBuilder()
+        .setColor('Green')
+        .setTitle('Bot Started')
+        .setDescription(`**Version: ** ${process.env.npm_package_version}`)
+        .setFooter({ text: `${DiscordBotClient.user?.username}` })
+        .setTimestamp();

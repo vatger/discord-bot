@@ -1,47 +1,54 @@
-import SlashCommand from "../types/Command";
-import {ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder} from "discord.js";
-import {loadingEmbed} from "../embeds/loadingEmbed";
-import {errorEmbed} from "../embeds/errorEmbed";
-import axios, {AxiosResponse} from "axios";
-import {Config} from "../core/config";
+import SlashCommand from '../types/Command';
+import {
+    ChatInputCommandInteraction,
+    EmbedBuilder,
+    SlashCommandBuilder,
+} from 'discord.js';
+import { loadingEmbed } from '../embeds/loadingEmbed';
+import { errorEmbed } from '../embeds/errorEmbed';
+import axios, { AxiosResponse } from 'axios';
+import { Config } from '../core/config';
 
 export default class MetarCommand extends SlashCommand {
     constructor() {
-        super("metar");
+        super('metar');
     }
 
     async run(interaction: ChatInputCommandInteraction) {
         await interaction.reply({
             embeds: [loadingEmbed('Yellow', null)],
             fetchReply: true,
-            ephemeral: true
+            ephemeral: true,
         });
 
-        const icao: string | null = interaction.options.getString("icao");
+        const icao: string | null = interaction.options.getString('icao');
 
-        if (icao == null)
-        {
+        if (icao == null) {
             await interaction.reply({
-                embeds: [errorEmbed("Failed to resolve ICAO: null provided")],
-                ephemeral: true
+                embeds: [errorEmbed('Failed to resolve ICAO: null provided')],
+                ephemeral: true,
             });
             return;
         }
 
         try {
-            let res: AxiosResponse = await axios.get((
-                `https://avwx.rest/api/metar/${icao}?format=json&onfail=error`
-            ), {
-                headers: {
-                    Authorization: `BEARER ${Config.AVWX_TOKEN}`,
+            let res: AxiosResponse = await axios.get(
+                `https://avwx.rest/api/metar/${icao}?format=json&onfail=error`,
+                {
+                    headers: {
+                        Authorization: `BEARER ${Config.AVWX_TOKEN}`,
+                    },
                 }
-            });
+            );
 
             const metarEmbed: EmbedBuilder = new EmbedBuilder()
                 .setColor('Green')
                 .setTitle('METAR: `' + res?.data.station + '`')
                 .setDescription(`Received METAR from ${res?.data?.time?.repr}`)
-                .addFields({ name: 'Raw Report', value: '```' + res?.data.raw + '```' })
+                .addFields({
+                    name: 'Raw Report',
+                    value: '```' + res?.data.raw + '```',
+                })
                 .addFields({
                     name: 'Readable Report',
                     value: `
@@ -55,12 +62,12 @@ export default class MetarCommand extends SlashCommand {
                 });
 
             await interaction.editReply({ embeds: [metarEmbed] });
-
-        } catch (e: any)
-        {
+        } catch (e: any) {
             await interaction.editReply({
-                embeds: [errorEmbed(`Error loading METAR for ${icao.toUpperCase()}`)]
-            })
+                embeds: [
+                    errorEmbed(`Error loading METAR for ${icao.toUpperCase()}`),
+                ],
+            });
         }
     }
 
@@ -71,11 +78,10 @@ export default class MetarCommand extends SlashCommand {
             .addStringOption(option =>
                 option
                     .setName('icao')
-                    .setDescription("ICAO of the requested aerodrome")
+                    .setDescription('ICAO of the requested aerodrome')
                     .setRequired(true)
                     .setMaxLength(4)
                     .setMinLength(4)
             );
-
     }
 }

@@ -1,17 +1,21 @@
-import {CommandInteraction, SlashCommandBuilder} from "discord.js";
-import SlashCommand from "../types/Command";
-import {helpEmbed} from "../embeds/helpEmbed";
+import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import SlashCommand from '../types/Command';
+import { helpEmbed } from '../embeds/helpEmbed';
 
 export default class HelpCommand extends SlashCommand {
     constructor() {
-        super("help");
+        super('help');
     }
 
     async run(interaction: CommandInteraction) {
-        await interaction.reply({
-            embeds: [helpEmbed()],
-            ephemeral: true
-        });
+        try {
+            await interaction.reply({
+                embeds: [helpEmbed()],
+                ephemeral: true,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     build(): any {

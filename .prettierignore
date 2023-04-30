@@ -7,7 +7,7 @@ Dockerfile
 docker-compose.yml
 
 .gitignore
-.prettierrc.json
+.prettierrc
 .prettierignore
 
 README.md
@@ -16,3 +16,5 @@ README.md
 
 .idea/
 .vscode/
+.github/
+dist

@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "run": "tsc && node ./dist/src/index.js",
-        "commands:update": "tsc && node ./dist/scripts/registerCommands.js",
+        "commands:update": "rimraf ./dist && tsc && node ./dist/scripts/registerCommands.js",
         "start": "npm run build:prod && node dist/src/index.js",
         "run:prod": "node -r module-alias/register --inspect=0.0.0.0:9229 dist/src/index.js",
         "run:dev": "tsc-watch --onSuccess \"npm run run:prod\" --onFailure \"echo WHOOPS! Server compilation failed\"",

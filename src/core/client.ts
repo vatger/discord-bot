@@ -1,6 +1,12 @@
-import {ActivityType, Channel, Client, GatewayIntentBits, TextChannel} from "discord.js";
-import {Config} from "./config";
-import {onlineEmbed} from "../embeds/onlineEmbed";
+import {
+    ActivityType,
+    Channel,
+    Client,
+    GatewayIntentBits,
+    TextChannel,
+} from 'discord.js';
+import { Config } from './config';
+import { onlineEmbed } from '../embeds/onlineEmbed';
 
 export const DiscordBotClient = new Client({
     intents: [
@@ -11,28 +17,28 @@ export const DiscordBotClient = new Client({
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.AutoModerationExecution,
-    ]
+        GatewayIntentBits.GuildModeration,
+    ],
 });
 
 /**
  * Sets the client's activity
  */
-function setClientActivity()
-{
+function setClientActivity() {
     DiscordBotClient.user?.setActivity({
         type: ActivityType.Listening,
-        name: "122.800",
-        url: "https://vatger.de"
+        name: '122.800',
+        url: 'https://vatger.de',
     });
 }
 
-async function sendOnlineMessage()
-{
-    const channel: Channel | null = await DiscordBotClient.channels.fetch(Config.BOT_STATUS_CHANNEL_ID);
+async function sendOnlineMessage() {
+    const channel: Channel | null = await DiscordBotClient.channels.fetch(
+        Config.BOT_STATUS_CHANNEL_ID
+    );
 
-    if (channel == null)
-    {
-        console.error("Bot Status Channel not found");
+    if (channel == null) {
+        console.error('Bot Status Channel not found');
         return;
     }
 
@@ -43,5 +49,5 @@ async function sendOnlineMessage()
 
 export default {
     setClientActivity,
-    sendOnlineMessage
-}
+    sendOnlineMessage,
+};
