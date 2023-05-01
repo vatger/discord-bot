@@ -2,10 +2,10 @@ import { EmbedBuilder } from 'discord.js';
 import { DiscordBotClient } from '../core/client';
 import { StaticConfig } from '../core/config';
 
-export const successEmbed = (message: string) =>
+export const successEmbed = (message: string, title?: string) =>
     new EmbedBuilder()
         .setColor('Green')
-        .setTitle('Success')
+        .setTitle(title ?? 'Success')
         .setDescription(message)
         .setTimestamp()
         .setFooter({
