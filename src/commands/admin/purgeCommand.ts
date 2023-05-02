@@ -4,9 +4,9 @@ import {
     TextBasedChannel,
     ChatInputCommandInteraction,
 } from 'discord.js';
-import { successEmbed } from '../../embeds/default/successEmbed';
 import { dangerEmbed } from '../../embeds/default/dangerEmbed';
 import { sendModeratorMessage } from '../../utils/sendModeratorMessage';
+import {warningEmbed} from "../../embeds/default/warningEmbed";
 
 export default class PurgeCommand extends SlashCommand {
     constructor() {
@@ -15,36 +15,43 @@ export default class PurgeCommand extends SlashCommand {
 
     async run(interaction: ChatInputCommandInteraction) {
         try {
-            await interaction.deferReply();
-
             const channel: TextBasedChannel | null = interaction.channel;
             const count: number | null =
                 interaction.options.getInteger('count');
 
+            const message = await interaction.reply({
+                fetchReply: true,
+                embeds: [warningEmbed(
+                    "Purging in Progress",
+                    `Deleting the last **${count}** message/s in <#${channel?.id}>`
+                )],
+                ephemeral: true
+            });
+
             if (channel == null || count == null) {
-                await interaction.followUp({
+                await message.edit({
                     embeds: [
                         dangerEmbed(
                             "Purge Failed",
                             'Channel or Count were provided as NULL!'
                         ),
                     ],
-                    ephemeral: true,
                 });
                 return;
             }
 
             const messages = await channel.messages.fetch({ limit: count });
 
-            // try bulk delete
-            // fallback to single deletion
+            // try bulk delete, fallback to single deletion
             try {
+                console.log("Bulk deleting")
                 await (<any>channel).bulkDelete(messages);
             } catch (e: any) {
+                console.log("Single deleting");
                 for (const msg of messages) {
-                    const message = msg[1];
-                    if (message.deletable) {
-                        await message.delete();
+                    if (msg[1].deletable)
+                    {
+                        await msg[1].delete();
                     }
                 }
             }
@@ -52,22 +59,13 @@ export default class PurgeCommand extends SlashCommand {
             await sendModeratorMessage(
                 "Purged Channel",
                 `**Channel:** <#${channel.id}>
-                **Purged By:** ${interaction.user.username}#${interaction.user.discriminator}`
+                **Purged By:** ${interaction.user.username}#${interaction.user.discriminator}
+                **Number of Messages:** ${count}`
             );
 
-            await interaction.followUp({
-                embeds: [
-                    successEmbed(
-                        "Purge successfull",
-                        `Removing the last **${count}** message/s in <#${channel.id}>`
-                    ),
-                ],
-                ephemeral: true,
-            });
         } catch (e: any) {
-            await interaction.followUp({
+            await interaction.editReply({
                 embeds: [dangerEmbed("Purge Failed", e.message)],
-                ephemeral: true,
             });
         }
     }

@@ -40,9 +40,7 @@ export default class KickCommand extends SlashCommand {
             await sendModeratorMessage(
                 'User Warned',
                 `**User:** ${user.username}#${user.discriminator}
-                **Warned By:** ${interaction.user.username}#${
-                    interaction.user.discriminator
-                }
+                **Warned By:** ${interaction.user.username}#${interaction.user.discriminator}
                 **Reason:** ${reason ?? 'N/A'}`
             );
 
@@ -64,7 +62,6 @@ export default class KickCommand extends SlashCommand {
                 embeds: [dangerEmbed('Warn failed', e.message)],
                 ephemeral: true,
             });
-            return;
         }
     }
 
