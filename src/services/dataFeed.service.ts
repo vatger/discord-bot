@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { DatafeedAtis } from '../models/dataFeedAtis.model';
+import { DatafeedAtis } from '../interfaces/dataFeedAtis.interface';
 
 async function getRawDataFeed() {
     try {
         const response = await axios.get(
-            'http://data.vatsim.net/v3/vatsim-data.json'
+            'https://data.vatsim.net/v3/vatsim-data.json'
         );
 
         return response.data;

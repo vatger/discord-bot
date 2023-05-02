@@ -4,8 +4,9 @@ import {
     TextBasedChannel,
     ChatInputCommandInteraction,
 } from 'discord.js';
-import { errorEmbed } from '../../embeds/errorEmbed';
-import { successEmbed } from '../../embeds/successEmbed';
+import { successEmbed } from '../../embeds/default/successEmbed';
+import { dangerEmbed } from '../../embeds/default/dangerEmbed';
+import { sendModeratorMessage } from '../../utils/sendModeratorMessage';
 
 export default class PurgeCommand extends SlashCommand {
     constructor() {
@@ -14,30 +15,24 @@ export default class PurgeCommand extends SlashCommand {
 
     async run(interaction: ChatInputCommandInteraction) {
         try {
+            await interaction.deferReply();
+
             const channel: TextBasedChannel | null = interaction.channel;
             const count: number | null =
                 interaction.options.getInteger('count');
 
             if (channel == null || count == null) {
-                await interaction.reply({
+                await interaction.followUp({
                     embeds: [
-                        errorEmbed(
-                            'There was an error. \nChannel or Count were provided as NULL!'
+                        dangerEmbed(
+                            "Purge Failed",
+                            'Channel or Count were provided as NULL!'
                         ),
                     ],
                     ephemeral: true,
                 });
                 return;
             }
-
-            await interaction.reply({
-                embeds: [
-                    successEmbed(
-                        `Removing the last **${count}** message/s in <#${channel.id}>`
-                    ),
-                ],
-                ephemeral: true,
-            });
 
             // try bulk delete
             // fallback to single deletion
@@ -52,12 +47,27 @@ export default class PurgeCommand extends SlashCommand {
                     }
                 }
             }
-        } catch (error) {
-            await interaction.reply({
-                embeds: [errorEmbed('There was an error.')],
+
+            await sendModeratorMessage(
+                "Purged Channel",
+                `**Channel:** <#${channel.id}>
+                **Purged By:** ${interaction.user.username}#${interaction.user.discriminator}`
+            );
+
+            await interaction.followUp({
+                embeds: [
+                    successEmbed(
+                        "Purge successfull",
+                        `Removing the last **${count}** message/s in <#${channel.id}>`
+                    ),
+                ],
                 ephemeral: true,
             });
-            return;
+        } catch (e: any) {
+            await interaction.followUp({
+                embeds: [dangerEmbed("Purge Failed", e.message)],
+                ephemeral: true,
+            });
         }
     }
 

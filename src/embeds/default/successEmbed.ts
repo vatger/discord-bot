@@ -1,15 +1,15 @@
 import { EmbedBuilder } from 'discord.js';
-import { DiscordBotClient } from '../core/client';
-import { StaticConfig } from '../core/config';
+import { Config } from '../../core/config';
+import { DiscordBotClient } from '../../core/client';
 
-export const errorEmbed = (message: string) =>
+export const successEmbed = (title: string, message: string) =>
     new EmbedBuilder()
-        .setColor('Red')
-        .setTitle('An error occurred')
+        .setColor('Green')
+        .setTitle(title)
         .setDescription(message)
         .setTimestamp()
         .setFooter({
-            text: StaticConfig.BOT_NAME,
+            text: Config.BOT_NAME,
             iconURL: DiscordBotClient.user?.displayAvatarURL({
                 forceStatic: true,
             }),

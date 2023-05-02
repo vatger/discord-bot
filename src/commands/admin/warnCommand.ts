@@ -1,27 +1,22 @@
 import SlashCommand from '../../types/Command';
 import {
     SlashCommandBuilder,
-    PermissionFlagsBits,
     User,
     ChatInputCommandInteraction,
-    Channel,
-    TextChannel,
-    GuildMember,
 } from 'discord.js';
-import { DiscordBotClient } from '../../core/client';
-import { Config } from '../../core/config';
-import { successEmbed } from '../../embeds/default/successEmbed';
+import userService from '../../services/user.service';
 import { dangerEmbed } from '../../embeds/default/dangerEmbed';
+import { successEmbed } from '../../embeds/default/successEmbed';
 import { sendModeratorMessage } from '../../utils/sendModeratorMessage';
 
 export default class KickCommand extends SlashCommand {
     constructor() {
-        super('ban');
+        super('warn');
     }
 
     async run(interaction: ChatInputCommandInteraction) {
         try {
-            await interaction.deferReply();
+            await interaction.deferReply({ ephemeral: true });
 
             const user: User | null = interaction.options.getUser('user');
             const reason: string | null =
@@ -30,61 +25,43 @@ export default class KickCommand extends SlashCommand {
             if (!user) {
                 await interaction.followUp({
                     embeds: [
-                        dangerEmbed("Ban Failed", 'Failed to resolve User: null provided'),
+                        dangerEmbed(
+                            'Warn failed',
+                            'Failed to resolve User: null provided'
+                        ),
                     ],
                     ephemeral: true,
                 });
                 return;
             }
 
-            const member: GuildMember | undefined =
-                await interaction.guild?.members.fetch(user.id);
-
-            if (!member) {
-                await interaction.followUp({
-                    embeds: [
-                        dangerEmbed("Ban Failed", 'User is no longer on this server.'),
-                    ],
-                    ephemeral: true,
-                });
-                return;
-            }
-
-            if (!member?.bannable) {
-                await interaction.followUp({
-                    embeds: [dangerEmbed("Ban Failed", 'User is not bannable.')],
-                    ephemeral: true,
-                });
-                return;
-            }
-
-            await member.ban({ reason: reason ?? '' });
+            await userService.warnUser(interaction.user, user, reason);
 
             await sendModeratorMessage(
-                'User Banned', 
+                'User Warned',
                 `**User:** ${user.username}#${user.discriminator}
-                **Banned By:** ${interaction.user.username}#${interaction.user.discriminator}
+                **Warned By:** ${interaction.user.username}#${
+                    interaction.user.discriminator
+                }
                 **Reason:** ${reason ?? 'N/A'}`
             );
 
             await interaction.followUp({
                 embeds: [
                     successEmbed(
-                        "Ban successfull",
+                        'Warned successfully',
                         `User ${user.username}#${
                             user.discriminator
-                        } successfully banned! \n\n **Reason:** ${
+                        } successfully warned! \n\n **Reason:** ${
                             reason ?? 'N/A'
                         }`
                     ),
                 ],
                 ephemeral: true,
             });
-
-            return;
         } catch (e: any) {
             await interaction.followUp({
-                embeds: [dangerEmbed("Ban Failed", e.message)],
+                embeds: [dangerEmbed('Warn failed', e.message)],
                 ephemeral: true,
             });
             return;
@@ -94,17 +71,17 @@ export default class KickCommand extends SlashCommand {
     build(): any {
         return new SlashCommandBuilder()
             .setName(this.name)
-            .setDescription('Bans the specified user')
+            .setDescription('Add warning to user')
             .addUserOption(user =>
                 user
                     .setName('user')
-                    .setDescription('The member to ban')
+                    .setDescription('The member to warn')
                     .setRequired(true)
             )
             .addStringOption(string =>
                 string
                     .setName('reason')
-                    .setDescription('Reason of ban')
+                    .setDescription('Reason of warning')
                     .setRequired(true)
             );
     }

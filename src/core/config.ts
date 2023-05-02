@@ -3,9 +3,12 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 type EnvConfig = {
+    BOT_NAME: string;
     BOT_TOKEN: string;
     AVWX_TOKEN: string;
     VATSIM_DATAFEED_URL: string;
+
+    MONGO_URI: string;
 
     CLIENT_ID: string;
     GUILD_ID: string;
@@ -23,11 +26,14 @@ type EnvConfig = {
 };
 
 export const Config: EnvConfig = {
+    BOT_NAME: process.env.BOT_NAME ?? 'VATSIM Germany',
     BOT_TOKEN: process.env.BOT_TOKEN ?? '',
     AVWX_TOKEN: process.env.AVWX_TOKEN ?? '',
     VATSIM_DATAFEED_URL:
         process.env.VATSIM_DATAFEED_URL ??
         'http://data.vatsim.net/v3/vatsim-data.json',
+
+    MONGO_URI: process.env.MONGO_URI ?? '',
 
     CLIENT_ID: process.env.CLIENT_ID ?? '',
     GUILD_ID: process.env.GUILD_ID ?? '',
@@ -41,8 +47,4 @@ export const Config: EnvConfig = {
     UPDATE_RULES: process.env.UPDATE_RULES ?? 'false',
 
     RG_GROUPS: ['Langen FIR', 'Bremen FIR', 'München FIR'],
-};
-
-export const StaticConfig = {
-    BOT_NAME: 'VATSIM Germany',
 };

@@ -1,5 +1,5 @@
 import { ColorResolvable, EmbedBuilder, EmbedFooterOptions } from 'discord.js';
-import { StaticConfig } from '../core/config';
+import { Config } from '../core/config';
 import { DiscordBotClient } from '../core/client';
 
 export const atcEmbed = (
@@ -15,7 +15,7 @@ export const atcEmbed = (
         .setDescription(description)
         .setTimestamp()
         .setFooter({
-            text: StaticConfig.BOT_NAME,
+            text: Config.BOT_NAME,
             iconURL: DiscordBotClient.user?.displayAvatarURL({
                 forceStatic: true,
             }),

@@ -1,8 +1,8 @@
 import {CommandInteraction, EmbedBuilder, SlashCommandBuilder} from 'discord.js';
 import SlashCommand from '../types/Command';
 import axios, {AxiosResponse} from "axios";
-import {errorEmbed} from "../embeds/errorEmbed";
-import {successEmbed} from "../embeds/successEmbed";
+import { dangerEmbed } from '../embeds/default/dangerEmbed';
+import { successEmbed } from '../embeds/default/successEmbed';
 
 // -20 constant for title!
 const DISCORD_DESC_LIMIT = (1000 - 20);
@@ -20,14 +20,18 @@ export default class HelpCommand extends SlashCommand {
 
     async run(interaction: CommandInteraction) {
         try {
+            await interaction.deferReply();
+
             const res: AxiosResponse = await axios.get("https://data.vatsim.net/v3/vatsim-data.json");
 
             if (res.data?.controllers?.length == 0)
             {
-                await interaction.reply({
-                    embeds: [errorEmbed("Failed to pull data from the Datafeed")],
+                await interaction.followUp({
+                    embeds: [dangerEmbed("Online Controllers Failed", "Failed to pull data from the Datafeed")],
                     ephemeral: true,
-                })
+                });
+
+                return;
             }
 
             let controllers: DatafeedController[] = res.data.controllers;
@@ -56,7 +60,6 @@ export default class HelpCommand extends SlashCommand {
                     controllerString[index] += `**${c.callsign}** (${c.name} | ${c.frequency})\n`;
                     strlen += delta;
                 } else {
-                    console.log("Controller String[] length: ", controllerString.length);
                     strlen = 0;
                     index++;
                 }
@@ -65,16 +68,19 @@ export default class HelpCommand extends SlashCommand {
             let embeds: EmbedBuilder[] = [];
             for (let i = 0; i < controllerString.length; i++)
             {
-                console.log(`Strlen of ${i}: `, controllerString[i].length);
-                embeds.push(successEmbed(controllerString[i], `Online ATC | ${i + 1}/${index + 1}`));
+                embeds.push(successEmbed(`Online ATC | ${i + 1}/${index + 1}`, controllerString[i]));
             }
-            await interaction.reply({
+            await interaction.followUp({
                 embeds: embeds,
                 ephemeral: true
             });
 
-        } catch (error) {
-            console.log(error);
+        } catch (e: any) {
+            await interaction.followUp({
+                embeds: [dangerEmbed("Online Controllers Failed", "Unknown error")],
+                ephemeral: true,
+            });
+            console.error(e.message);
         }
     }
 

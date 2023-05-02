@@ -1,12 +1,12 @@
 import { EmbedBuilder } from 'discord.js';
-import { DiscordBotClient } from '../core/client';
-import { Config } from '../core/config';
+import { Config } from '../../core/config';
+import { DiscordBotClient } from '../../core/client';
 
-export const onlineEmbed = () =>
+export const dangerEmbed = (title: string, message: string) =>
     new EmbedBuilder()
-        .setColor('Green')
-        .setTitle('Bot Started')
-        .setDescription(`**Version: ** ${process.env.npm_package_version}`)
+        .setColor('Red')
+        .setTitle(title)
+        .setDescription(message)
         .setTimestamp()
         .setFooter({
             text: Config.BOT_NAME,

@@ -1,5 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
-import { StaticConfig } from '../core/config';
+import { Config } from '../core/config';
 import { DiscordBotClient } from '../core/client';
 
 export const welcomeEmbed = new EmbedBuilder()
@@ -84,7 +84,7 @@ export const ticketEmbed = new EmbedBuilder()
     ])
     .setTimestamp()
     .setFooter({
-        text: StaticConfig.BOT_NAME,
+        text: Config.BOT_NAME,
         iconURL: DiscordBotClient.user?.displayAvatarURL({ forceStatic: true }),
     });
 

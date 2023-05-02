@@ -9,7 +9,7 @@ import {
     StringSelectMenuBuilder,
 } from 'discord.js';
 import SlashCommand from '../../types/Command';
-import { errorEmbed } from '../../embeds/errorEmbed';
+import { dangerEmbed } from '../../embeds/default/dangerEmbed';
 import { Config } from '../../core/config';
 
 export default class RoleSelectionCommand extends SlashCommand {
@@ -23,7 +23,7 @@ export default class RoleSelectionCommand extends SlashCommand {
 
         if (member == null || !(member instanceof GuildMember)) {
             await interaction.reply({
-                embeds: [errorEmbed('Member not found')],
+                embeds: [dangerEmbed('Failed', 'Member not found')],
                 ephemeral: true,
             });
             return;

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ColorResolvable, EmbedFooterOptions, TextChannel } from 'discord.js';
 import { DiscordBotClient } from '../core/client';
 import { Config } from '../core/config';
-import { DatafeedController } from '../models/dataFeedController.model';
+import { DatafeedController } from '../interfaces/dataFeedController.interface';
 import { atcEmbed } from '../embeds/atcEmbed';
 
 let controllers: DatafeedController[] = [];

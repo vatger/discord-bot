@@ -6,11 +6,14 @@ import {
     User,
     EmbedBuilder,
     GuildMember,
+    ButtonBuilder,
+    ButtonStyle,
+    ActionRowBuilder,
 } from 'discord.js';
-import { errorEmbed } from '../../embeds/errorEmbed';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { DiscordBotClient } from '../../core/client';
-import { StaticConfig } from '../../core/config';
+import { Config } from '../../core/config';
+import { dangerEmbed } from '../../embeds/default/dangerEmbed';
 
 function getPresenceFromString(status: PresenceStatus | undefined): string {
     switch (status) {
@@ -41,13 +44,28 @@ export default class UserInfoCommand extends SlashCommand {
 
     async run(interaction: ChatInputCommandInteraction) {
         try {
+            await interaction.deferReply({ephemeral: true});
+
             const user: User | null = interaction.options.getUser('user');
             const guildMember: GuildMember | undefined =
                 await interaction.guild?.members.fetch(
                     user?.id.toString() ?? ''
                 );
 
-            await interaction.reply({
+            const warnings = new ButtonBuilder()
+			.setCustomId('warnings')
+			.setLabel('Show Warnings')
+			.setStyle(ButtonStyle.Danger);
+
+            const notes = new ButtonBuilder()
+			.setCustomId('notes')
+			.setLabel('Show Notes')
+			.setStyle(ButtonStyle.Secondary);
+
+            const row = new ActionRowBuilder<ButtonBuilder>()
+                    .addComponents(warnings, notes);
+
+            await interaction.followUp({
                 embeds: [
                     new EmbedBuilder()
                         .setTitle(
@@ -72,30 +90,31 @@ export default class UserInfoCommand extends SlashCommand {
                             },
                             {
                                 name: 'Joined Server',
-                                value: `${moment(guildMember?.joinedAt).format(
+                                value: `${dayjs(guildMember?.joinedAt).format(
                                     'DD.MM.YYYY HH:mm'
                                 )}`,
                             },
                             {
                                 name: 'Joined Discord',
-                                value: `${moment(
+                                value: `${dayjs(
                                     guildMember?.user.createdAt
                                 ).format('DD.MM.YYYY HH:mm')}`,
                             }
                         )
                         .setTimestamp()
                         .setFooter({
-                            text: StaticConfig.BOT_NAME,
+                            text: Config.BOT_NAME,
                             iconURL: DiscordBotClient.user?.displayAvatarURL({
                                 forceStatic: true,
                             }),
                         }),
                 ],
+                components: [row],
                 ephemeral: true,
             });
-        } catch (error) {
-            await interaction.reply({
-                embeds: [errorEmbed('There was an error.')],
+        } catch (e: any) {
+            await interaction.followUp({
+                embeds: [dangerEmbed('UserInfo Failed', e.message)],
                 ephemeral: true,
             });
             return;

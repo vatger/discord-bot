@@ -4,6 +4,7 @@ import Client, { DiscordBotClient } from './core/client';
 import { Config } from './core/config';
 import DiscordEvent from './types/Event';
 import Init from './core/init';
+import mongoose from 'mongoose';
 
 export const CommandList: Collection<string, Command> = new Collection<
     string,
@@ -25,6 +26,13 @@ Promise.all([Init.loadCommands(), Init.loadEvents()]).then(() => {
     console.log('Events: ', Array.from(EventList.keys()));
 
     DiscordBotClient.login(Config.BOT_TOKEN).then(async () => {
+        if (!Config.MONGO_URI) {
+            throw new Error('MONGO_URI has to be set!');
+        }
+
+        await mongoose.connect(Config.MONGO_URI);
+        mongoose.set('debug', true);
+
         console.log('Logged In!');
 
         Client.setClientActivity();

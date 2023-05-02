@@ -5,7 +5,7 @@ import {
 } from 'discord.js';
 import SlashCommand from '../types/Command';
 import { DiscordBotClient } from '../core/client';
-import { loadingEmbed } from '../embeds/loadingEmbed';
+import { warningEmbed } from '../embeds/default/warningEmbed';
 
 export default class PingCommand extends SlashCommand {
     constructor() {
@@ -14,7 +14,7 @@ export default class PingCommand extends SlashCommand {
 
     async run(interaction: CommandInteraction) {
         const sent = await interaction.reply({
-            embeds: [loadingEmbed('Random', null)],
+            embeds: [warningEmbed("Loading", "Loading ping times, please wait.")],
             fetchReply: true,
             ephemeral: true,
         });
