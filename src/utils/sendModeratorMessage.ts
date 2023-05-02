@@ -11,7 +11,7 @@ export async function sendModeratorMessage(title: string, message: string)
                 );
             if (channel == null) {
                 console.log(
-                    'Tried to send ban message in channel, but not found! Channel-ID: ',
+                    'Tried to send moderator message in channel, but not found! Channel-ID: ',
                     Config.MODERATOR_CHANNEL_ID
                 );
                 return;

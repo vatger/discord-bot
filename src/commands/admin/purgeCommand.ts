@@ -34,12 +34,13 @@ export default class PurgeCommand extends SlashCommand {
                 return;
             }
 
+            const messages = await channel.messages.fetch({ limit: count });
+
             // try bulk delete
             // fallback to single deletion
             try {
-                await (<any>channel).bulkDelete(count);
+                await (<any>channel).bulkDelete(messages);
             } catch (e: any) {
-                const messages = await channel.messages.fetch({ limit: count });
                 for (const msg of messages) {
                     const message = msg[1];
                     if (message.deletable) {
