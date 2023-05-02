@@ -6,13 +6,13 @@ interface User {
     notes: UserNote[];
 }
 
-interface UserWarning {
+export interface UserWarning {
     authorDiscordId: string;
     reason: string;
     createdAt: Date;
 }
 
-interface UserNote {
+export interface UserNote {
     authorDiscordId: string;
     message: string;
     createdAt: Date;

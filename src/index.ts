@@ -31,9 +31,8 @@ Promise.all([Init.loadCommands(), Init.loadEvents()]).then(() => {
         }
 
         await mongoose.connect(Config.MONGO_URI);
-        mongoose.set('debug', true);
 
-        console.log('Logged In!');
+        console.info('Logged In!');
 
         Client.setClientActivity();
         await Client.sendOnlineMessage();

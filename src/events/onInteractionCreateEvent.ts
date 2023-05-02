@@ -3,6 +3,7 @@ import {
     CommandInteraction,
     Events,
     Interaction,
+    ButtonInteraction,
     StringSelectMenuInteraction,
 } from 'discord.js';
 import { CommandList } from '../index';
@@ -26,6 +27,15 @@ export default class OnInteractionCreateEvent extends DiscordEvent {
             await CommandList.get(name)?.run(
                 <StringSelectMenuInteraction>interaction
             );
+            return;
+        }
+        
+        // Start den spaß mal, dann sehen wir was passiert :D
+        // oke, des is also nen neuer command
+        if (interaction.isButton()) {
+            const name: string = interaction.customId;
+            console.log('Running ButtonInteraction: ', name);
+            await CommandList.get(name)?.run(<ButtonInteraction>interaction);
             return;
         }
     }

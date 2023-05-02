@@ -24,11 +24,11 @@ export default class OnReadyEvent extends DiscordEvent {
                 await message[1].delete();
             }
 
-            // await channel.send({
-            //     files: [
-            //         'http://hp.vatsim-germany.org/images/vacc_logo_white.png',
-            //     ],
-            // });
+            await channel.send({
+                files: [
+                    'http://hp.vatsim-germany.org/images/vacc_logo_white.png',
+                ],
+            });
 
             await channel.send({
                 embeds: rulesEmbeds,
@@ -36,5 +36,6 @@ export default class OnReadyEvent extends DiscordEvent {
         }
 
         setInterval(vatgerConnections.checkVatgerConnections, 60000);
+        
     }
 }
