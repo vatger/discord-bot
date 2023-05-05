@@ -11,6 +11,7 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
     }
 
     async run(oldUser: GuildMember | PartialGuildMember, newUser: GuildMember) {
+
         if (oldUser.pending && !newUser.pending) {
             // Ask the homepage whether newuser.discord_id is registered on the homepage.
             try {

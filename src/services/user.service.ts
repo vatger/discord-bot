@@ -1,4 +1,4 @@
-import { User } from 'discord.js';
+import {GuildMember, PartialGuildMember, User} from 'discord.js';
 import userModel, { UserDocument } from '../models/user.model';
 import { sendBotLogMessage } from '../utils/sendBotLogMessage';
 
@@ -8,6 +8,18 @@ async function getAllUsers() {
 
         return users;
     } catch (error) {}
+}
+
+async function updateCid(user: GuildMember | PartialGuildMember, cid: number): Promise<void> {
+    await userModel.findOneAndUpdate(
+        {discordId: user.id},
+        {
+            $set: {
+                cid: cid
+            },
+        },
+        {upsert: true}
+    );
 }
 
 async function addUser(user: User): Promise<UserDocument> {
@@ -101,5 +113,6 @@ export default {
     getUserNotes,
     getUserWarnings,
     getAllUsers,
-    addUser
+    addUser,
+    updateCid
 };

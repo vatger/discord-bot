@@ -15,6 +15,8 @@ export default class SelectFirStringSelection extends SlashCommand {
     }
 
     async run(interaction: StringSelectMenuInteraction) {
+        await interaction.deferReply({ephemeral: true});
+
         const member: GuildMember | APIInteractionGuildMember | null =
             interaction.member;
         const roles: Collection<string, Role> | undefined =
@@ -35,14 +37,20 @@ export default class SelectFirStringSelection extends SlashCommand {
             return Config.RG_GROUPS.includes(role.name);
         });
 
-        await interaction.reply({
+        let roleIndex = 0;
+        await interaction.followUp({
             embeds: [
                 new EmbedBuilder()
                     .setColor('Green')
                     .setTitle('Success')
-                    .setDescription(
-                        `Roles Updated to: ${newRoles
-                            ?.map((role: Role) => `\n• ${role.name}`)
+                    .setDescription(newRoles?.size == 0
+                        ?
+                        'All roles removed'
+                        :
+                        `Roles Updated to: ${newRoles?.map((role: Role) => {
+                                roleIndex++;
+                                return `\n(${roleIndex}) ${role.name}`   
+                            })
                             .join('')}`
                     ),
             ],

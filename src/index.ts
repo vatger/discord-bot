@@ -5,6 +5,7 @@ import { Config } from './core/config';
 import DiscordEvent from './types/Event';
 import Init from './core/init';
 import mongoose from 'mongoose';
+import {httpClient} from "./http/httpClient";
 
 export const CommandList: Collection<string, Command> = new Collection<
     string,
@@ -33,6 +34,10 @@ Promise.all([Init.loadCommands(), Init.loadEvents()]).then(() => {
         await mongoose.connect(Config.MONGO_URI);
 
         console.info('Logged In!');
+
+        httpClient.listen(Config.API_PORT, "127.0.0.1", () => {
+            console.log("API listening on Port: ", Config.API_PORT)
+        });
 
         Client.setClientActivity();
         await Client.sendOnlineMessage();

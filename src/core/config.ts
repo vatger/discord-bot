@@ -14,6 +14,7 @@ type EnvConfig = {
     GUILD_ID: string;
 
     REGISTERED_ROLE_ID: string;
+    VATGER_MEMBER_ROLE_ID: string;
     MODERATOR_CHANNEL_ID: string;
 
     BOT_STATUS_CHANNEL_ID: string;
@@ -21,6 +22,8 @@ type EnvConfig = {
     ATC_NOTIFY_CHANNEL_ID: string;
 
     UPDATE_RULES: string;
+
+    API_PORT: number;
 
     RG_GROUPS: string[];
 };
@@ -39,12 +42,15 @@ export const Config: EnvConfig = {
     GUILD_ID: process.env.GUILD_ID ?? '',
 
     REGISTERED_ROLE_ID: process.env.REGISTERED_ROLE_ID ?? '',
+    VATGER_MEMBER_ROLE_ID: process.env.VATGER_MEMBER_ROLE_ID ?? '',
     MODERATOR_CHANNEL_ID: process.env.MODERATOR_CHANNEL_ID ?? '',
 
     BOT_STATUS_CHANNEL_ID: process.env.BOT_STATUS_CHANNEL_ID ?? '',
     WELCOME_CHANNEL_ID: process.env.WELCOME_CHANNEL_ID ?? '',
     ATC_NOTIFY_CHANNEL_ID: process.env.ATC_NOTIFY_CHANNEL_ID ?? '',
     UPDATE_RULES: process.env.UPDATE_RULES ?? 'false',
+
+    API_PORT: Number(process.env.API_PORT),
 
     RG_GROUPS: ['Langen FIR', 'Bremen FIR', 'München FIR'],
 };

@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     {
         discordId: { type: String, unique: true, required: true },
         cid: { type: Number, default: null },
+        is_vatger: {type: Boolean, default: false},
 
         warnings: [{
             authorDiscordId: { type: String, required: true },

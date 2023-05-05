@@ -20,7 +20,7 @@ export default class HelpCommand extends SlashCommand {
 
     async run(interaction: CommandInteraction) {
         try {
-            await interaction.deferReply();
+            await interaction.deferReply({ephemeral: true});
 
             const res: AxiosResponse = await axios.get("https://data.vatsim.net/v3/vatsim-data.json");
 

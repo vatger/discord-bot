@@ -1,6 +1,7 @@
 interface User {
     discordId: string;
     cid: number;
+    is_vatger: boolean;
 
     warnings: UserWarning[];
     notes: UserNote[];
