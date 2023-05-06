@@ -35,7 +35,7 @@ Promise.all([Init.loadCommands(), Init.loadEvents()]).then(() => {
 
         console.info('Logged In!');
 
-        httpClient.listen(Config.API_PORT, "127.0.0.1", () => {
+        httpClient.listen(Config.API_PORT, "0.0.0.0", () => {
             console.log("API listening on Port: ", Config.API_PORT)
         });
 
