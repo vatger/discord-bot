@@ -3,6 +3,7 @@ import DiscordEvent from '../types/Event';
 import { Events, GuildMember } from 'discord.js';
 import { sendBotLogMessage } from '../utils/sendBotLogMessage';
 import axios from "axios";
+import vatsimApiService from "../services/vatsimApiService";
 
 export default class OnGuildMemberAddEvent extends DiscordEvent {
     constructor() {
@@ -13,15 +14,13 @@ export default class OnGuildMemberAddEvent extends DiscordEvent {
         // Register user to database
 
         try {
-            const vatsim_cid = (await axios.get("https://api.vatsim.net/v2/members/discord/" + user.id)).data as {id: string; user_id: string};
-            const cid: Number = Number.parseInt(vatsim_cid.user_id);
+            const cid = await vatsimApiService.getCIDFromDiscordID(user.id);
 
-            console.log(cid);
             await userModel.findOneAndUpdate(
                 { discordId: user.id },
                 {
                     $set: {
-                        cid: cid
+                        cid: cid ?? null
                     }
                 },
                 { upsert: true, returnOriginal: false }

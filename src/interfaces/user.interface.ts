@@ -8,12 +8,14 @@ interface User {
 }
 
 export interface UserWarning {
+    _id?: string;
     authorDiscordId: string;
     reason: string;
     createdAt: Date;
 }
 
 export interface UserNote {
+    _id?: string;
     authorDiscordId: string;
     message: string;
     createdAt: Date;

@@ -22,9 +22,10 @@ async function updateCid(user: GuildMember | PartialGuildMember, cid: number): P
     );
 }
 
-async function addUser(user: User): Promise<UserDocument> {
+async function addUser(user: User, cid?: Number): Promise<UserDocument> {
     const _user: UserDocument = new userModel({
         discordId: user.id,
+        cid: cid ?? null
     });
     try {
         await _user.save();
@@ -51,7 +52,7 @@ async function warnUser(author: User, user: User, reason: string | null) {
             { upsert: true }
         );
     } catch (e: any) {
-        sendBotLogMessage('Failed to add warning to User', e.message);
+        await sendBotLogMessage('Failed to add warning to User', e.message);
     }
 }
 async function noteUser(author: User, user: User, message: string | null) {
@@ -71,7 +72,7 @@ async function noteUser(author: User, user: User, message: string | null) {
             { upsert: true }
         );
     } catch (e: any) {
-        sendBotLogMessage('Failed to add note to User', e.message);
+        await sendBotLogMessage('Failed to add note to User', e.message);
     }
 }
 
@@ -87,7 +88,7 @@ async function getUserWarnings(user: User) {
 
         return _user.warnings;
     } catch (e: any) {
-        sendBotLogMessage('Failed to retreive warning of User', e.message);
+        await sendBotLogMessage('Failed to retreive warning of User', e.message);
     }
 }
 
@@ -103,7 +104,7 @@ async function getUserNotes(user: User) {
 
         return _user.notes;
     } catch (e: any) {
-        sendBotLogMessage('Failed to retreive notes of User', e.message);
+        await sendBotLogMessage('Failed to retreive notes of User', e.message);
     }
 }
 
