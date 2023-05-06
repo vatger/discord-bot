@@ -6,6 +6,7 @@ import {successEmbed} from '../../embeds/default/successEmbed';
 import {DiscordBotClient} from '../../core/client';
 import {Config} from '../../core/config';
 import vatsimApiService from "../../services/vatsimApiService";
+import userModel from "../../models/user.model";
 
 export default class KickCommand extends SlashCommand {
     constructor() {
@@ -28,30 +29,27 @@ export default class KickCommand extends SlashCommand {
                 e => !e.user.bot
             );
 
-            let memberExistCount = 0;
-            let memberAddCount = 0;
+            let memberCount = 0;
             for (const member of filteredMemberList) {
                 // This queries the VATSIM API for every member, not optimal, but it is what it is
                 const cid = await vatsimApiService.getCIDFromDiscordID(member[1].user.id);
 
-                if (dbUsers.findIndex(
-                    dbu => dbu.discordId === member[1].user.id && dbu.cid == cid
-                ) === -1) {
-                    await userService.addUser(
-                        member[1].user,
-                        cid
-                    );
-                    memberAddCount++;
-                } else {
-                    memberExistCount++;
-                }
+                await userModel.findOneAndUpdate({
+                    discordId: member[1].user.id,
+                }, {
+                    $set: {
+                        cid: cid,
+                    }
+                }, {upsert: true});
+
+                memberCount++;
             }
 
             await interaction.followUp({
                 embeds: [
                     successEmbed(
                         'Sync done',
-                        `Synced all members successfully.\nFound **${memberExistCount}**\nAdded: **${memberAddCount}**`
+                        `Synced all members successfully.\nTotal: **${memberCount}**`
                     ),
                 ],
                 ephemeral: true,
