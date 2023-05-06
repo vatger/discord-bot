@@ -31,10 +31,12 @@ export default class KickCommand extends SlashCommand {
             let memberExistCount = 0;
             let memberAddCount = 0;
             for (const member of filteredMemberList) {
+                // This queries the VATSIM API for every member, not optimal, but it is what it is
+                const cid = await vatsimApiService.getCIDFromDiscordID(member[1].user.id);
+
                 if (dbUsers.findIndex(
-                    dbu => dbu.discordId === member[1].user.id
+                    dbu => dbu.discordId === member[1].user.id && dbu.cid == cid
                 ) === -1) {
-                    const cid = await vatsimApiService.getCIDFromDiscordID(member[1].user.id);
                     await userService.addUser(
                         member[1].user,
                         cid

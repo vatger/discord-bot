@@ -109,7 +109,7 @@ export default class UserInfoCommand extends SlashCommand {
                     },
                     {
                         name: 'CID',
-                        value: _user?.cid.toString() ?? "N/A",
+                        value: _user?.cid?.toString() ?? "N/A",
                         inline: true,
                     },
                     {
