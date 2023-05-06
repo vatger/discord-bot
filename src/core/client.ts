@@ -19,6 +19,7 @@ export const DiscordBotClient = new Client({
         GatewayIntentBits.DirectMessageReactions,
         GatewayIntentBits.AutoModerationExecution,
         GatewayIntentBits.GuildModeration,
+        GatewayIntentBits.MessageContent,
     ],
 });
 
