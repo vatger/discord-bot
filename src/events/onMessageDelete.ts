@@ -26,7 +26,7 @@ export default class OnMessageDelete extends DiscordEvent {
             // Wait one second, since the audit log may be a little slow :)
             await sleep(1000);
 
-            let logs = await message.guild?.fetchAuditLogs({type: AuditLogEvent.MessageDelete});
+            let logs = await message.guild?.fetchAuditLogs({limit: 2, type: AuditLogEvent.MessageDelete});
             let entry = logs?.entries.first();
 
             const deleteEmbed = dangerEmbed("Message Deleted", null);

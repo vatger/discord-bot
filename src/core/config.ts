@@ -9,6 +9,7 @@ type EnvConfig = {
     VATSIM_DATAFEED_URL: string;
 
     MONGO_URI: string;
+    MONGO_DISABLE_SSL: boolean;
 
     CLIENT_ID: string;
     GUILD_ID: string;
@@ -37,6 +38,7 @@ export const Config: EnvConfig = {
         'http://data.vatsim.net/v3/vatsim-data.json',
 
     MONGO_URI: process.env.MONGO_URI ?? '',
+    MONGO_DISABLE_SSL: process.env.MONGO_DISABLE_SSL == "true",
 
     CLIENT_ID: process.env.CLIENT_ID ?? '',
     GUILD_ID: process.env.GUILD_ID ?? '',
