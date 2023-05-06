@@ -31,7 +31,10 @@ Promise.all([Init.loadCommands(), Init.loadEvents()]).then(() => {
             throw new Error('MONGO_URI has to be set!');
         }
 
-        await mongoose.connect(Config.MONGO_URI, {ssl: Config.MONGO_DISABLE_SSL, sslValidate: Config.MONGO_DISABLE_SSL_VALIDATION});
+        await mongoose.connect(Config.MONGO_URI, {
+            ssl: Config.MONGO_ENABLE_SSL,
+            sslValidate: Config.MONGO_ENABLE_SSL_VALIDATION
+        });
 
         console.info('Logged In!');
 
