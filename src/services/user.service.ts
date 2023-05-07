@@ -49,16 +49,40 @@ async function warnUser(author: User, user: User, reason: string | null) {
                     ],
                 },
             },
-            { upsert: true }
+            {upsert: true}
         );
     } catch (e: any) {
         await sendBotLogMessage('Failed to add warning to User', e.message);
     }
 }
+
+async function deleteWarn(user: User, warn_id: string) {
+    try {
+        const _user = await userModel.findOneAndUpdate(
+            {discordId: user.id},
+            {
+                $pull: {
+                    warnings: [
+                        {
+                            _id: warn_id
+                        }
+                    ]
+                }
+            }
+        );
+
+        return true;
+    } catch (e: any) {
+        await sendBotLogMessage('Failed to remove warning from User', e.message);
+        return false;
+    }
+}
+
+
 async function noteUser(author: User, user: User, message: string | null) {
     try {
         const _user = await userModel.findOneAndUpdate(
-            { discordId: user.id },
+            {discordId: user.id},
             {
                 $push: {
                     notes: [
@@ -71,6 +95,7 @@ async function noteUser(author: User, user: User, message: string | null) {
             },
             { upsert: true }
         );
+
     } catch (e: any) {
         await sendBotLogMessage('Failed to add note to User', e.message);
     }
@@ -110,6 +135,7 @@ async function getUserNotes(user: User) {
 
 export default {
     warnUser,
+    deleteWarn,
     noteUser,
     getUserNotes,
     getUserWarnings,
