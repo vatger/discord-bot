@@ -4,12 +4,8 @@ import {
     PermissionFlagsBits,
     User,
     ChatInputCommandInteraction,
-    Channel,
-    TextChannel,
     GuildMember,
 } from 'discord.js';
-import { DiscordBotClient } from '../../core/client';
-import { Config } from '../../core/config';
 import { successEmbed } from '../../embeds/default/successEmbed';
 import { dangerEmbed } from '../../embeds/default/dangerEmbed';
 import { sendModeratorMessage } from '../../utils/sendModeratorMessage';
@@ -61,10 +57,12 @@ export default class KickCommand extends SlashCommand {
             await member.ban({ reason: reason ?? '' });
 
             await sendModeratorMessage(
-                'User Banned', 
-                `**User:** ${user.username}#${user.discriminator}
-                **Banned By:** ${interaction.user.username}#${interaction.user.discriminator}
-                **Reason:** ${reason ?? 'N/A'}`
+                'User Banned',
+                `**User: ** ${user.username}#${user.discriminator}
+                **Banned By: ** ${interaction.user.username}#${interaction.user.discriminator}
+                **Reason:** 
+                \`\`\`${reason ?? 'N/A'}\`\`\`
+                `
             );
 
             await interaction.followUp({

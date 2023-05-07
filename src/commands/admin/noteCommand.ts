@@ -39,11 +39,13 @@ export default class KickCommand extends SlashCommand {
 
             await sendModeratorMessage(
                 'User Note added',
-                `**User:** ${user.username}#${user.discriminator}
-                **Added by:** ${interaction.user.username}#${
+                `**User: ** ${user.username}#${user.discriminator}
+                **Added by: ** ${interaction.user.username}#${
                     interaction.user.discriminator
                 }
-                **Message:** ${message ?? 'N/A'}`
+                **Message: ** 
+                \`\`\`${message ?? 'N/A'}\`\`\`
+                `
             );
 
             await interaction.followUp({

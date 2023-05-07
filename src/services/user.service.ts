@@ -66,13 +66,14 @@ async function deleteWarn(user: User, warn_id: string) {
                         _id: warn_id
                     }
                 }
-            }
+            },
+            {returnOriginal: true}
         );
 
-        return true;
+        return _user;
     } catch (e: any) {
         await sendBotLogMessage('Failed to remove warning from User', e.message);
-        return false;
+        return undefined;
     }
 }
 

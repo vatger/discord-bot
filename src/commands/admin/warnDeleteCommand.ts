@@ -22,7 +22,10 @@ export default class WarnDeleteCommand extends SlashCommand {
                 return;
             }
 
-            if (await userService.deleteWarn(user, warnId)) {
+            // Returns the user before the deletion.
+            // That way we can get the warning reason
+            let _user = await userService.deleteWarn(user, warnId);
+            if (_user != null) {
                 await interaction.followUp({
                     embeds: [successEmbed("Warning Removed", `The warning **${warnId}** was removed for user <@${user.id}>`)],
                     ephemeral: true
@@ -31,15 +34,14 @@ export default class WarnDeleteCommand extends SlashCommand {
                 throw new Error();
             }
 
-            /*
             await sendModeratorMessage(
                 "Warning Removed",
                 `**User: ** <@${user.id}>
                     **Removed By: ** <@${interaction.user.id}>
-                    **Warning Id: ** ${warnId}
+                    **Warning Reason: ** 
+                    \`\`\`${_user.warnings.find(w => w._id == warnId)?.reason ?? "N/A"}\`\`\`
                 `
             );
-            */
 
         } catch (e: any) {
             await interaction.followUp({
