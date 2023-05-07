@@ -62,11 +62,9 @@ async function deleteWarn(user: User, warn_id: string) {
             {discordId: user.id},
             {
                 $pull: {
-                    warnings: [
-                        {
-                            _id: warn_id
-                        }
-                    ]
+                    warnings: {
+                        _id: warn_id
+                    }
                 }
             }
         );
