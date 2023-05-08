@@ -1,97 +1,97 @@
 export function getAtcRatingShort(rating?: number) {
     switch (rating) {
         case -1:
-            return "INAC";
+            return 'INAC';
 
         case 0:
-            return "SUS";
+            return 'SUS';
 
         case 1:
-            return "OBS";
+            return 'OBS';
 
         case 2:
-            return "S1";
+            return 'S1';
 
         case 3:
-            return "S2";
+            return 'S2';
 
         case 4:
-            return "S3";
+            return 'S3';
 
         case 5:
-            return "C1";
+            return 'C1';
 
         case 6:
-            return "C2";
+            return 'C2';
 
         case 7:
-            return "C3";
+            return 'C3';
 
         case 8:
-            return "I1";
+            return 'I1';
 
         case 9:
-            return "I2";
+            return 'I2';
 
         case 10:
-            return "I3";
+            return 'I3';
 
         case 11:
-            return "SUP";
+            return 'SUP';
 
         case 12:
-            return "ADM";
+            return 'ADM';
 
         default:
-            return "N/A";
+            return 'N/A';
     }
 }
 
 export function getAtcRatingLong(rating?: number) {
     switch (rating) {
         case -1:
-            return "Inactive";
+            return 'Inactive';
 
         case 0:
-            return "Suspended";
+            return 'Suspended';
 
         case 1:
-            return "Observer";
+            return 'Observer';
 
         case 2:
-            return "Tower Trainee";
+            return 'Tower Trainee';
 
         case 3:
-            return "Tower Controller";
+            return 'Tower Controller';
 
         case 4:
-            return "Senior Student";
+            return 'Senior Student';
 
         case 5:
-            return "Enroute Controller";
+            return 'Enroute Controller';
 
         case 6:
-            return "Controller 2 (not in use)";
+            return 'Controller 2 (not in use)';
 
         case 7:
-            return "Senior Controller";
+            return 'Senior Controller';
 
         case 8:
-            return "Instructor";
+            return 'Instructor';
 
         case 9:
-            return "Instructor 2 (not in use)";
+            return 'Instructor 2 (not in use)';
 
         case 10:
-            return "Senior Instructor";
+            return 'Senior Instructor';
 
         case 11:
-            return "Supervisor";
+            return 'Supervisor';
 
         case 12:
-            return "Administrator";
+            return 'Administrator';
 
         default:
-            return "N/A";
+            return 'N/A';
     }
 }

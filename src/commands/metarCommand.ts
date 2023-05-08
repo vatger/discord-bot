@@ -16,19 +16,33 @@ export default class MetarCommand extends SlashCommand {
 
     async run(interaction: ChatInputCommandInteraction) {
         try {
-            await interaction.deferReply();
-            
+            await interaction.deferReply({ ephemeral: true });
+
             const icao: string | null = interaction.options.getString('icao');
 
             const sent = await interaction.followUp({
-                embeds: [warningEmbed("Loading", `Loading METAR for ${icao?.toUpperCase() ?? "N/A"}, please wait.`)],
+                embeds: [
+                    warningEmbed(
+                        'Loading',
+                        null,
+                        `Loading METAR for ${
+                            icao?.toUpperCase() ?? 'N/A'
+                        }, please wait.`
+                    ),
+                ],
                 fetchReply: true,
                 ephemeral: true,
             });
 
             if (icao == null) {
                 await interaction.followUp({
-                    embeds: [dangerEmbed("METAR Failed", 'Failed to resolve ICAO: null provided')],
+                    embeds: [
+                        dangerEmbed(
+                            'METAR Failed',
+                            null,
+                            'Failed to resolve ICAO: null provided'
+                        ),
+                    ],
                     ephemeral: true,
                 });
                 return;
@@ -47,7 +61,9 @@ export default class MetarCommand extends SlashCommand {
                 const metarEmbed: EmbedBuilder = new EmbedBuilder()
                     .setColor('Green')
                     .setTitle('METAR: `' + res?.data.station + '`')
-                    .setDescription(`Received METAR from ${res?.data?.time?.repr}`)
+                    .setDescription(
+                        `Received METAR from ${res?.data?.time?.repr}`
+                    )
                     .addFields({
                         name: 'Raw Report',
                         value: '```' + res?.data.raw + '```',
@@ -68,14 +84,17 @@ export default class MetarCommand extends SlashCommand {
             } catch (e: any) {
                 await interaction.editReply({
                     embeds: [
-                        dangerEmbed("METAR Failed", `Error loading METAR for ${icao.toUpperCase()}`)
+                        dangerEmbed(
+                            'METAR Failed',
+                            null,
+                            `Error loading METAR for ${icao.toUpperCase()}`
+                        ),
                     ],
                 });
             }
-        } catch (e: any)
-        {
+        } catch (e: any) {
             await interaction.followUp({
-                embeds: [dangerEmbed("METAR Failed", "Unknown Error")],
+                embeds: [dangerEmbed('METAR Failed', null, 'Unknown Error')],
                 ephemeral: true,
             });
             console.error(e.message);

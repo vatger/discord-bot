@@ -29,7 +29,7 @@ export default class OnInteractionCreateEvent extends DiscordEvent {
             );
             return;
         }
-        
+
         // Start den spaß mal, dann sehen wir was passiert :D
         // oke, des is also nen neuer command
         if (interaction.isButton()) {

@@ -11,6 +11,7 @@ docker-compose.yml
 .prettierignore
 
 README.md
+CONTRIBUTING.md
 .env
 .env.example
 

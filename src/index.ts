@@ -5,7 +5,7 @@ import { Config } from './core/config';
 import DiscordEvent from './types/Event';
 import Init from './core/init';
 import mongoose from 'mongoose';
-import {httpClient} from "./http/httpClient";
+import { httpClient } from './http/httpClient';
 
 export const CommandList: Collection<string, Command> = new Collection<
     string,
@@ -33,13 +33,13 @@ Promise.all([Init.loadCommands(), Init.loadEvents()]).then(() => {
 
         await mongoose.connect(Config.MONGO_URI, {
             ssl: Config.MONGO_ENABLE_SSL,
-            sslValidate: Config.MONGO_ENABLE_SSL_VALIDATION
+            sslValidate: Config.MONGO_ENABLE_SSL_VALIDATION,
         });
 
         console.info('Logged In!');
 
-        httpClient.listen(Config.API_PORT, "0.0.0.0", () => {
-            console.log("API listening on Port: ", Config.API_PORT)
+        httpClient.listen(Config.API_PORT, '0.0.0.0', () => {
+            console.log('API listening on Port: ', Config.API_PORT);
         });
 
         Client.setClientActivity();

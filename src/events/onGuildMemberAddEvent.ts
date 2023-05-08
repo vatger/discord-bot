@@ -2,8 +2,8 @@ import userModel, { UserDocument } from '../models/user.model';
 import DiscordEvent from '../types/Event';
 import { Events, GuildMember } from 'discord.js';
 import { sendBotLogMessage } from '../utils/sendBotLogMessage';
-import axios from "axios";
-import vatsimApiService from "../services/vatsimApiService";
+import axios from 'axios';
+import vatsimApiService from '../services/vatsimApiService';
 
 export default class OnGuildMemberAddEvent extends DiscordEvent {
     constructor() {
@@ -20,13 +20,16 @@ export default class OnGuildMemberAddEvent extends DiscordEvent {
                 { discordId: user.id },
                 {
                     $set: {
-                        cid: cid ?? null
-                    }
+                        cid: cid ?? null,
+                    },
                 },
                 { upsert: true, returnOriginal: false }
             );
         } catch (e: any) {
-            await sendBotLogMessage("Failed to add User to Database", e.message);
+            await sendBotLogMessage(
+                'Failed to add User to Database',
+                e.message
+            );
         }
     }
 }

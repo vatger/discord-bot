@@ -6,7 +6,7 @@ import {
 } from 'discord.js';
 import { dangerEmbed } from '../../embeds/default/dangerEmbed';
 import { sendModeratorMessage } from '../../utils/sendModeratorMessage';
-import {warningEmbed} from "../../embeds/default/warningEmbed";
+import { warningEmbed } from '../../embeds/default/warningEmbed';
 
 export default class PurgeCommand extends SlashCommand {
     constructor() {
@@ -21,19 +21,23 @@ export default class PurgeCommand extends SlashCommand {
 
             const message = await interaction.reply({
                 fetchReply: true,
-                embeds: [warningEmbed(
-                    "Purging in Progress",
-                    `Deleting the last **${count}** message/s in <#${channel?.id}>`
-                )],
-                ephemeral: true
+                embeds: [
+                    warningEmbed(
+                        'Purging in Progress',
+                        null,
+                        `Deleting the last **${count}** message/s in <#${channel?.id}>`
+                    ),
+                ],
+                ephemeral: true,
             });
 
             if (channel == null || count == null) {
                 await message.edit({
                     embeds: [
                         dangerEmbed(
-                            "Purge Failed",
-                            'Channel or Count were provided as NULL!'
+                            'Purge Failed',
+                            null,
+                            'Channel or Count were provided as NULL'
                         ),
                     ],
                 });
@@ -44,28 +48,32 @@ export default class PurgeCommand extends SlashCommand {
 
             // try bulk delete, fallback to single deletion
             try {
-                console.log("Bulk deleting")
                 await (<any>channel).bulkDelete(messages);
             } catch (e: any) {
-                console.log("Single deleting");
                 for (const msg of messages) {
-                    if (msg[1].deletable)
-                    {
+                    if (msg[1].deletable) {
                         await msg[1].delete();
                     }
                 }
             }
 
-            await sendModeratorMessage(
-                "Purged Channel",
-                `**Channel:** <#${channel.id}>
-                **Purged By:** ${interaction.user.username}#${interaction.user.discriminator}
-                **Number of Messages:** ${count}`
-            );
-
+            await sendModeratorMessage('Purged Channel', [
+                {
+                    name: 'Channel',
+                    value: `<#${channel.id}>`,
+                },
+                {
+                    name: 'Purged By',
+                    value: `<@${interaction.user.id}>`,
+                },
+                {
+                    name: 'Number of messages',
+                    value: `${count}`,
+                },
+            ]);
         } catch (e: any) {
             await interaction.editReply({
-                embeds: [dangerEmbed("Purge Failed", e.message)],
+                embeds: [dangerEmbed('Purge Failed', null, e.message ?? 'N/A')],
             });
         }
     }

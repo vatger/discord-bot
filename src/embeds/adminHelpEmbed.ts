@@ -21,7 +21,7 @@ export const adminHelpEmbed = () =>
         .addFields([
             {
                 name: '`/note (user) (message)`',
-                value: 'Write a note for the user. This note will be saved in the user database.'
+                value: 'Write a note for the user. This note will be saved in the user database.',
             },
         ])
         .addFields([

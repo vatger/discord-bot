@@ -15,7 +15,7 @@ export default class SelectFirStringSelection extends SlashCommand {
     }
 
     async run(interaction: StringSelectMenuInteraction) {
-        await interaction.deferReply({ephemeral: true});
+        await interaction.deferReply({ ephemeral: true });
 
         const member: GuildMember | APIInteractionGuildMember | null =
             interaction.member;
@@ -43,15 +43,15 @@ export default class SelectFirStringSelection extends SlashCommand {
                 new EmbedBuilder()
                     .setColor('Green')
                     .setTitle('Success')
-                    .setDescription(newRoles?.size == 0
-                        ?
-                        'All roles removed'
-                        :
-                        `Roles Updated to: ${newRoles?.map((role: Role) => {
-                                roleIndex++;
-                                return `\n(${roleIndex}) ${role.name}`   
-                            })
-                            .join('')}`
+                    .setDescription(
+                        newRoles?.size == 0
+                            ? 'All roles removed'
+                            : `Roles Updated to: ${newRoles
+                                  ?.map((role: Role) => {
+                                      roleIndex++;
+                                      return `\n(${roleIndex}) ${role.name}`;
+                                  })
+                                  .join('')}`
                     ),
             ],
             ephemeral: true,

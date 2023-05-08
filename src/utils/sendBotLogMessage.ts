@@ -17,7 +17,7 @@ export async function sendBotLogMessage(title: string, message: string) {
             return;
         }
 
-        const _errorEmbed = dangerEmbed(title, message);
+        const _errorEmbed = dangerEmbed(title, null, message);
 
         await (<TextBasedChannel>logChannel).send({
             embeds: [_errorEmbed],

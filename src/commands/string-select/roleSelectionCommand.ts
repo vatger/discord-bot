@@ -23,7 +23,7 @@ export default class RoleSelectionCommand extends SlashCommand {
 
         if (member == null || !(member instanceof GuildMember)) {
             await interaction.reply({
-                embeds: [dangerEmbed('Failed', 'Member not found')],
+                embeds: [dangerEmbed('Failed', null, 'Member not found')],
                 ephemeral: true,
             });
             return;

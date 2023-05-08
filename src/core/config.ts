@@ -39,8 +39,9 @@ export const Config: EnvConfig = {
         'http://data.vatsim.net/v3/vatsim-data.json',
 
     MONGO_URI: process.env.MONGO_URI ?? '',
-    MONGO_ENABLE_SSL: process.env.MONGO_ENABLE_SSL == "true",
-    MONGO_ENABLE_SSL_VALIDATION: process.env.MONGO_ENABLE_SSL_VALIDATION == "true",
+    MONGO_ENABLE_SSL: process.env.MONGO_ENABLE_SSL == 'true',
+    MONGO_ENABLE_SSL_VALIDATION:
+        process.env.MONGO_ENABLE_SSL_VALIDATION == 'true',
 
     CLIENT_ID: process.env.CLIENT_ID ?? '',
     GUILD_ID: process.env.GUILD_ID ?? '',
@@ -54,7 +55,10 @@ export const Config: EnvConfig = {
     ATC_NOTIFY_CHANNEL_ID: process.env.ATC_NOTIFY_CHANNEL_ID ?? '',
     UPDATE_RULES: process.env.UPDATE_RULES ?? 'false',
 
-    API_PORT: Number(process.env.API_PORT),
+    API_PORT:
+        Number(process.env.API_PORT) == Number.NaN
+            ? 8000
+            : Number(process.env.API_PORT),
 
     RG_GROUPS: ['Langen FIR', 'Bremen FIR', 'München FIR'],
 };

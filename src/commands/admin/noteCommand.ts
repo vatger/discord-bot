@@ -27,6 +27,7 @@ export default class KickCommand extends SlashCommand {
                     embeds: [
                         dangerEmbed(
                             'Note failed',
+                            null,
                             'Failed to resolve User: null provided'
                         ),
                     ],
@@ -37,27 +38,33 @@ export default class KickCommand extends SlashCommand {
 
             await userService.noteUser(interaction.user, user, message);
 
-            await sendModeratorMessage(
-                'User Note added',
-                `**User: ** ${user.username}#${user.discriminator}
-                **Added by: ** ${interaction.user.username}#${
-                    interaction.user.discriminator
-                }
-                **Message: ** 
-                \`\`\`${message ?? 'N/A'}\`\`\`
-                `
-            );
+            await sendModeratorMessage('User Note added', [
+                {
+                    name: 'User',
+                    value: `<@${user.id}>`,
+                },
+                {
+                    name: 'Added By',
+                    value: `<@${interaction.user.id}>`,
+                },
+                {
+                    name: 'Message',
+                    value: `\`\`\`${message ?? 'N/A'}\`\`\``,
+                },
+            ]);
 
             await interaction.followUp({
                 embeds: [
-                    successEmbed(
-                        'User Note added successfully',
-                        `Added note for ${user.username}#${
-                            user.discriminator
-                        } successfully! \n\n **Message:** ${
-                            message ?? 'N/A'
-                        }`
-                    ),
+                    successEmbed('User Note added successfully', [
+                        {
+                            name: 'Added note successfully for',
+                            value: `<@${user.id}>`,
+                        },
+                        {
+                            name: 'Message:',
+                            value: `\`\`\`${message ?? 'N/A'}\`\`\``,
+                        },
+                    ]),
                 ],
                 ephemeral: true,
             });

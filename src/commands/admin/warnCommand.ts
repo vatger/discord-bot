@@ -27,6 +27,7 @@ export default class KickCommand extends SlashCommand {
                     embeds: [
                         dangerEmbed(
                             'Warn failed',
+                            null,
                             'Failed to resolve User: null provided'
                         ),
                     ],
@@ -37,31 +38,39 @@ export default class KickCommand extends SlashCommand {
 
             await userService.warnUser(interaction.user, user, reason);
 
-            await sendModeratorMessage(
-                'User Warned',
-                `**User:** ${user.username}#${user.discriminator}
-                **Warned By:** ${interaction.user.username}#${interaction.user.discriminator}
-                **Reason:** 
-                \`\`\`${reason ?? 'N/A'}\`\`\`
-                `
-            );
+            await sendModeratorMessage('User Warned', [
+                {
+                    name: 'User',
+                    value: `<@${user.id}>`,
+                },
+                {
+                    name: 'Warned By',
+                    value: `<@${interaction.user.id}>`,
+                },
+                {
+                    name: 'Reason',
+                    value: `\`\`\`${reason ?? 'N/A'}\`\`\``,
+                },
+            ]);
 
             await interaction.followUp({
                 embeds: [
-                    successEmbed(
-                        'Warned successfully',
-                        `User ${user.username}#${
-                            user.discriminator
-                        } successfully warned! \n\n **Reason:** ${
-                            reason ?? 'N/A'
-                        }`
-                    ),
+                    successEmbed('Warned successfully', [
+                        {
+                            name: 'User',
+                            value: `<@${user.id}>`,
+                        },
+                        {
+                            name: 'Reason',
+                            value: `\`\`\`${reason ?? 'N/A'}\`\`\``,
+                        },
+                    ]),
                 ],
                 ephemeral: true,
             });
         } catch (e: any) {
             await interaction.followUp({
-                embeds: [dangerEmbed('Warn failed', e.message)],
+                embeds: [dangerEmbed('Warn failed', null, e.message)],
                 ephemeral: true,
             });
         }

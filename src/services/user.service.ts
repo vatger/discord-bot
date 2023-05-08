@@ -1,4 +1,4 @@
-import {GuildMember, PartialGuildMember, User} from 'discord.js';
+import { GuildMember, PartialGuildMember, User } from 'discord.js';
 import userModel, { UserDocument } from '../models/user.model';
 import { sendBotLogMessage } from '../utils/sendBotLogMessage';
 
@@ -10,22 +10,25 @@ async function getAllUsers() {
     } catch (error) {}
 }
 
-async function updateCid(user: GuildMember | PartialGuildMember, cid: number): Promise<void> {
+async function updateCid(
+    user: GuildMember | PartialGuildMember,
+    cid: number
+): Promise<void> {
     await userModel.findOneAndUpdate(
-        {discordId: user.id},
+        { discordId: user.id },
         {
             $set: {
-                cid: cid
+                cid: cid,
             },
         },
-        {upsert: true}
+        { upsert: true }
     );
 }
 
 async function addUser(user: User, cid?: Number): Promise<UserDocument> {
     const _user: UserDocument = new userModel({
         discordId: user.id,
-        cid: cid ?? null
+        cid: cid ?? null,
     });
     try {
         await _user.save();
@@ -49,7 +52,7 @@ async function warnUser(author: User, user: User, reason: string | null) {
                     ],
                 },
             },
-            {upsert: true}
+            { upsert: true }
         );
     } catch (e: any) {
         await sendBotLogMessage('Failed to add warning to User', e.message);
@@ -59,29 +62,31 @@ async function warnUser(author: User, user: User, reason: string | null) {
 async function deleteWarn(user: User, warn_id: string) {
     try {
         const _user = await userModel.findOneAndUpdate(
-            {discordId: user.id},
+            { discordId: user.id },
             {
                 $pull: {
                     warnings: {
-                        _id: warn_id
-                    }
-                }
+                        _id: warn_id,
+                    },
+                },
             },
-            {returnOriginal: true}
+            { returnOriginal: true }
         );
 
         return _user;
     } catch (e: any) {
-        await sendBotLogMessage('Failed to remove warning from User', e.message);
+        await sendBotLogMessage(
+            'Failed to remove warning from User',
+            e.message
+        );
         return undefined;
     }
 }
 
-
 async function noteUser(author: User, user: User, message: string | null) {
     try {
         const _user = await userModel.findOneAndUpdate(
-            {discordId: user.id},
+            { discordId: user.id },
             {
                 $push: {
                     notes: [
@@ -94,7 +99,6 @@ async function noteUser(author: User, user: User, message: string | null) {
             },
             { upsert: true }
         );
-
     } catch (e: any) {
         await sendBotLogMessage('Failed to add note to User', e.message);
     }
@@ -112,7 +116,10 @@ async function getUserWarnings(user: User) {
 
         return _user.warnings;
     } catch (e: any) {
-        await sendBotLogMessage('Failed to retreive warning of User', e.message);
+        await sendBotLogMessage(
+            'Failed to retreive warning of User',
+            e.message
+        );
     }
 }
 
@@ -140,5 +147,5 @@ export default {
     getUserWarnings,
     getAllUsers,
     addUser,
-    updateCid
+    updateCid,
 };

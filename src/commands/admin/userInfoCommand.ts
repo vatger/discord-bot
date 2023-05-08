@@ -12,14 +12,14 @@ import {
     InteractionResponse,
 } from 'discord.js';
 import dayjs from 'dayjs';
-import {DiscordBotClient} from '../../core/client';
-import {Config} from '../../core/config';
-import {dangerEmbed} from '../../embeds/default/dangerEmbed';
-import userModel, {UserDocument} from '../../models/user.model';
+import { DiscordBotClient } from '../../core/client';
+import { Config } from '../../core/config';
+import { dangerEmbed } from '../../embeds/default/dangerEmbed';
+import userModel, { UserDocument } from '../../models/user.model';
 import userService from '../../services/user.service';
-import {UserNote, UserWarning} from '../../interfaces/user.interface';
-import vatsimApiService from "../../services/vatsimApiService";
-import {getAtcRatingShort} from "../../utils/vatsimUtils";
+import { UserNote, UserWarning } from '../../interfaces/user.interface';
+import vatsimApiService from '../../services/vatsimApiService';
+import { getAtcRatingShort } from '../../utils/vatsimUtils';
 
 function getPresenceFromString(status: PresenceStatus | undefined): string {
     switch (status) {
@@ -70,7 +70,9 @@ export default class UserInfoCommand extends SlashCommand {
                 discordId: user.id,
             });
 
-            const vatsimRatingData = await vatsimApiService.getRatingApi(_user?.cid);
+            const vatsimRatingData = await vatsimApiService.getRatingApi(
+                _user?.cid
+            );
 
             const warnings = new ButtonBuilder()
                 .setCustomId('warnings')
@@ -109,7 +111,7 @@ export default class UserInfoCommand extends SlashCommand {
                     },
                     {
                         name: 'CID',
-                        value: _user?.cid?.toString() ?? "N/A",
+                        value: _user?.cid?.toString() ?? 'N/A',
                         inline: true,
                     },
                     {
@@ -119,7 +121,9 @@ export default class UserInfoCommand extends SlashCommand {
                     },
                     {
                         name: 'Division / vACC',
-                        value: `${vatsimRatingData?.division ?? "-"} / ${vatsimRatingData?.subdivision ?? "-"}`,
+                        value: `${vatsimRatingData?.division ?? '-'} / ${
+                            vatsimRatingData?.subdivision ?? '-'
+                        }`,
                         inline: true,
                     },
                     {
@@ -169,19 +173,33 @@ export default class UserInfoCommand extends SlashCommand {
 
             switch (confirmation.customId) {
                 case 'warnings':
-                    const _warnings = (await userService.getUserWarnings(user)) ?? [];
+                    const _warnings =
+                        (await userService.getUserWarnings(user)) ?? [];
 
                     for (let i = 0; i < _warnings.length; i++) {
                         embeds.push(
                             dangerEmbed(
                                 `Warning #${i + 1} of ${_warnings.length}`,
-                                `
-                                 **Warning ID:** ${_warnings[i]._id}
-                                 **Warned By:** <@${_warnings[i].authorDiscordId}>
-                                 **Created at:** ${dayjs(_warnings[i].createdAt).format('DD.MM.YYYY HH:mm')}
-                                 **Reason:**
-                                 \`\`\`${_warnings[i].reason}\`\`\`
-                                `
+                                [
+                                    {
+                                        name: 'Warning ID',
+                                        value: `${_warnings[i]._id}`,
+                                    },
+                                    {
+                                        name: 'Warned By',
+                                        value: `<@${_warnings[i].authorDiscordId}>`,
+                                    },
+                                    {
+                                        name: 'Created at',
+                                        value: `${dayjs(
+                                            _warnings[i].createdAt
+                                        ).format('DD.MM.YYYY HH:mm')}`,
+                                    },
+                                    {
+                                        name: 'Reason',
+                                        value: `\`\`\`${_warnings[i].reason}\`\`\``,
+                                    },
+                                ]
                             ).setTimestamp(_warnings[i].createdAt)
                         );
                     }
@@ -199,16 +217,26 @@ export default class UserInfoCommand extends SlashCommand {
 
                     for (let i = 0; i < _notes.length; i++) {
                         embeds.push(
-                            dangerEmbed(
-                                `Notes #${i + 1} of ${_notes.length}`,
-                                `
-                                **Note ID:** ${_notes[i]._id}
-                                **Created By:** <@${_notes[i].authorDiscordId}>
-                                **Created at:** ${dayjs(_notes[i].createdAt).format('DD.MM.YYYY HH:mm')}
-                                **Message:**
-                                \`\`\`${_notes[i].message}\`\`\`
-                                `
-                            )
+                            dangerEmbed(`Notes #${i + 1} of ${_notes.length}`, [
+                                {
+                                    name: 'Note ID',
+                                    value: `${_notes[i]._id}`,
+                                },
+                                {
+                                    name: 'Created By',
+                                    value: `<@${_notes[i].authorDiscordId}>`,
+                                },
+                                {
+                                    name: 'Created At',
+                                    value: `${dayjs(_notes[i].createdAt).format(
+                                        'DD.MM.YYYY HH:mm'
+                                    )}`,
+                                },
+                                {
+                                    name: 'Message',
+                                    value: `\`\`\`${_notes[i].message}\`\`\``,
+                                },
+                            ])
                         );
                     }
 

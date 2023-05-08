@@ -36,6 +36,5 @@ export default class OnReadyEvent extends DiscordEvent {
         }
 
         setInterval(vatgerConnections.checkVatgerConnections, 60000);
-        
     }
 }

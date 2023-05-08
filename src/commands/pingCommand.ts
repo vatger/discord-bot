@@ -6,6 +6,7 @@ import {
 import SlashCommand from '../types/Command';
 import { DiscordBotClient } from '../core/client';
 import { warningEmbed } from '../embeds/default/warningEmbed';
+import { successEmbed } from '../embeds/default/successEmbed';
 
 export default class PingCommand extends SlashCommand {
     constructor() {
@@ -14,27 +15,38 @@ export default class PingCommand extends SlashCommand {
 
     async run(interaction: CommandInteraction) {
         const sent = await interaction.reply({
-            embeds: [warningEmbed("Loading", "Loading ping times, please wait.")],
+            embeds: [
+                warningEmbed(
+                    'Loading',
+                    null,
+                    'Loading ping times, please wait.'
+                ),
+            ],
             fetchReply: true,
             ephemeral: true,
         });
 
-        const pingEmbed = new EmbedBuilder()
-            .setColor(0x2b3089)
-            .setDescription(
-                `
-                **Uptime: **${Math.round(interaction.client.uptime / 60000)} min
-                **Websocket Latency: **${interaction.client.ws.ping} ms
-                **Roundtrip Latency: **${
-                    sent.createdTimestamp - interaction.createdTimestamp
-                } ms
-            `
-            )
-            .setTimestamp()
-            .setFooter({ text: DiscordBotClient.user?.username ?? 'Bot' });
-
         await interaction.editReply({
-            embeds: [pingEmbed],
+            embeds: [
+                successEmbed('Ping', [
+                    {
+                        name: 'Uptime',
+                        value: `${Math.round(
+                            interaction.client.uptime / 60_000
+                        )} min`,
+                    },
+                    {
+                        name: 'Websocket Latency',
+                        value: `${interaction.client.ws.ping} ms`,
+                    },
+                    {
+                        name: 'Roundtrip Latency',
+                        value: `${
+                            sent.createdTimestamp - interaction.createdTimestamp
+                        } ms`,
+                    },
+                ]),
+            ],
         });
     }
 
