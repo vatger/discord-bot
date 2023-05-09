@@ -28,6 +28,7 @@ type EnvConfig = {
     API_PORT: number;
 
     RG_GROUPS: string[];
+    PING_GROUPS: string[];
 };
 
 export const Config: EnvConfig = {
@@ -61,4 +62,5 @@ export const Config: EnvConfig = {
             : Number(process.env.API_PORT),
 
     RG_GROUPS: ['Langen FIR', 'Bremen FIR', 'München FIR'],
+    PING_GROUPS: ['EDDH','EDDB','EDDF','EDDM','EDWW','EDGG', 'EDMM']
 };
