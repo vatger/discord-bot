@@ -1,8 +1,7 @@
-import userModel, { UserDocument } from '../models/user.model';
+import userModel from '../models/user.model';
 import DiscordEvent from '../types/Event';
 import { Events, GuildMember } from 'discord.js';
 import { sendBotLogMessage } from '../utils/sendBotLogMessage';
-import axios from 'axios';
 import vatsimApiService from '../services/vatsimApiService';
 
 export default class OnGuildMemberAddEvent extends DiscordEvent {
@@ -23,7 +22,7 @@ export default class OnGuildMemberAddEvent extends DiscordEvent {
                         cid: cid ?? null,
                     },
                 },
-                { upsert: true, returnOriginal: false }
+                {upsert: true}
             );
         } catch (e: any) {
             await sendBotLogMessage(
