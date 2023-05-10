@@ -1,13 +1,18 @@
-import { GuildMember, PartialGuildMember, User } from 'discord.js';
-import userModel, { UserDocument } from '../models/user.model';
-import { sendBotLogMessage } from '../utils/sendBotLogMessage';
+import {GuildMember, PartialGuildMember, User} from 'discord.js';
+import userModel, {UserDocument} from '../models/user.model';
+import {sendBotLogMessage} from '../utils/sendBotLogMessage';
+import axios from "axios";
+import {dangerEmbed} from "../embeds/default/dangerEmbed";
+import {findGuildMemberByDiscordID} from "../utils/findGuildMember";
+import {Config} from "../core/config";
 
 async function getAllUsers() {
     try {
         const users: UserDocument[] = await userModel.find();
 
         return users;
-    } catch (error) {}
+    } catch (error) {
+    }
 }
 
 async function updateCid(
@@ -139,6 +144,41 @@ async function getUserNotes(user: User) {
     }
 }
 
+async function checkIsVatger(discordId: string) {
+    const _user = await userModel.findOne({
+        discordId: discordId
+    });
+
+    if (_user == null || _user.cid == null)
+        throw new Error("User with discord ID " + discordId + " is not in the database or the CID is not present");
+
+    const res = await axios.get("http://hp.vatsim-germany.org/api/account/" + _user.cid + "/isger");
+    const isVatger = res.data as boolean;
+
+    // If this is already the saved state, then we already assigned roles, etc.
+    if (isVatger == _user.isVatger) {
+        throw new Error("You are already registered. No changes to your account have been made");
+    }
+
+    await userModel.updateOne({
+        discordId: _user.discordId,
+        cid: _user.cid
+    }, {
+        $set: {
+            isVatger: isVatger
+        }
+    });
+
+    const guildMember = await findGuildMemberByDiscordID(discordId);
+
+    if (isVatger)
+        await guildMember?.roles.add(Config.VATGER_MEMBER_ROLE_ID);
+    else
+        await guildMember?.roles.remove(Config.VATGER_MEMBER_ROLE_ID);
+
+    return isVatger;
+}
+
 export default {
     warnUser,
     deleteWarn,
@@ -148,4 +188,5 @@ export default {
     getAllUsers,
     addUser,
     updateCid,
+    checkIsVatger,
 };
