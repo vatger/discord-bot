@@ -70,7 +70,7 @@ export default class KickCommand extends SlashCommand {
             });
         } catch (e: any) {
             await interaction.followUp({
-                embeds: [dangerEmbed('Note failed', e.message)],
+                embeds: [dangerEmbed('Note failed', null, e.message)],
                 ephemeral: true,
             });
             return;
