@@ -21,7 +21,7 @@ export const helpEmbed = () =>
         .addFields([
             {
                 name: '`/roleselection`',
-                value: 'Select roles to see the respective regional group channel',
+                value: 'Select roles to get notifications for.',
             },
         ])
         .setTimestamp()

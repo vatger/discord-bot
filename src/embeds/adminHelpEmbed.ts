@@ -8,18 +8,6 @@ export const adminHelpEmbed = () =>
         .setTitle('Here is a List of all available admin commands')
         .addFields([
             {
-                name: '`/kick (user) (reason)`',
-                value: 'Kick the selected user for given reason.',
-            },
-        ])
-        .addFields([
-            {
-                name: '`/ban (user) (reason)`',
-                value: 'Ban the selected user for given reason.',
-            },
-        ])
-        .addFields([
-            {
                 name: '`/note (user) (message)`',
                 value: 'Write a note for the user. This note will be saved in the user database.',
             },
