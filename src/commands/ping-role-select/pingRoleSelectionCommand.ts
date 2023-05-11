@@ -14,7 +14,7 @@ import { Config } from '../../core/config';
 
 export default class RoleSelectionCommand extends SlashCommand {
     constructor() {
-        super('pingselection');
+        super('roleselection');
     }
 
     async run(interaction: CommandInteraction) {
@@ -39,7 +39,6 @@ export default class RoleSelectionCommand extends SlashCommand {
         const pingRoleOptions = Config.PING_GROUPS.map(group => {
             return {
                 label: group,
-                description: 'Get the respective ping role',
                 value: group,
                 default: roleArray.includes(group),
             };
@@ -57,8 +56,27 @@ export default class RoleSelectionCommand extends SlashCommand {
             .setColor(0x0099ff)
             .setTitle('Select your ping role')
             .setDescription(
-                `We have created some roles for notifications.\nBased on the role, you decide which notification you want to see.\n\n **Select your roles below:**`
-            );
+                `We have created some roles for notifications.\nBased on the role, you decide which notifications you want to see.\n**Select your roles below:**\n\n⚠️ What does each role mean:`
+            )
+            .setFields([
+                {
+                    name: 'Aerodrome Roles (i.e. EDDF, EDDM ...)',
+                    value: 'These roles are used for pings and staffing requests regarding the respective aerodrome',
+                },
+                {
+                    name: 'Center Roles (i.e. CTR EDMM, CTR EDWW ...)',
+                    value: 'These roles are used for pings and staffing requests regarding the respective FIR',
+                },
+                {
+                    name: 'Minor Roles (i.e. Minor EDGG, Minor EDMM ...)',
+                    value: 'These roles are used for pings and staffing requests regarding the minor aerodrome in the rexpective FIR',
+                },
+                {
+                    name: 'ECFMP Roles (i.e. ECFMP EDGG, ECFMP EDWW ...)',
+                    value: 'These roles are used for pings by the ECFMP Flow Measures here: <#1070334861258276925>',
+                },
+            ]);
+            
 
         await interaction.reply({
             components: [pingRoles],
@@ -70,8 +88,6 @@ export default class RoleSelectionCommand extends SlashCommand {
     build(): any {
         return new SlashCommandBuilder()
             .setName(this.name)
-            .setDescription(
-                'Select roles to get notifications.'
-            );
+            .setDescription('Select roles to get notifications for.');
     }
 }
