@@ -22,8 +22,10 @@ type EnvConfig = {
     BOT_STATUS_CHANNEL_ID: string;
     WELCOME_CHANNEL_ID: string;
     ATC_NOTIFY_CHANNEL_ID: string;
+    REGISTRATION_HELP_CHANNEL_ID: string;
 
     UPDATE_RULES: string;
+    UPDATE_REGISTRATION_HELP: string;
 
     API_PORT: number;
 
@@ -49,11 +51,13 @@ export const Config: EnvConfig = {
     REGISTERED_ROLE_ID: process.env.REGISTERED_ROLE_ID ?? '',
     VATGER_MEMBER_ROLE_ID: process.env.VATGER_MEMBER_ROLE_ID ?? '',
     MODERATOR_CHANNEL_ID: process.env.MODERATOR_CHANNEL_ID ?? '',
+    REGISTRATION_HELP_CHANNEL_ID: process.env.REGISTRATION_HELP_CHANNEL_ID ?? '',
 
     BOT_STATUS_CHANNEL_ID: process.env.BOT_STATUS_CHANNEL_ID ?? '',
     WELCOME_CHANNEL_ID: process.env.WELCOME_CHANNEL_ID ?? '',
     ATC_NOTIFY_CHANNEL_ID: process.env.ATC_NOTIFY_CHANNEL_ID ?? '',
     UPDATE_RULES: process.env.UPDATE_RULES ?? 'false',
+    UPDATE_REGISTRATION_HELP: process.env.UPDATE_REGISTRATION_HELP ?? 'false',
 
     API_PORT:
         Number(process.env.API_PORT) == Number.NaN
