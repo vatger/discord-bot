@@ -154,6 +154,10 @@ async function checkIsVatger(discordId: string) {
 
     const res = await axios.get("http://hp.vatsim-germany.org/api/account/" + _user.cid + "/isger");
     const isVatger = res.data as boolean;
+    
+    if (isVatger == false) {
+        return false;
+    }
 
     // If this is already the saved state, then we already assigned roles, etc.
     if (isVatger == _user.isVatger) {
