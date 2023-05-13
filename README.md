@@ -8,10 +8,10 @@ If you wish to contribute and/or make changes, please check out our contribution
 
 ## Contact
 
-|         Name         | Responsible for |             Contact             |
-|:--------------------:|:---------------:|:-------------------------------:|
-| Moritz F. - 1234027  |        *        |       `nav[at]vatger.de`        |
-| Nikolas G. - 1373921 |        *        | `nikolas.goerlitz[at]vatger.de` |
+|         Name         | Responsible for |      Contact       |
+|:--------------------:|:---------------:|:------------------:|
+| Moritz F. - 1234027  |        *        | `nav[at]vatger.de` |
+| Nikolas G. - 1373921 |        *        | `git[at]vatger.de` |
 
 ## Prerequisites
 - **Node.js** (https://nodejs.org/en)
