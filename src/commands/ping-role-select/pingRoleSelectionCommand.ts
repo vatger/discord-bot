@@ -69,11 +69,11 @@ export default class RoleSelectionCommand extends SlashCommand {
                 },
                 {
                     name: 'Minor Roles (i.e. Minor EDGG, Minor EDMM ...)',
-                    value: 'These roles are used for pings and staffing requests regarding the minor aerodrome in the rexpective FIR',
+                    value: 'These roles are used for pings and staffing requests regarding the minor aerodrome in the respective FIR',
                 },
                 {
                     name: 'ECFMP Roles (i.e. ECFMP EDGG, ECFMP EDWW ...)',
-                    value: 'These roles are used for pings by the ECFMP Flow Measures here: <#1070334861258276925>',
+                    value: 'These roles are used for pings by the ECFMP Flow Measures here: <#1106925308646531142>',
                 },
             ]);
             
