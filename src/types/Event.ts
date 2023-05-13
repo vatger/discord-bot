@@ -1,4 +1,4 @@
-import {Client, Events} from "discord.js";
+import { Client, Events } from 'discord.js';
 
 export default class DiscordEvent {
     event: Events;
@@ -8,16 +8,14 @@ export default class DiscordEvent {
     }
 
     async run(...any: any[]) {
-        throw new Error("Not implemented");
+        throw new Error('Not implemented');
     }
 
-    register(client: Client)
-    {
+    register(client: Client) {
         client.on(this.event.toString(), this.run);
     }
 
-    unRegister(client: Client)
-    {
+    unRegister(client: Client) {
         client.removeListener(this.event.toString(), this.run);
     }
 }

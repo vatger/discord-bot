@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: development
+      args:
+        - NODE_ENV=development
+    ports:
+      - '9229:9229/tcp'
+    volumes:
+      - .:/opt:delegated
+    environment:
+      - DISCORD_TOKEN
+      - AVWX_TOKEN
+      - GUILD_ID
+      - CLIENT_ID
+      - ATC_NOTIFY_CHANNEL_ID
+      - BOT_STATUS_CHANNEL_ID
+      - WELCOME_CHANNEL_ID
+      - MONGO_ENABLE_SSL
+      - MONGO_ENABLE_SSL_VALIDATION
+      - API_PORT
