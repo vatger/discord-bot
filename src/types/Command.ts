@@ -1,7 +1,7 @@
 import {
     CommandInteraction,
     StringSelectMenuInteraction,
-    ButtonInteraction,
+    ButtonInteraction, RoleSelectMenuInteraction,
 } from 'discord.js';
 
 export default class SlashCommand {
@@ -15,6 +15,7 @@ export default class SlashCommand {
         interaction:
             | CommandInteraction
             | StringSelectMenuInteraction
+            | RoleSelectMenuInteraction
             | ButtonInteraction
     ) {
         throw new Error('Interaction Handler not implemented');
