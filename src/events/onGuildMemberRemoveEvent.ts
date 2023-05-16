@@ -11,9 +11,6 @@ export default class OnGuildMemberRemoveEvent extends DiscordEvent {
     async run(user: GuildMember | PartialGuildMember) {
         // Remove user from database
 
-        console.log(user.user.username, user.id);
-        
-
         try {
             await userModel.updateOne({
                 discordId: user.id

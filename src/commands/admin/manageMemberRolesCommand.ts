@@ -37,6 +37,8 @@ export default class UserInfoCommand extends SlashCommand {
         let guildMember: GuildMember | null | undefined;
 
         try {
+            console.log(1);
+            
             answer = await interaction.deferReply({ ephemeral: true });
 
             user = interaction.options.getUser('user');
@@ -49,8 +51,10 @@ export default class UserInfoCommand extends SlashCommand {
             const roles =
                 guildMember?.roles.cache.map((r: Role) => r.name) ?? [];
 
-            const manageableRoleOptions = interaction.guild?.roles.cache
-            .filter((role: Role) => Config.MANAGEABLE_GROUPS.includes(role.name))
+            const manageableRoleOptions = interaction.guild?.roles?.cache
+            .filter((role: Role) => {
+                return Config.MANAGEABLE_GROUPS.includes(role.name)
+            })
             .map((role: Role) => {
                 return {
                     label: role.name,
@@ -79,17 +83,20 @@ export default class UserInfoCommand extends SlashCommand {
             });
         } catch (e: any) {
             await interaction.followUp({
-                embeds: [dangerEmbed('UserInfo Failed', e.message)],
+                embeds: [dangerEmbed('ManageMemberRoles Failed', null, e.message)],
                 ephemeral: true,
             });
             return;
         }
+
+        console.log(2);
 
         const collectorFilter = (i: any) => i.user.id === interaction.user.id;
 
         if (answer == null) return;
 
         try {
+            console.log(3);
             const roleSelectInteraction = (await answer.awaitMessageComponent({
                 filter: collectorFilter,
                 time: 60000,
@@ -122,6 +129,7 @@ export default class UserInfoCommand extends SlashCommand {
                 return Config.MANAGEABLE_GROUPS.includes(role.name);
             });
 
+            console.log(4);
             let roleIndex = 0;
             await answer.edit({
                 embeds: [
