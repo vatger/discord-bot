@@ -37,8 +37,6 @@ export default class UserInfoCommand extends SlashCommand {
         let guildMember: GuildMember | null | undefined;
 
         try {
-            console.log(1);
-            
             answer = await interaction.deferReply({ ephemeral: true });
 
             user = interaction.options.getUser('user');
@@ -62,7 +60,7 @@ export default class UserInfoCommand extends SlashCommand {
                     default: roles.includes(role.name)
                 }
             });
-
+            
             if (manageableRoleOptions == null) {
                 throw new Error("Failed to get Guild Roles");
             }
@@ -89,14 +87,11 @@ export default class UserInfoCommand extends SlashCommand {
             return;
         }
 
-        console.log(2);
-
         const collectorFilter = (i: any) => i.user.id === interaction.user.id;
 
         if (answer == null) return;
 
         try {
-            console.log(3);
             const roleSelectInteraction = (await answer.awaitMessageComponent({
                 filter: collectorFilter,
                 time: 60000,
