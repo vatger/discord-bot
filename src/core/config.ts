@@ -30,6 +30,7 @@ type EnvConfig = {
     API_PORT: number;
 
     PING_GROUPS: string[];
+    MANAGEABLE_GROUPS: string[];
 };
 
 export const Config: EnvConfig = {
@@ -64,5 +65,6 @@ export const Config: EnvConfig = {
             ? 8000
             : Number(process.env.API_PORT),
 
-    PING_GROUPS: ['EDDH','EDDB','EDDV','EDDL','EDDK','EDDF','EDDS', 'EDDN', 'EDDM', 'CTR EDWW', 'CTR EDGG', 'CTR EDMM', 'Minor EDWW', 'Minor EDGG', 'Minor EDMM', 'ECFMP EDWW', 'ECFMP EDGG', 'ECFMP EDMM']
+    PING_GROUPS: ['EDDH','EDDB','EDDV','EDDL','EDDK','EDDF','EDDS', 'EDDN', 'EDDM', 'CTR EDWW', 'CTR EDGG', 'CTR EDMM', 'Minor EDWW', 'Minor EDGG', 'Minor EDMM', 'ECFMP EDWW', 'ECFMP EDGG', 'ECFMP EDMM'],
+    MANAGEABLE_GROUPS: ['Mentor EDWW','Mentor EDBB','Mentor EDLL','Mentor EDFF','Mentor EDMM','Mentor','NAV EDWW', 'NAV EDGG', 'NAV EDMM', 'NAV', 'Event EDWW', 'Event EDBB', 'Event EDLL', 'Event EDFF', 'Event EDMM', 'Event', 'PTD Trainer', 'PMP Mentor']
 };

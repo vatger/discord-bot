@@ -11,10 +11,15 @@ export default class OnGuildMemberRemoveEvent extends DiscordEvent {
     async run(user: GuildMember | PartialGuildMember) {
         // Remove user from database
 
+        console.log(user.user.username, user.id);
+        
+
         try {
-            await userModel.deleteOne(
-                {discordId: user.id},
-            );
+            await userModel.updateOne({
+                discordId: user.id
+            }, {
+                isVatger: false
+            });
 
             await sendBotLogMessage(
                 "Removed User from database (Leave)",

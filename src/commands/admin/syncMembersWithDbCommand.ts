@@ -2,6 +2,7 @@ import SlashCommand from '../../types/Command';
 import {
     ChatInputCommandInteraction,
     PermissionFlagsBits,
+    Role,
     SlashCommandBuilder,
 } from 'discord.js';
 import userService from '../../services/user.service';
@@ -35,10 +36,16 @@ export default class KickCommand extends SlashCommand {
 
             let memberCount = 0;
             for (const member of filteredMemberList) {
+                console.log(`Syncing member ${member[1].user.username}`);
+                
                 // This queries the VATSIM API for every member, not optimal, but it is what it is
                 const cid = await vatsimApiService.getCIDFromDiscordID(
                     member[1].user.id
                 );
+
+                const isVatger = member[1].roles.cache.filter((role: Role) => {
+                    return role.id == Config.VATGER_MEMBER_ROLE_ID;
+                });
 
                 await userModel.findOneAndUpdate(
                     {
@@ -47,6 +54,7 @@ export default class KickCommand extends SlashCommand {
                     {
                         $set: {
                             cid: cid,
+                            isVatger: isVatger.size > 0
                         },
                     },
                     { upsert: true }
