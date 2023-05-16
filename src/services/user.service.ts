@@ -152,16 +152,10 @@ async function checkIsVatger(discordId: string) {
     if (_user == null || _user.cid == null)
         throw new Error("User with discord ID " + discordId + " is not in the database or the CID is not present");
 
-    const res = await axios.get("http://hp.vatsim-germany.org/api/account/" + _user.cid + "/isger");
-    const isVatger = res.data as boolean;
-    
-    if (isVatger == false) {
-        return false;
-    }
+    const isVatger = (await axios.get("http://hp.vatsim-germany.org/api/account/" + _user.cid + "/isger")).data as boolean;
 
-    // If this is already the saved state, then we already assigned roles, etc.
-    if (isVatger == _user.isVatger) {
-        throw new Error("You are already registered. No changes to your account have been made");
+    if (!isVatger) {
+        return false;
     }
 
     await userModel.updateOne({
@@ -169,16 +163,12 @@ async function checkIsVatger(discordId: string) {
         cid: _user.cid
     }, {
         $set: {
-            isVatger: isVatger
+            isVatger: true
         }
     });
 
     const guildMember = await findGuildMemberByDiscordID(discordId);
-
-    if (isVatger)
-        await guildMember?.roles.add(Config.VATGER_MEMBER_ROLE_ID);
-    else
-        await guildMember?.roles.remove(Config.VATGER_MEMBER_ROLE_ID);
+    await guildMember?.roles.add(Config.VATGER_MEMBER_ROLE_ID);
 
     return isVatger;
 }
