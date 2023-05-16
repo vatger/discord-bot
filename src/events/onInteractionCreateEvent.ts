@@ -4,7 +4,7 @@ import {
     Events,
     Interaction,
     ButtonInteraction,
-    StringSelectMenuInteraction,
+    StringSelectMenuInteraction, RoleSelectMenuInteraction,
 } from 'discord.js';
 import { CommandList } from '../index';
 
@@ -26,6 +26,15 @@ export default class OnInteractionCreateEvent extends DiscordEvent {
             console.log('Running String Select Menu Interaction: ', name);
             await CommandList.get(name)?.run(
                 <StringSelectMenuInteraction>interaction
+            );
+            return;
+        }
+
+        if (interaction.isRoleSelectMenu()) {
+            const name: string = interaction.customId;
+            console.log('Running Role Select Menu Interaction: ', name);
+            await CommandList.get(name)?.run(
+                <RoleSelectMenuInteraction>interaction
             );
             return;
         }

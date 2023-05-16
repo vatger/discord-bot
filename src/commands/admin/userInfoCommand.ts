@@ -17,7 +17,7 @@ import { Config } from '../../core/config';
 import { dangerEmbed } from '../../embeds/default/dangerEmbed';
 import userModel, { UserDocument } from '../../models/user.model';
 import userService from '../../services/user.service';
-import { UserNote, UserWarning } from '../../interfaces/user.interface';
+import {UserNote} from '../../interfaces/user.interface';
 import vatsimApiService from '../../services/vatsimApiService';
 import { getAtcRatingShort } from '../../utils/vatsimUtils';
 
@@ -249,8 +249,6 @@ export default class UserInfoCommand extends SlashCommand {
             }
         } catch (e: any) {
             await answer?.edit({
-                content:
-                    'Confirmation not received within 1 minute, cancelling',
                 components: [],
             });
         }
