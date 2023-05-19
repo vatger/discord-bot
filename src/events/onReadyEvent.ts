@@ -4,6 +4,7 @@ import { Config } from '../core/config';
 import { rulesEmbeds } from '../embeds/ruleEmbed';
 import vatgerConnections from '../jobs/vatgerConnections';
 import { registrationHelpEmbed } from '../embeds/registrationHelpEmbed';
+import cleanupChannels from '../jobs/cleanupChannels';
 
 export default class OnReadyEvent extends DiscordEvent {
     constructor() {
@@ -54,6 +55,8 @@ export default class OnReadyEvent extends DiscordEvent {
                 embeds: [registrationHelpEmbed],
             });
         }
+
+        setInterval(cleanupChannels.cleanupChannels, 60000 * 60);
 
         setInterval(vatgerConnections.checkVatgerConnections, 60000);
     }
