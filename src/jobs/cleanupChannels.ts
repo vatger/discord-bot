@@ -2,6 +2,7 @@ import { TextChannel } from 'discord.js';
 import { DiscordBotClient } from '../core/client';
 import { Config } from '../core/config';
 import dayjs from 'dayjs';
+import { sendBotLogMessage } from '../utils/sendBotLogMessage';
 
 function parseChannels() {
     const channelArray = Config.CLEANUP_CHANNEL_IDS.split(',');
@@ -46,7 +47,12 @@ async function cleanupChannels() {
                 }
             }
         }
-    } catch (error) {}
+    } catch (error: any) {
+        await sendBotLogMessage(
+            `Failed to cleanup channels`,
+            error.message
+        );
+    }
 }
 
 export default {
