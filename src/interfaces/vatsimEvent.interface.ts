@@ -1,12 +1,12 @@
-export interface vatsimEvent {
+export interface VatsimEvent {
     id: number;
     type: string;
     vso_name: string;
     name: string;
     link: string;
-    organisers: organizer[];
-    airports: airport[];
-    routes: route[];
+    organisers: VatsimEventOrganizer[];
+    airports: VatsimEventAirport[];
+    routes: VatsimEventRoute[];
     start_time: Date;
     end_time: Date;
     short_description: string;
@@ -15,7 +15,7 @@ export interface vatsimEvent {
 
 }
 
-export interface organizer {
+export interface VatsimEventOrganizer {
     region: string;
     division: string;
     subdivision: string;
@@ -23,11 +23,11 @@ export interface organizer {
 
 }
 
-export interface airport {
+export interface VatsimEventAirport {
     icao: string;
 }
 
-export interface route {
+export interface VatsimEventRoute {
     departure: string;
     arrival: string;
     route: string;
