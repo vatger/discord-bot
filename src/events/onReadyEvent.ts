@@ -4,6 +4,10 @@ import { Config } from '../core/config';
 import { rulesEmbeds } from '../embeds/ruleEmbed';
 import vatgerConnections from '../jobs/vatgerConnections';
 import { registrationHelpEmbed } from '../embeds/registrationHelpEmbed';
+import vatsimEventsService from '../services/vatsimEventsService';
+import schedule from 'node-schedule';
+import dayjs from 'dayjs';
+import manageEvents from '../jobs/manageEvents';
 
 export default class OnReadyEvent extends DiscordEvent {
     constructor() {
@@ -13,9 +17,7 @@ export default class OnReadyEvent extends DiscordEvent {
     async run(client: Client) {
         if (Config.UPDATE_RULES === 'true') {
             const channelId = Config.WELCOME_CHANNEL_ID;
-            const channel: TextChannel = client.channels.cache.get(
-                channelId
-            ) as TextChannel;
+            const channel: TextChannel = client.channels.cache.get(channelId) as TextChannel;
 
             if (channel == null) return;
 
@@ -26,9 +28,7 @@ export default class OnReadyEvent extends DiscordEvent {
             }
 
             await channel.send({
-                files: [
-                    'http://hp.vatsim-germany.org/images/vacc_logo_white.png',
-                ],
+                files: ['http://hp.vatsim-germany.org/images/vacc_logo_white.png'],
             });
 
             await channel.send({
@@ -38,9 +38,7 @@ export default class OnReadyEvent extends DiscordEvent {
 
         if (Config.UPDATE_REGISTRATION_HELP === 'true') {
             const channelId = Config.REGISTRATION_HELP_CHANNEL_ID;
-            const channel: TextChannel = client.channels.cache.get(
-                channelId
-            ) as TextChannel;
+            const channel: TextChannel = client.channels.cache.get(channelId) as TextChannel;
 
             if (channel == null) return;
 
@@ -56,5 +54,15 @@ export default class OnReadyEvent extends DiscordEvent {
         }
 
         setInterval(vatgerConnections.checkVatgerConnections, 60000);
+
+        if (Config.EVENT_UPDATE) {
+
+            await manageEvents.manageEvents();
+            
+            schedule.scheduleJob(Config.EVENT_UPDATE_CRON, async () => {
+                await manageEvents.manageEvents();
+            });
+        }
+
     }
 }

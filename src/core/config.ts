@@ -31,6 +31,9 @@ type EnvConfig = {
 
     PING_GROUPS: string[];
     MANAGEABLE_GROUPS: string[];
+
+    EVENT_UPDATE: boolean;
+    EVENT_UPDATE_CRON: string;
 };
 
 export const Config: EnvConfig = {
@@ -66,5 +69,8 @@ export const Config: EnvConfig = {
             : Number(process.env.API_PORT),
 
     PING_GROUPS: ['EDDH','EDDB','EDDV','EDDL','EDDK','EDDF','EDDS', 'EDDN', 'EDDM', 'CTR EDWW', 'CTR EDGG', 'CTR EDMM', 'Minor EDWW', 'Minor EDGG', 'Minor EDMM', 'ECFMP EDWW', 'ECFMP EDGG', 'ECFMP EDMM'],
-    MANAGEABLE_GROUPS: ['Mentor EDWW','Mentor EDBB','Mentor EDLL','Mentor EDFF','Mentor EDMM','Mentor','NAV EDWW', 'NAV EDGG', 'NAV EDMM', 'NAV', 'Event EDWW', 'Event EDBB', 'Event EDLL', 'Event EDFF', 'Event EDMM', 'Event', 'PTD Trainer', 'PMP Mentor']
+    MANAGEABLE_GROUPS: ['Mentor EDWW','Mentor EDBB','Mentor EDLL','Mentor EDFF','Mentor EDMM','Mentor','NAV EDWW', 'NAV EDGG', 'NAV EDMM', 'NAV', 'Event EDWW', 'Event EDBB', 'Event EDLL', 'Event EDFF', 'Event EDMM', 'Event', 'PTD Trainer', 'PMP Mentor'],
+
+    EVENT_UPDATE: process.env.EVENT_UPDATE == 'true',
+    EVENT_UPDATE_CRON: process.env.EVENT_UPDATE_CRON ?? '0 */3 0 0 0'
 };
