@@ -26,7 +26,7 @@ async function manageEvents(): Promise<void> {
 
         for (const event of discordEvents) {
             try {
-                if (!relevantEvents.find(relEvent => relEvent.name === event[1].name)) {
+                if (!relevantEvents.find(relEvent => relEvent.name === event[1].name) && event[1].creator?.id === DiscordBotClient.user?.id) {
                     await guild.scheduledEvents.delete(event[0]);
                 }
             } catch (error) {
