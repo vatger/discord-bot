@@ -27,6 +27,8 @@ type EnvConfig = {
     UPDATE_RULES: string;
     UPDATE_REGISTRATION_HELP: string;
 
+    CLEANUP_CHANNEL_IDS: string;
+
     API_PORT: number;
 
     PING_GROUPS: string[];
@@ -62,6 +64,8 @@ export const Config: EnvConfig = {
     ATC_NOTIFY_CHANNEL_ID: process.env.ATC_NOTIFY_CHANNEL_ID ?? '',
     UPDATE_RULES: process.env.UPDATE_RULES ?? 'false',
     UPDATE_REGISTRATION_HELP: process.env.UPDATE_REGISTRATION_HELP ?? 'false',
+
+    CLEANUP_CHANNEL_IDS: process.env.CLEANUP_CHANNEL_IDS ?? '',
 
     API_PORT:
         Number(process.env.API_PORT) == Number.NaN
