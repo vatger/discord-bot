@@ -29,8 +29,8 @@ async function manageEvents(): Promise<void> {
                 if (!relevantEvents.find(relEvent => relEvent.name === event[1].name) && event[1].creator?.id === DiscordBotClient.user?.id) {
                     await guild.scheduledEvents.delete(event[0]);
                 }
-            } catch (error) {
-                throw new Error(`Failed to delete Event ${event[1].name}`);
+            } catch (error: any) {
+                throw new Error(`Failed to delete Event ${event[1].name}, ${error.message}`);
             }
         }
 
@@ -53,8 +53,8 @@ async function manageEvents(): Promise<void> {
                     });
 
                     discordEvents.set(dcEvent.id, dcEvent);
-                } catch (error) {
-                    throw new Error(`Error on creating event: ${event.name}`);
+                } catch (error: any) {
+                    throw new Error(`Error on creating event: ${event.name}, ${error.message}`);
                 }
             } else {
                 try {
@@ -68,13 +68,13 @@ async function manageEvents(): Promise<void> {
                                 : NodeHtmlMarkdown.translate(event.short_description),
                         image: event.banner,
                     });
-                } catch (error) {
-                    throw new Error(`Error on updating event: ${event.name}`);
+                } catch (error: any) {
+                    throw new Error(`Error on updating event: ${event.name}, ${error.message}`);
                 }
             }
         }
-    } catch (error) {
-        throw new Error('Failed to manage events.');
+    } catch (error: any) {
+        throw new Error(`Failed to manage events. ${error.message}`);
     }
 }
 
