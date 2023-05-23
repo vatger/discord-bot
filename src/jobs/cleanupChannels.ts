@@ -14,13 +14,8 @@ async function cleanupChannels() {
         const channelIdArray = parseChannels();
 
         for (const channelId of channelIdArray) {
-            const channel: TextChannel = DiscordBotClient.channels.cache.get(
-                channelId
-            ) as TextChannel;
-            const regex = new RegExp(
-                '(?<=Nachrichten werden nach ).*(?= Stunde)',
-                'gm'
-            );
+            const channel: TextChannel = DiscordBotClient.channels.cache.get(channelId) as TextChannel;
+            const regex = new RegExp('(?<=Nachrichten werden nach ).*(?= Stunde)', 'gm');
 
             if (!channel || !channel.topic) {
                 continue;
@@ -37,21 +32,13 @@ async function cleanupChannels() {
             const messages = await channel.messages.fetch({ limit: 50 });
 
             for (const message of messages) {
-                if (
-                    dayjs(new Date()).diff(message[1].createdAt, 'hour', true) >
-                    hoursToDelete
-                ) {
-                    console.log('delete message');
-
+                if (dayjs(new Date()).diff(message[1].createdAt, 'hour', true) > hoursToDelete) {
                     await message[1].delete();
                 }
             }
         }
     } catch (error: any) {
-        await sendBotLogMessage(
-            `Failed to cleanup channels`,
-            error.message
-        );
+        await sendBotLogMessage(`Failed to cleanup channels`, error.message);
     }
 }
 

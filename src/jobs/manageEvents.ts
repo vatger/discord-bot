@@ -17,10 +17,6 @@ async function manageEvents(): Promise<void> {
     try {
         const relevantEvents: VatsimEvent[] = await vatsimEventsService.getRelevantEvents(dayjs().startOf('day').toDate(), dayjs().endOf('day').toDate());
 
-        if (!relevantEvents) {
-            return;
-        }
-
         const guild: Guild = await DiscordBotClient.guilds.fetch(Config.GUILD_ID);
         const discordEvents: Collection<string, GuildScheduledEvent<GuildScheduledEventStatus>> = await guild.scheduledEvents.fetch();
 
@@ -74,7 +70,7 @@ async function manageEvents(): Promise<void> {
             }
         }
     } catch (error: any) {
-        throw new Error(`Failed to manage events. ${error.message}`);
+        console.error(`Failed to manage events. ${error.message}`);
     }
 }
 
