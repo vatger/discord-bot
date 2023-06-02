@@ -3,6 +3,8 @@ import {Events, GuildMember, PartialGuildMember} from 'discord.js';
 import {sendBotLogMessage} from '../utils/sendBotLogMessage';
 import userService from "../services/user.service";
 import {Config} from "../core/config";
+import { sendModeratorMessage } from '../utils/sendModeratorMessage';
+import dayjs from 'dayjs';
 
 export default class OnGuildMemberUpdateEvent extends DiscordEvent {
     constructor() {
@@ -19,6 +21,23 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
                 await userService.checkIsVatger(newUser.id);
             } catch (e: any) {
                 await sendBotLogMessage('Error in Rule-Acceptance', e.message);
+            }
+        }
+
+        if (!oldUser.isCommunicationDisabled() && newUser.isCommunicationDisabled()) {
+            try {
+                await sendModeratorMessage('User Timeouted', [
+                    {
+                        name: 'User',
+                        value: `<@${newUser.id}>`,
+                    },
+                    {
+                        name: 'Timeout until',
+                        value: `${dayjs(newUser.communicationDisabledUntil).format('DD.MM.YYYY HH:mm') }`,
+                    }
+                ]);
+            } catch (e: any) {
+                await sendBotLogMessage('Error in Timeout Message', e.message);
             }
         }
     }
