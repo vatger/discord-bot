@@ -35,6 +35,10 @@ async function checkVatgerConnections() {
     let actualControllers: DatafeedController[] =
         await getControllersFromDatafeed();
 
+    if (!actualControllers || actualControllers.length === 0) {
+        return;
+    }
+
     await removeControllers(actualControllers);
 
     for (const actualController of actualControllers) {
