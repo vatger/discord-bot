@@ -26,6 +26,7 @@ type EnvConfig = {
 
     UPDATE_RULES: string;
     UPDATE_REGISTRATION_HELP: string;
+    UPDATE_VATGER_CONNECTIONS: boolean;
 
     CLEANUP_CHANNEL_IDS: string;
 
@@ -64,6 +65,7 @@ export const Config: EnvConfig = {
     ATC_NOTIFY_CHANNEL_ID: process.env.ATC_NOTIFY_CHANNEL_ID ?? '',
     UPDATE_RULES: process.env.UPDATE_RULES ?? 'false',
     UPDATE_REGISTRATION_HELP: process.env.UPDATE_REGISTRATION_HELP ?? 'false',
+    UPDATE_VATGER_CONNECTIONS: process.env.UPDATE_VATGER_CONNECTIONS === 'true',
 
     CLEANUP_CHANNEL_IDS: process.env.CLEANUP_CHANNEL_IDS ?? '',
 
