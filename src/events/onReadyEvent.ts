@@ -56,7 +56,10 @@ export default class OnReadyEvent extends DiscordEvent {
 
         setInterval(cleanupChannels.cleanupChannels, 60000 * 60);
 
-        setInterval(vatgerConnections.checkVatgerConnections, 60000);
+        if (Config.UPDATE_VATGER_CONNECTIONS) {
+            setInterval(vatgerConnections.checkVatgerConnections, 60000);
+        }
+
 
         if (Config.EVENT_UPDATE) {
 
