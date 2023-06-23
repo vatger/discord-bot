@@ -76,7 +76,7 @@ export default class OnReadyEvent extends DiscordEvent {
 
             setInterval(async () => {
                 await staffingRequest.checkStaffingAlerts(config, alertCooldown);
-            }, 1 * 1000 * 60);
+            }, 15 * 1000 * 60);
         }
     }
 }
