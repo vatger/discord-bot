@@ -9,6 +9,8 @@ import vatsimEventsService from '../services/vatsimEventsService';
 import schedule from 'node-schedule';
 import dayjs from 'dayjs';
 import manageEvents from '../jobs/manageEvents';
+import { loadConfig } from '../jobs/staffingRequest/util';
+import staffingRequest from '../jobs/staffingRequest/staffingRequest';
 
 export default class OnReadyEvent extends DiscordEvent {
     constructor() {
@@ -60,15 +62,21 @@ export default class OnReadyEvent extends DiscordEvent {
             setInterval(vatgerConnections.checkVatgerConnections, 60000);
         }
 
-
         if (Config.EVENT_UPDATE) {
-
             await manageEvents.manageEvents();
-            
+
             schedule.scheduleJob(Config.EVENT_UPDATE_CRON, async () => {
                 await manageEvents.manageEvents();
             });
         }
 
+        if (Config.STAFFING_REQUEST) {
+            const alertCooldown: Record<string, number> = {};
+            const config = await loadConfig();
+
+            setInterval(async () => {
+                await staffingRequest.checkStaffingAlerts(config, alertCooldown);
+            }, 1 * 1000 * 60);
+        }
     }
 }

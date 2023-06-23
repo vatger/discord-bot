@@ -37,6 +37,9 @@ type EnvConfig = {
 
     EVENT_UPDATE: boolean;
     EVENT_UPDATE_CRON: string;
+
+    STAFFING_REQUEST: boolean;
+    STAFFING_REQUEST_CHANNEL_ID: string;
 };
 
 export const Config: EnvConfig = {
@@ -78,5 +81,8 @@ export const Config: EnvConfig = {
     MANAGEABLE_GROUPS: ['Mentor EDWW','Mentor EDBB','Mentor EDLL','Mentor EDFF','Mentor EDMM','Mentor','NAV EDWW', 'NAV EDGG', 'NAV EDMM', 'NAV', 'Event EDWW', 'Event EDBB', 'Event EDLL', 'Event EDFF', 'Event EDMM', 'Event', 'PTD Trainer', 'PMP Mentor'],
 
     EVENT_UPDATE: process.env.EVENT_UPDATE == 'true',
-    EVENT_UPDATE_CRON: process.env.EVENT_UPDATE_CRON ?? '0 */3 0 0 0'
+    EVENT_UPDATE_CRON: process.env.EVENT_UPDATE_CRON ?? '0 */3 0 0 0',
+
+    STAFFING_REQUEST: process.env.STAFFING_REQUEST === 'true' ?? false,
+    STAFFING_REQUEST_CHANNEL_ID: process.env.STAFFING_REQUEST_CHANNEL_ID ?? ''
 };

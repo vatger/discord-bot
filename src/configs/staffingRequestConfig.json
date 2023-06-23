@@ -1,0 +1,48 @@
+{
+    "alert_cooldown": 30,
+    "max_distance": 5,
+    "alerts": [
+      {
+        "airport": "EDDF",
+        "trafficThreshold": 10,
+        "coveringPositions": ["EDDF_.*TWR", "EDDF_.*GND", "EDDF_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDDM",
+        "trafficThreshold": 10,
+        "coveringPositions": ["EDDM_.*TWR", "EDDM_.*GND", "EDDM_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDDL",
+        "trafficThreshold": 10,
+        "coveringPositions": ["EDDL_.*TWR", "EDDL_.*GND", "EDDL_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDDK",
+        "trafficThreshold": 10,
+        "coveringPositions": ["EDDK_.*TWR", "EDDK_.*GND", "EDDK_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDDB",
+        "trafficThreshold": 10,
+        "coveringPositions": ["EDDB_.*TWR", "EDDB_.*GND", "EDDB_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDDS",
+        "trafficThreshold": 10,
+        "coveringPositions": ["EDDS_.*TWR", "EDDS_.*GND", "EDDS_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDDH",
+        "trafficThreshold": 10,
+        "coveringPositions": ["EDDH_.*TWR", "EDDH_.*GND", "EDDH_.*APP"],
+        "mentionRoles": []
+      }
+    ]
+  }

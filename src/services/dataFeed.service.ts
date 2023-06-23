@@ -13,6 +13,18 @@ async function getRawDataFeed() {
     }
 }
 
+async function getPilotsFromDataFeed() {
+    try {
+        const response = await axios.get(
+            'https://status.vatger.de/datafeed/pilots'
+        );
+
+        return response.data.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function getAtis(
     icao: string | undefined
 ): Promise<DatafeedAtis | undefined> {
@@ -36,4 +48,6 @@ async function getAtis(
 
 export default {
     getAtis,
+    getRawDataFeed,
+    getPilotsFromDataFeed
 };
