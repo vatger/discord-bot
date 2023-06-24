@@ -16,13 +16,13 @@
       },
       {
         "airport": "EDDL",
-        "trafficThreshold": 10,
+        "trafficThreshold": 8,
         "coveringPositions": ["EDDL_.*TWR", "EDDL_.*GND", "EDDL_.*APP"],
         "mentionRoles": []
       },
       {
         "airport": "EDDK",
-        "trafficThreshold": 10,
+        "trafficThreshold": 8,
         "coveringPositions": ["EDDK_.*TWR", "EDDK_.*GND", "EDDK_.*APP"],
         "mentionRoles": []
       },
@@ -34,7 +34,7 @@
       },
       {
         "airport": "EDDS",
-        "trafficThreshold": 10,
+        "trafficThreshold": 6,
         "coveringPositions": ["EDDS_.*TWR", "EDDS_.*GND", "EDDS_.*APP"],
         "mentionRoles": []
       },
@@ -42,6 +42,84 @@
         "airport": "EDDH",
         "trafficThreshold": 10,
         "coveringPositions": ["EDDH_.*TWR", "EDDH_.*GND", "EDDH_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDLW",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDLW_.*TWR", "EDLW_.*GND", "EDLW_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDLP",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDLP_.*TWR", "EDLP_.*GND", "EDLP_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDDG",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDDG_.*TWR", "EDDG_.*GND", "EDDG_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDFH",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDFH_.*TWR", "EDFH_.*GND", "EDFH_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDDR",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDDR_.*TWR", "EDDR_.*GND", "EDDR_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDFM",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDFM_.*TWR", "EDFM_.*GND", "EDFM_.*APP"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDVK",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDVK_.*TWR", "EDVK_.*GND"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDHL",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDHL_.*TWR", "EDHL_.*GND"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDVE",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDVE_.*TWR", "EDVE_.*GND"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDJA",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDJA_.*TWR", "EDJA_.*GND"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDMO",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDMO_.*TWR", "EDMO_.*GND"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDMA",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDMA_.*TWR", "EDMA_.*GND"],
+        "mentionRoles": []
+      },
+      {
+        "airport": "EDQM",
+        "trafficThreshold": 3,
+        "coveringPositions": ["EDQM_.*TWR", "EDQM_.*GND"],
         "mentionRoles": []
       }
     ]
