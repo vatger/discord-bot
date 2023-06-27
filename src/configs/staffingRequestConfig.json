@@ -6,121 +6,127 @@
         "airport": "EDDF",
         "trafficThreshold": 10,
         "coveringPositions": ["EDDF_.*TWR", "EDDF_.*GND", "EDDF_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["EDDF"]
       },
       {
         "airport": "EDDM",
         "trafficThreshold": 10,
         "coveringPositions": ["EDDM_.*TWR", "EDDM_.*GND", "EDDM_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["EDDM"]
       },
       {
         "airport": "EDDL",
         "trafficThreshold": 8,
         "coveringPositions": ["EDDL_.*TWR", "EDDL_.*GND", "EDDL_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["EDDL"]
       },
       {
         "airport": "EDDK",
         "trafficThreshold": 8,
         "coveringPositions": ["EDDK_.*TWR", "EDDK_.*GND", "EDDK_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["EDDK"]
       },
       {
         "airport": "EDDB",
         "trafficThreshold": 10,
         "coveringPositions": ["EDDB_.*TWR", "EDDB_.*GND", "EDDB_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["EDDB"]
       },
       {
         "airport": "EDDS",
         "trafficThreshold": 6,
         "coveringPositions": ["EDDS_.*TWR", "EDDS_.*GND", "EDDS_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["EDDS"]
       },
       {
         "airport": "EDDH",
         "trafficThreshold": 10,
         "coveringPositions": ["EDDH_.*TWR", "EDDH_.*GND", "EDDH_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["EDDH"]
+      },
+      {
+        "airport": "EDDN",
+        "trafficThreshold": 6,
+        "coveringPositions": ["EDDN_.*TWR", "EDDN_.*GND", "EDDN_.*APP"],
+        "mentionRoles": ["EDDN"]
       },
       {
         "airport": "EDLW",
         "trafficThreshold": 3,
         "coveringPositions": ["EDLW_.*TWR", "EDLW_.*GND", "EDLW_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDGG"]
       },
       {
         "airport": "EDLP",
         "trafficThreshold": 3,
         "coveringPositions": ["EDLP_.*TWR", "EDLP_.*GND", "EDLP_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDGG"]
       },
       {
         "airport": "EDDG",
         "trafficThreshold": 3,
         "coveringPositions": ["EDDG_.*TWR", "EDDG_.*GND", "EDDG_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDGG"]
       },
       {
         "airport": "EDFH",
         "trafficThreshold": 3,
         "coveringPositions": ["EDFH_.*TWR", "EDFH_.*GND", "EDFH_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDGG"]
       },
       {
         "airport": "EDDR",
         "trafficThreshold": 3,
         "coveringPositions": ["EDDR_.*TWR", "EDDR_.*GND", "EDDR_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDGG"]
       },
       {
         "airport": "EDFM",
         "trafficThreshold": 3,
         "coveringPositions": ["EDFM_.*TWR", "EDFM_.*GND", "EDFM_.*APP"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDGG"]
       },
       {
         "airport": "EDVK",
         "trafficThreshold": 3,
         "coveringPositions": ["EDVK_.*TWR", "EDVK_.*GND"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDWW"]
       },
       {
         "airport": "EDHL",
         "trafficThreshold": 3,
         "coveringPositions": ["EDHL_.*TWR", "EDHL_.*GND"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDWW"]
       },
       {
         "airport": "EDVE",
         "trafficThreshold": 3,
         "coveringPositions": ["EDVE_.*TWR", "EDVE_.*GND"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDWW"]
       },
       {
         "airport": "EDJA",
         "trafficThreshold": 3,
         "coveringPositions": ["EDJA_.*TWR", "EDJA_.*GND"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDMM"]
       },
       {
         "airport": "EDMO",
         "trafficThreshold": 3,
         "coveringPositions": ["EDMO_.*TWR", "EDMO_.*GND"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDMM"]
       },
       {
         "airport": "EDMA",
         "trafficThreshold": 3,
         "coveringPositions": ["EDMA_.*TWR", "EDMA_.*GND"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDMM"]
       },
       {
         "airport": "EDQM",
         "trafficThreshold": 3,
         "coveringPositions": ["EDQM_.*TWR", "EDQM_.*GND"],
-        "mentionRoles": []
+        "mentionRoles": ["Minor EDMM"]
       }
     ]
   }
