@@ -1,6 +1,6 @@
 import { Config } from '../../core/config';
 import dataFeedService from '../../services/dataFeed.service';
-import { sendBotMessageInChannel } from '../../utils/sendBotMessageInChannel';
+import { sendBotMessageInChannel } from '../../utils/sendBotStaffingRequest';
 import { StaffingConfig, getPilotCountAround } from './util';
 
 async function checkStaffingAlerts(config: StaffingConfig, alertCooldown: Record<string, number>): Promise<void> {
@@ -41,7 +41,7 @@ async function checkStaffingAlerts(config: StaffingConfig, alertCooldown: Record
             // send the alert and update the cooldown data
             console.debug(`Sending alert for ${alert.airport}`);
 
-            await sendBotMessageInChannel(`${alert.airport} is looking for controllers!`, `${count} pilot(s) waiting for your ATC service. 📡`, Config.STAFFING_REQUEST_CHANNEL_ID);
+            await sendBotMessageInChannel(`${alert.airport} is looking for controllers!`, `${count} pilot(s) waiting for your ATC service. 📡`, alert.mentionRoles );
 
             alertCooldown[alert.airport] = new Date().getTime() + (config.alert_cooldown * 1000 * 60);
         }
