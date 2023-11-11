@@ -15,11 +15,16 @@ export default class OnGuildMemberAddEvent extends DiscordEvent {
         try {
             const cid = await vatsimApiService.getCIDFromDiscordID(user.id);
 
+            const vatsimMemberData = await vatsimApiService.getRatingApi(cid);
+
             await userModel.findOneAndUpdate(
                 { discordId: user.id },
                 {
                     $set: {
                         cid: cid ?? null,
+                        pilotRating: vatsimMemberData?.pilotrating ?? null,
+                        controllerRating: vatsimMemberData?.rating ?? null,
+                        militaryRating: vatsimMemberData?.militaryrating ?? null
                     },
                 },
                 {upsert: true}
