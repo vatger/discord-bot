@@ -1,8 +1,6 @@
 import {GuildMember, PartialGuildMember, User} from 'discord.js';
 import userModel, {UserDocument} from '../models/user.model';
-import {sendBotLogMessage} from '../utils/sendBotLogMessage';
 import axios from "axios";
-import {dangerEmbed} from "../embeds/default/dangerEmbed";
 import {findGuildMemberByDiscordID} from "../utils/findGuildMember";
 import {Config} from "../core/config";
 
