@@ -49,7 +49,9 @@ async function checkIsVatger(discordId: string) {
     if (_user == null || _user.cid == null)
         throw new Error("User with discord ID " + discordId + " is not in the database or the CID is not present");
 
-    const isVatger = (await axios.get("http://hp.vatsim-germany.org/api/account/" + _user.cid + "/isger")).data as boolean;
+    const isVatger = (await axios.get("http://hp.vatsim-germany.org/api/account/" + _user.cid + "/isger", {headers: {
+        Authorization: 'Token ' + Config.HP_TOKEN 
+    }})).data as boolean;
 
     if (!isVatger) {
         return false;

@@ -31,6 +31,7 @@ type EnvConfig = {
     CLEANUP_CHANNEL_IDS: string;
 
     API_PORT: number;
+    HP_TOKEN: string;
 
     PING_GROUPS: string[];
     MANAGEABLE_GROUPS: string[];
@@ -76,6 +77,8 @@ export const Config: EnvConfig = {
         Number(process.env.API_PORT) == Number.NaN
             ? 8000
             : Number(process.env.API_PORT),
+
+    HP_TOKEN: process.env.HP_TOKEN ?? '',
 
     PING_GROUPS: ['EDDH','EDDB','EDDV','EDDL','EDDK','EDDF','EDDS', 'EDDN', 'EDDM', 'CTR EDWW', 'CTR EDGG', 'CTR EDMM', 'Minor EDWW', 'Minor EDGG', 'Minor EDMM', 'ECFMP EDWW', 'ECFMP EDGG', 'ECFMP EDMM'],
     MANAGEABLE_GROUPS: ['Mentor EDWW','Mentor EDBB','Mentor EDLL','Mentor EDFF','Mentor EDMM','Mentor','NAV EDWW', 'NAV EDGG', 'NAV EDMM', 'NAV', 'Event EDWW', 'Event EDBB', 'Event EDLL', 'Event EDFF', 'Event EDMM', 'Event', 'PTD Trainer', 'PMP Mentor'],
