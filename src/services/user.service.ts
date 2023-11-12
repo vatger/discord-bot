@@ -49,14 +49,13 @@ async function checkIsVatger(discordId: string) {
     if (_user == null || _user.cid == null)
         throw new Error("User with discord ID " + discordId + " is not in the database or the CID is not present");
 
-    const vatgerApiData:
-        {
+    const vatgerApiData =
+        (await axios.get<{
             is_vatger_member: boolean,
             is_vatger_fullmember: boolean,
             atc_rating: number | null,
             pilot_rating: number | null
-        } =
-        (await axios.get("http://vatsim-germany.org/api/discord/" + _user.cid, {
+        }>("http://vatsim-germany.org/api/discord/" + _user.cid, {
             headers: {
                 Authorization: 'Token ' + Config.HP_TOKEN
             }
@@ -64,7 +63,7 @@ async function checkIsVatger(discordId: string) {
 
     if (!vatgerApiData.is_vatger_fullmember) {
         return false;
-    } 
+    }
 
     await userModel.updateOne({
         discordId: _user.discordId,
@@ -75,11 +74,11 @@ async function checkIsVatger(discordId: string) {
         }
     });
 
-    console.log(`Added VATGER Role to ${_user.cid}`);
-
+    
     const guildMember = await findGuildMemberByDiscordID(discordId);
     await guildMember?.roles.add(Config.VATGER_MEMBER_ROLE_ID);
-
+    console.log(`Added VATGER Role to ${_user.cid}`);
+    
     return vatgerApiData.is_vatger_fullmember;
 }
 
