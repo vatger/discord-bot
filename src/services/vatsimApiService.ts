@@ -2,7 +2,7 @@ import axios from 'axios';
 
 async function getCIDFromDiscordID(
     discord_id: string
-): Promise<Number | undefined> {
+): Promise<number | undefined> {
     try {
         const vatsim_cid = (
             await axios.get(
@@ -12,7 +12,7 @@ async function getCIDFromDiscordID(
             id: string;
             user_id: string;
         };
-        const cid: Number = Number.parseInt(vatsim_cid.user_id);
+        const cid = Number.parseInt(vatsim_cid.user_id);
 
         if (cid == Number.NaN) return undefined;
 
@@ -29,16 +29,17 @@ async function getCIDFromDiscordID(
 async function getRatingApi(cid?: number) {
     try {
         const rating_data = (
-            await axios.get('https://api.vatsim.net/api/ratings/' + cid)
+            await axios.get('https://api.vatsim.net/v2/members/' + cid)
         ).data as {
-            id: string;
+            id: number;
             rating: number;
             pilotrating: number;
+            militaryrating: number;
             susp_date?: string;
             reg_date: string;
-            region: string;
-            division: string;
-            subdivision: string;
+            region_id: string;
+            division_id: string;
+            subdivision_id: string;
             lastratingchange: string;
         };
 

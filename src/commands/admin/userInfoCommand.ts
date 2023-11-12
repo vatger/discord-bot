@@ -6,9 +6,6 @@ import {
     User,
     EmbedBuilder,
     GuildMember,
-    ButtonBuilder,
-    ButtonStyle,
-    ActionRowBuilder,
     InteractionResponse,
 } from 'discord.js';
 import dayjs from 'dayjs';
@@ -16,8 +13,6 @@ import { DiscordBotClient } from '../../core/client';
 import { Config } from '../../core/config';
 import { dangerEmbed } from '../../embeds/default/dangerEmbed';
 import userModel, { UserDocument } from '../../models/user.model';
-import userService from '../../services/user.service';
-import {UserNote} from '../../interfaces/user.interface';
 import vatsimApiService from '../../services/vatsimApiService';
 import { getAtcRatingShort } from '../../utils/vatsimUtils';
 
@@ -52,7 +47,6 @@ export default class UserInfoCommand extends SlashCommand {
         let answer: InteractionResponse<boolean> | undefined = undefined;
         let user: User | null;
         let userInfoEmbed: EmbedBuilder | undefined = undefined;
-        let actionRow: ActionRowBuilder<ButtonBuilder> | undefined = undefined;
 
         try {
             answer = await interaction.deferReply({ ephemeral: true });
@@ -72,23 +66,6 @@ export default class UserInfoCommand extends SlashCommand {
 
             const vatsimRatingData = await vatsimApiService.getRatingApi(
                 _user?.cid
-            );
-
-            const warnings = new ButtonBuilder()
-                .setCustomId('warnings')
-                .setLabel(
-                    `Show Warnings (${_user ? _user?.warnings.length : 'N/A'})`
-                )
-                .setStyle(ButtonStyle.Danger);
-
-            const notes = new ButtonBuilder()
-                .setCustomId('notes')
-                .setLabel(`Show Notes (${_user ? _user?.notes.length : 'N/A'})`)
-                .setStyle(ButtonStyle.Secondary);
-
-            actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
-                warnings,
-                notes
             );
 
             userInfoEmbed = new EmbedBuilder()
@@ -121,8 +98,8 @@ export default class UserInfoCommand extends SlashCommand {
                     },
                     {
                         name: 'Division / vACC',
-                        value: `${vatsimRatingData?.division ?? '-'} / ${
-                            vatsimRatingData?.subdivision ?? '-'
+                        value: `${vatsimRatingData?.division_id ?? '-'} / ${
+                            vatsimRatingData?.subdivision_id ?? '-'
                         }`,
                         inline: true,
                     },
@@ -149,7 +126,6 @@ export default class UserInfoCommand extends SlashCommand {
 
             await interaction.followUp({
                 embeds: [userInfoEmbed],
-                components: [actionRow],
                 ephemeral: true,
             });
         } catch (e: any) {
@@ -169,84 +145,7 @@ export default class UserInfoCommand extends SlashCommand {
                 filter: collectorFilter,
                 time: 30000,
             });
-            let embeds: EmbedBuilder[] = [];
 
-            switch (confirmation.customId) {
-                case 'warnings':
-                    const _warnings =
-                        (await userService.getUserWarnings(user)) ?? [];
-
-                    for (let i = 0; i < _warnings.length; i++) {
-                        embeds.push(
-                            dangerEmbed(
-                                `Warning #${i + 1} of ${_warnings.length}`,
-                                [
-                                    {
-                                        name: 'Warning ID',
-                                        value: `${_warnings[i]._id}`,
-                                    },
-                                    {
-                                        name: 'Warned By',
-                                        value: `<@${_warnings[i].authorDiscordId}>`,
-                                    },
-                                    {
-                                        name: 'Created at',
-                                        value: `${dayjs(
-                                            _warnings[i].createdAt
-                                        ).format('DD.MM.YYYY HH:mm')}`,
-                                    },
-                                    {
-                                        name: 'Reason',
-                                        value: `\`\`\`${_warnings[i].reason}\`\`\``,
-                                    },
-                                ]
-                            ).setTimestamp(_warnings[i].createdAt)
-                        );
-                    }
-
-                    confirmation.update({
-                        embeds: [userInfoEmbed, ...embeds],
-                        components: [],
-                    });
-
-                    break;
-
-                case 'notes':
-                    const _notes: UserNote[] =
-                        (await userService.getUserNotes(user)) ?? [];
-
-                    for (let i = 0; i < _notes.length; i++) {
-                        embeds.push(
-                            dangerEmbed(`Notes #${i + 1} of ${_notes.length}`, [
-                                {
-                                    name: 'Note ID',
-                                    value: `${_notes[i]._id}`,
-                                },
-                                {
-                                    name: 'Created By',
-                                    value: `<@${_notes[i].authorDiscordId}>`,
-                                },
-                                {
-                                    name: 'Created At',
-                                    value: `${dayjs(_notes[i].createdAt).format(
-                                        'DD.MM.YYYY HH:mm'
-                                    )}`,
-                                },
-                                {
-                                    name: 'Message',
-                                    value: `\`\`\`${_notes[i].message}\`\`\``,
-                                },
-                            ])
-                        );
-                    }
-
-                    confirmation.update({
-                        embeds: [userInfoEmbed, ...embeds],
-                        components: [],
-                    });
-
-                    break;
-            }
         } catch (e: any) {
             await answer?.edit({
                 components: [],

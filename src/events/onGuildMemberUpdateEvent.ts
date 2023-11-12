@@ -17,7 +17,7 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
                 // Add the VATSIM Member role, once the user has accepted the rules
                 await newUser.roles.add(Config.REGISTERED_ROLE_ID);
 
-                // Ask the homepage whether newUser is registered on the homepage and a member of at least one regional-group.
+                // Ask the homepage whether newUser is registered on the homepage.
                 await userService.checkIsVatger(newUser.id);
             } catch (e: any) {
                 await sendBotLogMessage('Error in Rule-Acceptance', e.message);
