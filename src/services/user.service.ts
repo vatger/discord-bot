@@ -64,7 +64,7 @@ async function checkIsVatger(discordId: string) {
 
     if (!vatgerApiData.is_vatger_fullmember) {
         return false;
-    } else 
+    } 
 
     await userModel.updateOne({
         discordId: _user.discordId,
@@ -74,6 +74,8 @@ async function checkIsVatger(discordId: string) {
             isVatger: true
         }
     });
+
+    console.log(`Added VATGER Role to ${_user.cid}`);
 
     const guildMember = await findGuildMemberByDiscordID(discordId);
     await guildMember?.roles.add(Config.VATGER_MEMBER_ROLE_ID);
