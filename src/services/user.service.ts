@@ -1,8 +1,8 @@
-import {GuildMember, PartialGuildMember, User} from 'discord.js';
-import userModel, {UserDocument} from '../models/user.model';
+import { GuildMember, PartialGuildMember, User } from 'discord.js';
+import userModel, { UserDocument } from '../models/user.model';
 import axios from "axios";
-import {findGuildMemberByDiscordID} from "../utils/findGuildMember";
-import {Config} from "../core/config";
+import { findGuildMemberByDiscordID } from "../utils/findGuildMember";
+import { Config } from "../core/config";
 
 async function getAllUsers() {
     try {
@@ -49,13 +49,22 @@ async function checkIsVatger(discordId: string) {
     if (_user == null || _user.cid == null)
         throw new Error("User with discord ID " + discordId + " is not in the database or the CID is not present");
 
-    const isVatger = (await axios.get("http://hp.vatsim-germany.org/api/account/" + _user.cid + "/isger", {headers: {
-        Authorization: 'Token ' + Config.HP_TOKEN 
-    }})).data as boolean;
+    const vatgerApiData:
+        {
+            is_vatger_member: boolean,
+            is_vatger_fullmember: boolean,
+            atc_rating: number | null,
+            pilot_rating: number | null
+        } =
+        (await axios.get("http://vatsim-germany.org/api/discord/" + _user.cid, {
+            headers: {
+                Authorization: 'Token ' + Config.HP_TOKEN
+            }
+        })).data;
 
-    if (!isVatger) {
+    if (!vatgerApiData.is_vatger_fullmember) {
         return false;
-    }
+    } else 
 
     await userModel.updateOne({
         discordId: _user.discordId,
@@ -69,7 +78,7 @@ async function checkIsVatger(discordId: string) {
     const guildMember = await findGuildMemberByDiscordID(discordId);
     await guildMember?.roles.add(Config.VATGER_MEMBER_ROLE_ID);
 
-    return isVatger;
+    return vatgerApiData.is_vatger_fullmember;
 }
 
 export default {
