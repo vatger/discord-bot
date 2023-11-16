@@ -1,8 +1,8 @@
 import DiscordEvent from '../types/Event';
-import {Events, GuildMember, PartialGuildMember} from 'discord.js';
-import {sendBotLogMessage} from '../utils/sendBotLogMessage';
+import { Events, GuildMember, PartialGuildMember } from 'discord.js';
+import { sendBotLogMessage } from '../utils/sendBotLogMessage';
 import userService from "../services/user.service";
-import {Config} from "../core/config";
+import { Config } from "../core/config";
 import { sendModeratorMessage } from '../utils/sendModeratorMessage';
 import dayjs from 'dayjs';
 
@@ -18,9 +18,11 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
                 await newUser.roles.add(Config.REGISTERED_ROLE_ID);
 
                 // Ask the homepage whether newUser is registered on the homepage.
-                await userService.checkIsVatger(newUser.id);
+                const isVatger = await userService.checkIsVatger(newUser.id);
             } catch (e: any) {
+                console.error(e);
                 await sendBotLogMessage('Error in Rule-Acceptance', e.message);
+
             }
         }
 
@@ -33,7 +35,7 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
                     },
                     {
                         name: 'Timeout until',
-                        value: `${dayjs(newUser.communicationDisabledUntil).format('DD.MM.YYYY HH:mm') }`,
+                        value: `${dayjs(newUser.communicationDisabledUntil).format('DD.MM.YYYY HH:mm')}`,
                     }
                 ]);
             } catch (e: any) {
