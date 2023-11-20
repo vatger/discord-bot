@@ -5,9 +5,10 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-      target: development
+      target: build
       args:
         - NODE_ENV=development
+    command: npm run dev
     ports:
       - '9229:9229/tcp'
     volumes:
@@ -23,3 +24,4 @@ services:
       - MONGO_ENABLE_SSL
       - MONGO_ENABLE_SSL_VALIDATION
       - API_PORT
+      - HP_TOKEN

@@ -4,10 +4,10 @@
     "scripts": {
         "run": "tsc && node ./dist/src/index.js",
         "commands:update": "rimraf ./dist && tsc && node ./dist/scripts/registerCommands.js",
-        "start": "npm run build:prod && node dist/src/index.js",
-        "run:prod": "node -r module-alias/register --inspect=0.0.0.0:9229 dist/src/index.js",
-        "run:dev": "tsc-watch --onSuccess \"npm run run:prod\" --onFailure \"echo WHOOPS! Server compilation failed\"",
-        "build:prod": "rimraf ./dist && tsc"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "paths": "resolve-tspaths --out \"dist\"",
+        "start": "resolve-tspaths --out \"dist\" && node --inspect=0.0.0.0:9229 dist/src/index.js",
+        "dev": "tsc-watch -p ./tsconfig.json --onSuccess \"npm run start\" --onFailure \"echo WHOOPS! Server compilation failed\""
     },
     "dependencies": {
         "@types/cors": "^2.8.13",
@@ -26,5 +26,9 @@
         "node-schedule": "^2.1.1",
         "rimraf": "^5.0.0",
         "typescript": "^5.0.4"
+    },
+    "devDependencies": {
+        "resolve-tspaths": "^0.8.17",
+        "tsc-watch": "^6.0.4"
     }
 }
