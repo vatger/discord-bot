@@ -99,7 +99,6 @@ export default class UserInfoCommand extends SlashCommand {
                 return Config.MANAGEABLE_GROUPS.includes(role.name);
             });
 
-            console.log(4);
             let roleIndex = 0;
             await answer.edit({
                 embeds: [
