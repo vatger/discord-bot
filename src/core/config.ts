@@ -80,8 +80,8 @@ export const Config: EnvConfig = {
 
     HP_TOKEN: process.env.HP_TOKEN ?? '',
 
-    PING_GROUPS: ['EDDH','EDDB','EDDV','EDDL','EDDK','EDDF','EDDS', 'EDDN', 'EDDM', 'CTR EDWW', 'CTR EDGG', 'CTR EDMM', 'Minor EDWW', 'Minor EDGG', 'Minor EDMM', 'ECFMP EDWW', 'ECFMP EDGG', 'ECFMP EDMM'],
-    MANAGEABLE_GROUPS: ['Mentor EDWW','Mentor EDGG','Mentor EDMM','Mentor','NAV EDWW', 'NAV EDGG', 'NAV EDMM', 'NAV', 'Event EDWW', 'Event EDGG', 'Event EDMM', 'Event', 'PTD Trainer', 'PMP Mentor'],
+    PING_GROUPS: ['EDDH', 'EDDB', 'EDDV', 'EDDL', 'EDDK', 'EDDF', 'EDDS', 'EDDN', 'EDDM', 'CTR EDWW', 'CTR EDGG', 'CTR EDMM', 'Minor EDWW', 'Minor EDGG', 'Minor EDMM', 'ECFMP EDWW', 'ECFMP EDGG', 'ECFMP EDMM'],
+    MANAGEABLE_GROUPS: ['Mentor EDWW', 'Mentor EDGG', 'Mentor EDMM', 'Mentor', 'NAV EDWW', 'NAV EDGG', 'NAV EDMM', 'NAV', 'Event EDWW', 'Event EDGG', 'Event EDMM', 'Event', 'PTD Trainer', 'PMP Mentor'],
 
     EVENT_UPDATE: process.env.EVENT_UPDATE == 'true',
     EVENT_UPDATE_CRON: process.env.EVENT_UPDATE_CRON ?? '0 */3 0 0 0',

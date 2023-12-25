@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import manageEvents from '../jobs/manageEvents';
 import { loadConfig } from '../jobs/staffingRequest/util';
 import staffingRequest from '../jobs/staffingRequest/staffingRequest';
+import { manageMemberRoles } from '../jobs/manageMemberRoles';
 
 export default class OnReadyEvent extends DiscordEvent {
     constructor() {
@@ -57,6 +58,10 @@ export default class OnReadyEvent extends DiscordEvent {
         }
 
         setInterval(cleanupChannels.cleanupChannels, 60000 * 60);
+
+        schedule.scheduleJob('0 2 * * *', async () => {
+            await manageMemberRoles();
+        });
 
         if (Config.UPDATE_VATGER_CONNECTIONS) {
             setInterval(vatgerConnections.checkVatgerConnections, 60000);

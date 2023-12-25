@@ -18,7 +18,7 @@ async function checkStaffingAlerts(config: StaffingConfig, alertCooldown: Record
 
             const count = getPilotCountAround(datafeed.pilots, alert.airport, config.max_distance);
             if (count < alert.trafficThreshold) {
-                console.debug(`${count} pilot(s) within ${config.max_distance} of ${alert.airport} - below alert threshold`);
+                //console.debug(`${count} pilot(s) within ${config.max_distance} of ${alert.airport} - below alert threshold`);
                 continue;
             }
             console.debug(`${count} pilot(s) within ${config.max_distance} of ${alert.airport}`);
@@ -31,7 +31,7 @@ async function checkStaffingAlerts(config: StaffingConfig, alertCooldown: Record
                     continue;
                 }
                 isCovered = true;
-                console.debug(`${alert.airport} is covered by ${matching.callsign}`);
+                //console.debug(`${alert.airport} is covered by ${matching.callsign}`);
                 break;
             }
             if (isCovered) {
@@ -39,7 +39,7 @@ async function checkStaffingAlerts(config: StaffingConfig, alertCooldown: Record
             }
 
             // send the alert and update the cooldown data
-            console.debug(`Sending alert for ${alert.airport}`);
+            //console.debug(`Sending alert for ${alert.airport}`);
 
             await sendBotMessageInChannel(`${alert.airport} is looking for controllers!`, `${count} pilot(s) waiting for your ATC service. 📡`, alert.mentionRoles );
 
