@@ -16,12 +16,10 @@ export default class KickCommand extends SlashCommand {
     }
 
     async run(interaction: ChatInputCommandInteraction) {
-        let answer: InteractionResponse<boolean> | undefined = undefined;
-
         try {
-            answer = await interaction.deferReply({ ephemeral: true });
+            await interaction.deferReply({ ephemeral: true });
 
-            await manageMemberRoles()
+            await manageMemberRoles();
 
             await interaction.followUp({
                 embeds: [
