@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import vatgerApiService from '../services/vatgerApiService';
 import vatsimApiService from '../services/vatsimApiService';
 import { getDepartmentRoles } from '../utils/getDepartmentRoles';
+import { DiscordBotClient } from '../core/client';
 
 export default class OnGuildMemberUpdateEvent extends DiscordEvent {
     constructor() {
@@ -17,6 +18,7 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
     async run(oldUser: GuildMember | PartialGuildMember, newUser: GuildMember) {
         if (oldUser.pending && !newUser.pending) {
             try {
+                const guild = DiscordBotClient.guilds.cache.get(Config.GUILD_ID);
                 // Add the VATSIM Member role, once the user has accepted the rules
                 await newUser.roles.add(Config.REGISTERED_ROLE_ID);
 
@@ -31,7 +33,7 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
 
                     if (userCid) {
                         const vatgerApiData = await vatgerApiService.getUserDetailsFromVatger(userCid);
-                        const userRolesToAdd = await getDepartmentRoles(vatgerApiData.teams);
+                        const userRolesToAdd = await getDepartmentRoles(vatgerApiData.teams, guild);
 
                         await newUser.roles.add(userRolesToAdd);
                     }

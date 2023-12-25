@@ -59,7 +59,9 @@ export default class OnReadyEvent extends DiscordEvent {
 
         setInterval(cleanupChannels.cleanupChannels, 60000 * 60);
 
-        setInterval(manageMemberRoles, 15000);
+        schedule.scheduleJob('0 2 * * *', async () => {
+            await manageMemberRoles();
+        });
 
         if (Config.UPDATE_VATGER_CONNECTIONS) {
             setInterval(vatgerConnections.checkVatgerConnections, 60000);

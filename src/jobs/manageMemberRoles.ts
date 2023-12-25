@@ -4,55 +4,8 @@ import userService from "../services/user.service";
 import vatsimApiService from "../services/vatsimApiService";
 import vatgerApiService from "../services/vatgerApiService";
 import { getDepartmentRoles } from '../utils/getDepartmentRoles';
-import { GuildMember, Role, RoleResolvable } from "discord.js";
+import { Guild, GuildMember, Role, RoleResolvable } from "discord.js";
 import { sendBotLogMessage } from "../utils/sendBotLogMessage";
-
-async function removeDepartmentRoles(member: GuildMember, usersDepartmentRoles: RoleResolvable[]) {
-
-    const assignedMemberRoles = member.roles.cache;
-    //console.log('rolesArray', assignedMemberRolesArray);
-
-    let rolesRemoveFromUser: RoleResolvable[] = [];
-
-    for (const role of assignedMemberRoles) {
-        if (Config.MANAGEABLE_GROUPS.some(r => r === role[1].name)) {
-
-            console.log(`Role ${role[1].name} is there`);
-
-            if (!usersDepartmentRoles.some(r => r === role[1].id)) {
-                rolesRemoveFromUser.push(role[1].id);
-            }
-        }
-    }
-
-    console.log('ROles to remove', rolesRemoveFromUser);
-
-    //console.log('add');
-    await member.roles.remove(rolesRemoveFromUser, 'No Department Member anymore.');
-
-    await cleanupDepartmentRoles(member);
-
-
-
-}
-
-async function cleanupDepartmentRoles(member: GuildMember) {
-
-    const assignedMemberRoles = member.roles.cache;
-
-    const assignedMemberRolesArray = Array.from(assignedMemberRoles.values());
-
-    if (assignedMemberRolesArray.filter(x => x.name.includes('EDGG Nav' || 'EDMM Nav' || 'EDWW Nav')).length == 0) {
-        await member.roles.remove('1108078713507151912');
-    }
-    if (assignedMemberRolesArray.filter(x => x.name.includes('EDGG Mentor' || 'EDMM Mentor' || 'EDWW Mentor')).length == 0) {
-        await member.roles.remove('1108078723288268960');
-    }
-    if (assignedMemberRolesArray.filter(x => x.name.includes('EDGG Event' || 'EDMM Event' || 'EDWW Event')).length == 0) {
-        await member.roles.remove('1107703779194834954');
-    }
-}
-
 
 export async function manageMemberRoles() {
     try {
@@ -74,7 +27,7 @@ export async function manageMemberRoles() {
                 if (userCid) {
                     const vatgerApiData = await vatgerApiService.getUserDetailsFromVatger(userCid);
 
-                    const usersDepartmentRoles = await getDepartmentRoles(vatgerApiData.teams);
+                    const usersDepartmentRoles = await getDepartmentRoles(vatgerApiData.teams, guild);
 
 
 
@@ -94,49 +47,58 @@ export async function manageMemberRoles() {
 
                     }
 
+                    
 
-                    let rolesAddToUser: RoleResolvable[] = [];
-                    let rolesRemoveFromUser: RoleResolvable[] = [];
+                        let rolesAddToUser: RoleResolvable[] = [];
+                        let rolesRemoveFromUser: RoleResolvable[] = [];
 
-                    const assignedMemberRoles = member[1].roles.cache;
+                        let assignedMemberRoles = member[1].roles.cache;
 
 
-                    for (const role of usersDepartmentRoles) {
-                        console.log(`Checking role: ${role}`);
+                        for (const role of usersDepartmentRoles) {
 
-                        if (!assignedMemberRoles.some(r => r.id === role)) {
-                            console.log(`Adding role: ${role}`);
-                            rolesAddToUser.push(role);
+                            if (!assignedMemberRoles.some(r => r.id === role)) {
+                                console.log(`Adding role: ${role} to ${member[1].displayName}`);
+                                rolesAddToUser.push(role);
+                            }
                         }
-                    }
 
-                    for (const role of assignedMemberRoles) {
-                        console.log(`Checking role: ${role[1].name}`);
-                        if (Config.MANAGEABLE_GROUPS.some(r => r === role[1].name) && !usersDepartmentRoles.some(r => r === role[1].id)) {
-                            console.log('remove', role[1].name);
+                        await member[1].roles.add(rolesAddToUser, 'New Department Member');
 
-                            rolesRemoveFromUser.push(role[1].id);
+                        for (const role of assignedMemberRoles) {
+                            if ((Config.MANAGEABLE_GROUPS.indexOf(role[1].name) > -1) && (usersDepartmentRoles.indexOf(role[1].id) === -1)) {
+                                console.log(`Removing ${role[1].name} from ${member[1].displayName}`);
+
+                                rolesRemoveFromUser.push(role[1].id);
+                            }
                         }
-                    }
 
 
+                        await member[1].roles.remove(rolesRemoveFromUser, 'No Department Member anymore.');
 
-                    const assignedMemberRolesArray = Array.from(assignedMemberRoles.values());
+                        assignedMemberRoles = member[1].roles.cache;
 
-                    // if (assignedMemberRolesArray.filter(x => x.name.includes('EDGG Nav' || 'EDMM Nav' || 'EDWW Nav')).length == 0) {
-                    //     await member.roles.remove('1108078713507151912');
-                    // }
-                    // if (assignedMemberRolesArray.filter(x => x.name.includes('EDGG Mentor' || 'EDMM Mentor' || 'EDWW Mentor')).length == 0) {
-                    //     await member.roles.remove('1108078723288268960');
-                    // }
-                    // if (assignedMemberRolesArray.filter(x => x.name.includes('EDGG Event' || 'EDMM Event' || 'EDWW Event')).length == 0) {
-                    //     await member.roles.remove('1107703779194834954');
-                    // }
+                        const assignedMemberRolesArray = Array.from(assignedMemberRoles.values());
 
-
-                    await member[1].roles.add(rolesAddToUser, 'New Department Member');
-                    await member[1].roles.remove(rolesRemoveFromUser, 'No Department Member anymore.');
-
+                        if (assignedMemberRolesArray.filter(x => x.name.includes('NAV EDGG' || 'NAV EDMM' || 'NAV EDWW')).length == 0) {
+                            const role = guild?.roles.cache.find(r => r.name === 'NAV')
+                            if (role) {
+                                await member[1].roles.remove(role);
+                            }
+                        }
+                        if (assignedMemberRolesArray.filter(x => x.name.includes('Mentor EDGG' || 'Mentor EDMM' || 'Mentor EDWW')).length == 0) {
+                            const role = guild?.roles.cache.find(r => r.name === 'Mentor')
+                            if (role) {
+                                await member[1].roles.remove(role);
+                            }
+                        }
+                        if (assignedMemberRolesArray.filter(x => x.name.includes('Event EDGG' || 'Event EDMM' || 'Event EDWW')).length == 0) {
+                            const role = guild?.roles.cache.find(r => r.name === 'Event')
+                            if (role) {
+                                await member[1].roles.remove(role); 
+                            }
+                        }
+                    
 
                 }
 
