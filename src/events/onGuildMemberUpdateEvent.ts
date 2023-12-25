@@ -1,10 +1,13 @@
 import DiscordEvent from '../types/Event';
-import { Events, GuildMember, PartialGuildMember } from 'discord.js';
+import { Events, GuildMember, PartialGuildMember, RoleResolvable } from 'discord.js';
 import { sendBotLogMessage } from '../utils/sendBotLogMessage';
 import userService from "../services/user.service";
 import { Config } from "../core/config";
 import { sendModeratorMessage } from '../utils/sendModeratorMessage';
 import dayjs from 'dayjs';
+import vatgerApiService from '../services/vatgerApiService';
+import vatsimApiService from '../services/vatsimApiService';
+import { getDepartmentRoles } from '../utils/getDepartmentRoles';
 
 export default class OnGuildMemberUpdateEvent extends DiscordEvent {
     constructor() {
@@ -19,10 +22,24 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
 
                 // Ask the homepage whether newUser is registered on the homepage.
                 const isVatger = await userService.checkIsVatger(newUser.id);
+
+                if (isVatger) {
+                    await newUser.roles.add(Config.VATGER_MEMBER_ROLE_ID);
+                    console.log(`Added VATGER Role to ${newUser.id}`);
+
+                    const userCid = await vatsimApiService.getCIDFromDiscordID(newUser.id);
+
+                    if (userCid) {
+                        const vatgerApiData = await vatgerApiService.getUserDetailsFromVatger(userCid);
+                        const userRolesToAdd = await getDepartmentRoles(vatgerApiData.teams);
+
+                        await newUser.roles.add(userRolesToAdd);
+                    }
+                    await userService.updateUser(newUser, { isVatger: true })
+                }
             } catch (e: any) {
                 console.error(e);
-                await sendBotLogMessage('Error in Rule-Acceptance', e.message);
-
+                await sendBotLogMessage('Error in Rule-Acceptance Flow', e.message);
             }
         }
 
