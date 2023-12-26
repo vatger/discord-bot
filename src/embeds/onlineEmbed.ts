@@ -1,12 +1,13 @@
 import { EmbedBuilder } from 'discord.js';
 import { DiscordBotClient } from '../core/client';
 import { Config } from '../core/config';
+import * as packageJson from '../../package.json';
 
 export const onlineEmbed = () =>
     new EmbedBuilder()
         .setColor('Green')
         .setTitle('Bot Started')
-        .setDescription(`**Version: ** ${process.env.npm_package_version}`)
+        .setDescription(`**Version: ** ${packageJson.version}`)
         .setTimestamp()
         .setFooter({
             text: Config.BOT_NAME,
