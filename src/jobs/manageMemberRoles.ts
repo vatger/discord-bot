@@ -3,8 +3,6 @@ import { Config } from "../core/config";
 import userService from "../services/user.service";
 import vatsimApiService from "../services/vatsimApiService";
 import vatgerApiService from "../services/vatgerApiService";
-import { getDepartmentRoles } from '../utils/getDepartmentRoles';
-import { Guild, GuildMember, Role, RoleResolvable } from "discord.js";
 import { sendBotLogMessage } from "../utils/sendBotLogMessage";
 
 export async function manageMemberRoles() {
