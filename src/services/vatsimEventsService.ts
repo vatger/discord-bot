@@ -4,10 +4,10 @@ import dayjs from 'dayjs';
 
 async function getAllVatsimEvents(): Promise<VatsimEvent[]> {
     try {
-        const vatsimEvents = await axios.get('https://my.vatsim.net/api/v1/events/all');
+        const vatsimEvents = await axios.get('https://my.vatsim.net/api/v2/events/latest');
         return vatsimEvents.data.data;
     } catch (error) {
-        throw new Error('Error on retrieving VATSIM Events');
+        throw new Error(`Error on retrieving VATSIM Events:  ${error}`);
     }
 }
 
