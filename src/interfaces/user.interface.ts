@@ -1,4 +1,4 @@
-interface User {
+interface IUser {
     discordId: string;
     cid: number;
     isVatger: boolean;
@@ -7,4 +7,4 @@ interface User {
     militaryRating: number;
 }
 
-export default User;
+export default IUser;

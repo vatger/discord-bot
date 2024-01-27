@@ -11,6 +11,7 @@ services:
     command: npm run dev
     ports:
       - '9229:9229/tcp'
+      - '8000:8000/tcp'
     volumes:
       - .:/opt:delegated
     environment:

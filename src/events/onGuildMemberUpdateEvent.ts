@@ -7,7 +7,6 @@ import { sendModeratorMessage } from '../utils/sendModeratorMessage';
 import dayjs from 'dayjs';
 import vatgerApiService from '../services/vatgerApiService';
 import vatsimApiService from '../services/vatsimApiService';
-import { getDepartmentRoles } from '../utils/getDepartmentRoles';
 import { DiscordBotClient } from '../core/client';
 
 export default class OnGuildMemberUpdateEvent extends DiscordEvent {
@@ -28,15 +27,7 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
                 if (isVatger) {
                     await newUser.roles.add(Config.VATGER_MEMBER_ROLE_ID);
                     console.log(`Added VATGER Role to ${newUser.id}`);
-
-                    const userCid = await vatsimApiService.getCIDFromDiscordID(newUser.id);
-
-                    if (userCid) {
-                        const vatgerApiData = await vatgerApiService.getUserDetailsFromVatger(userCid);
-                        const userRolesToAdd = await getDepartmentRoles(vatgerApiData.teams, guild);
-
-                        await newUser.roles.add(userRolesToAdd);
-                    }
+                    
                     await userService.updateUser(newUser, { isVatger: true })
                 }
             } catch (e: any) {

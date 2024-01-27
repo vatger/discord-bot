@@ -71,13 +71,14 @@ async function getUserByDiscordId(discordId: string) {
 
 }
 
-async function getUserByCid(cid: number) {
+async function getUserByCid(cid: number): Promise<UserDocument> {
     try {
         const user: UserDocument | null = await userModel.findOne({ cid: cid });
 
-        if (user) {
-            return user;
+        if (!user) {
+            throw new Error('Pilot not found');
         }
+        return user;
     } catch (error) {
         throw new Error(`Cant get user CID: ${error}`);
     }

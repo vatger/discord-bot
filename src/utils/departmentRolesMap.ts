@@ -11,6 +11,8 @@ map.set('EDMM Nav', '1107561970997149717');
 map.set('EDGG Event', '1107563041509351455');
 map.set('EDWW Event', '1107562913448865884');
 map.set('EDMM Event', '1107563076942827531');
+map.set('PMP Mentor', '1108030536284385330');
+map.set('PTD Trainer', '1107774004758057001');
 
 // Dev Map
 // const map = new Map();
