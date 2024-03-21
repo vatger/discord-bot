@@ -41,7 +41,14 @@ export async function manageMemberRoles() {
 
                 } else {
                     const cid = await vatsimApiService.getCIDFromDiscordID(member[1].id);
-                    await userService.addUser(member[1], cid);
+
+                    if (cid) {
+                        const vatgerApiData = await vatgerApiService.getUserDetailsFromVatger(cid);
+                        
+                        await userService.updateUser(member[1], {cid: cid, isVatger: vatgerApiData.is_vatger_member});
+
+                    }
+
                 }
 
 

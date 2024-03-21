@@ -37,7 +37,7 @@ async function updateUser(user: GuildMember, changes: Partial<UserDocument>) {
 
         const changeOps = getValidUpdateOpsFromNestedObject(changes);
 
-        const userDocument = await userModel.findOneAndUpdate({ discordId: user.id }, { $set: changeOps }, { new: true }).exec();
+        const userDocument = await userModel.findOneAndUpdate({ discordId: user.id }, { $set: changeOps }, { new: true, upsert: true }).exec();
 
         return userDocument
     } catch (error) {
