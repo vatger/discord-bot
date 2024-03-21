@@ -59,7 +59,7 @@ export default class OnReadyEvent extends DiscordEvent {
 
         setInterval(cleanupChannels.cleanupChannels, 60000 * 60);
 
-        schedule.scheduleJob('*/5 * * * *', async () => {
+        schedule.scheduleJob('0 2 * * *', async () => {
             await manageMemberRoles();
         });
 
