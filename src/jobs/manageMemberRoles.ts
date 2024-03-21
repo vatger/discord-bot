@@ -13,15 +13,15 @@ export async function manageMemberRoles() {
 
         const filteredMemberList = discordMembers?.filter(
             e => !e.user.bot
-        );       
+        );
 
         if (filteredMemberList) {
             for (const member of filteredMemberList) {
 
-                const userCid = await vatsimApiService.getCIDFromDiscordID(member[1].id);
+                const user = await userService.getUserByDiscordId(member[1].id);
 
-                if (userCid && !member[1].pending) {
-                    const vatgerApiData = await vatgerApiService.getUserDetailsFromVatger(userCid);                 
+                if (user && !member[1].pending) {
+                    const vatgerApiData = await vatgerApiService.getUserDetailsFromVatger(user?.cid);
 
                     if (vatgerApiData.is_vatger_member && !member[1].roles.cache.some(r => r.id === Config.VATGER_MEMBER_ROLE_ID)) {
 
@@ -37,8 +37,11 @@ export async function manageMemberRoles() {
                         await userService.updateUser(member[1], { isVatger: false });
                         console.log(`Removed VATGER Role to ${member[1].displayName}`);
 
-                    }       
+                    }
 
+                } else {
+                    const cid = await vatsimApiService.getCIDFromDiscordID(member[1].id);
+                    await userService.addUser(member[1], cid);
                 }
 
 

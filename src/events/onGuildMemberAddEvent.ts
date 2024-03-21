@@ -3,6 +3,7 @@ import DiscordEvent from '../types/Event';
 import { Events, GuildMember } from 'discord.js';
 import { sendBotLogMessage } from '../utils/sendBotLogMessage';
 import vatsimApiService from '../services/vatsimApiService';
+import userService from '../services/user.service';
 
 export default class OnGuildMemberAddEvent extends DiscordEvent {
     constructor() {
@@ -15,20 +16,10 @@ export default class OnGuildMemberAddEvent extends DiscordEvent {
         try {
             const cid = await vatsimApiService.getCIDFromDiscordID(user.id);
 
-            const vatsimMemberData = await vatsimApiService.getRatingApi(cid);
+            //const vatsimMemberData = await vatsimApiService.getRatingApi(cid);
 
-            await userModel.findOneAndUpdate(
-                { discordId: user.id },
-                {
-                    $set: {
-                        cid: cid ?? null,
-                        pilotRating: vatsimMemberData?.pilotrating ?? null,
-                        controllerRating: vatsimMemberData?.rating ?? null,
-                        militaryRating: vatsimMemberData?.militaryrating ?? null
-                    },
-                },
-                {upsert: true}
-            );
+            await userService.addUser(user, cid);
+
         } catch (e: any) {
             await sendBotLogMessage(
                 'Failed to add User to Database',

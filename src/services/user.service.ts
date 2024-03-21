@@ -45,7 +45,7 @@ async function updateUser(user: GuildMember, changes: Partial<UserDocument>) {
     }
 }
 
-async function addUser(user: User, cid?: Number): Promise<UserDocument> {
+async function addUser(user: User | GuildMember, cid?: Number): Promise<UserDocument> {
     const _user: UserDocument = new userModel({
         discordId: user.id,
         cid: cid ?? null,
