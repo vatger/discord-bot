@@ -75,8 +75,8 @@ async function updateMember(req: Request, res: Response) {
         const guild = DiscordBotClient.guilds.cache.get(Config.GUILD_ID);
         const cid = req.body.cid;
         const teams: string[] = req.body.teams;
-
-        console.log(`Attempting to update User: ${cid}. Teams: ${teams}...`);
+        
+        console.log(`Homepage Request for User: ${cid}. Teams: ${teams}`);
 
         const user: UserDocument | null = await userService.getUserByCid(cid);
 

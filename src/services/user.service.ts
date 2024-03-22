@@ -76,7 +76,7 @@ async function getUserByCid(cid: number): Promise<UserDocument> {
         const user: UserDocument | null = await userModel.findOne({ cid: cid });
 
         if (!user) {
-            throw new Error('Pilot not found');
+            throw new Error('User not found.');
         }
         return user;
     } catch (error) {
