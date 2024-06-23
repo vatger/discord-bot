@@ -21,10 +21,7 @@ export default class OnGuildMemberAddEvent extends DiscordEvent {
             await userService.addUser(user, cid);
 
         } catch (e: any) {
-            await sendBotLogMessage(
-                'Failed to add User to Database',
-                e.message
-            );
+            console.log(e);
         }
     }
 }
