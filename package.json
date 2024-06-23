@@ -1,6 +1,6 @@
 {
     "name": "discord-bot",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "scripts": {
         "run": "tsc && node ./dist/src/index.js",
         "commands:update": "rimraf ./dist && tsc && node ./dist/scripts/registerCommands.js",

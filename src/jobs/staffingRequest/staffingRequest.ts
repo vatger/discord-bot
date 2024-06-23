@@ -41,11 +41,11 @@ async function checkStaffingAlerts(config: StaffingConfig, alertCooldown: Record
             // send the alert and update the cooldown data
             //console.debug(`Sending alert for ${alert.airport}`);
 
-            await sendBotMessageInChannel(`${alert.airport} is looking for controllers!`, `${count} pilot(s) waiting for your ATC service. 📡`, alert.mentionRoles );
+            await sendBotMessageInChannel(`${alert.airport} is looking for controllers!`, `${count} pilot(s) waiting for your ATC service. 📡`);
 
             alertCooldown[alert.airport] = new Date().getTime() + (config.alert_cooldown * 1000 * 60);
         }
-    } catch (error) {}
+    } catch (error) { }
 }
 
 export default {
