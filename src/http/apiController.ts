@@ -116,7 +116,7 @@ async function updateMember(req: Request, res: Response) {
             }
         }
         if (mentorRole) {
-            if (roleNamesArray.filter(x => ['EDGG Mentor','EDMM Mentor','EDWW Mentor'].includes(x)).length > 0) {
+            if (roleNamesArray.filter(x => ['EDGG Mentor','EDMM Mentor','EDWW Mentor', 'S1 Mentor'].includes(x)).length > 0) {
                 await guildMember?.roles.add(mentorRole);
             } else {
                 await guildMember?.roles.remove(mentorRole);
