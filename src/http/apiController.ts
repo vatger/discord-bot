@@ -75,13 +75,21 @@ async function updateMember(req: Request, res: Response) {
         const guild = DiscordBotClient.guilds.cache.get(Config.GUILD_ID);
         const cid = req.body.cid;
         const teams: string[] = req.body.teams;
+        const vatger_member: boolean = req.body.is_vatger_member;
+        const vatger_fullmember: boolean = req.body.is_vatger_fullmember;
         
         console.log(`Homepage Request for User: ${cid}. Teams: ${teams}`);
 
         const user: UserDocument | null = await userService.getUserByCid(cid);
-
+        
         const guildMember: GuildMember | undefined = await findGuildMemberByDiscordID(user?.discordId);
         let guildMemberRoles = guildMember?.roles.cache;
+
+        if (vatger_fullmember) {
+            await guildMember.roles.add(Config.VATGER_MEMBER_ROLE_ID);
+            console.log(`Added VATGER Role to ${guildMember.id}`);
+            await userService.updateUser(guildMember, { isVatger: true })
+        }
 
         for (const group of Config.MANAGEABLE_GROUPS) {
             if (map.has(group)) {
