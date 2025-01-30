@@ -85,6 +85,10 @@ async function updateMember(req: Request, res: Response) {
         const guildMember: GuildMember | undefined = await findGuildMemberByDiscordID(user?.discordId);
         let guildMemberRoles = guildMember?.roles.cache;
 
+        if (!guildMember) {
+            throw new Error(`Couldn't find guild member by discord id. Discord ID: ${user?.discordId}`);
+        }
+        
         if (vatger_fullmember) {
             await guildMember.roles.add(Config.VATGER_MEMBER_ROLE_ID);
             console.log(`Added VATGER Role to ${guildMember.id}`);
