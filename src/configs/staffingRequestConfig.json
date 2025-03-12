@@ -51,6 +51,12 @@
         "mentionRoles": ["EDDN"]
       },
       {
+        "airport": "EDDP",
+        "trafficThreshold": 6,
+        "coveringPositions": ["EDDP_.*TWR", "EDDP_.*GND", "EDDP_.*APP"],
+        "mentionRoles": ["EDDP"]
+      },
+      {
         "airport": "EDLW",
         "trafficThreshold": 3,
         "coveringPositions": ["EDLW_.*TWR", "EDLW_.*GND", "EDLW_.*APP"],
