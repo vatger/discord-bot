@@ -1,14 +1,8 @@
 import DiscordEvent from '../types/Event';
-import { Events, GuildMember, PartialGuildMember, RoleResolvable } from 'discord.js';
+import { Events, GuildMember, PartialGuildMember } from 'discord.js';
 import { sendBotLogMessage } from '../utils/sendBotLogMessage';
 import userService from "../services/user.service";
 import { Config } from "../core/config";
-import { sendModeratorMessage } from '../utils/sendModeratorMessage';
-import dayjs from 'dayjs';
-import vatgerApiService from '../services/vatgerApiService';
-import vatsimApiService from '../services/vatsimApiService';
-import { DiscordBotClient } from '../core/client';
-
 export default class OnGuildMemberUpdateEvent extends DiscordEvent {
     constructor() {
         super(Events.GuildMemberUpdate);
@@ -17,7 +11,6 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
     async run(oldUser: GuildMember | PartialGuildMember, newUser: GuildMember) {
         if (oldUser.pending && !newUser.pending) {
             try {
-                const guild = DiscordBotClient.guilds.cache.get(Config.GUILD_ID);
                 // Add the VATSIM Member role, once the user has accepted the rules
                 await newUser.roles.add(Config.REGISTERED_ROLE_ID);
 
@@ -33,23 +26,6 @@ export default class OnGuildMemberUpdateEvent extends DiscordEvent {
             } catch (e: any) {
                 console.error(e);
                 await sendBotLogMessage('Error in Rule-Acceptance Flow', e.message);
-            }
-        }
-
-        if (!oldUser.isCommunicationDisabled() && newUser.isCommunicationDisabled()) {
-            try {
-                await sendModeratorMessage('User Timeouted', [
-                    {
-                        name: 'User',
-                        value: `<@${newUser.id}>`,
-                    },
-                    {
-                        name: 'Timeout until',
-                        value: `${dayjs(newUser.communicationDisabledUntil).format('DD.MM.YYYY HH:mm')}`,
-                    }
-                ]);
-            } catch (e: any) {
-                await sendBotLogMessage('Error in Timeout Message', e.message);
             }
         }
     }

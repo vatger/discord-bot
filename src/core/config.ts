@@ -86,6 +86,6 @@ export const Config: EnvConfig = {
     EVENT_UPDATE: process.env.EVENT_UPDATE == 'true',
     EVENT_UPDATE_CRON: process.env.EVENT_UPDATE_CRON ?? '0 */3 0 0 0',
 
-    STAFFING_REQUEST: process.env.STAFFING_REQUEST === 'true' ?? false,
+    STAFFING_REQUEST: process.env.STAFFING_REQUEST === 'true',
     STAFFING_REQUEST_CHANNEL_ID: process.env.STAFFING_REQUEST_CHANNEL_ID ?? ''
 };

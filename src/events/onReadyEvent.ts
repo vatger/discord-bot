@@ -2,12 +2,9 @@ import DiscordEvent from '../types/Event';
 import { Client, Events, TextChannel } from 'discord.js';
 import { Config } from '../core/config';
 import { rulesEmbeds } from '../embeds/ruleEmbed';
-import vatgerConnections from '../jobs/vatgerConnections';
 import { registrationHelpEmbed } from '../embeds/registrationHelpEmbed';
 import cleanupChannels from '../jobs/cleanupChannels';
-import vatsimEventsService from '../services/vatsimEventsService';
 import schedule from 'node-schedule';
-import dayjs from 'dayjs';
 import manageEvents from '../jobs/manageEvents';
 import { loadConfig } from '../jobs/staffingRequest/util';
 import staffingRequest from '../jobs/staffingRequest/staffingRequest';
@@ -62,10 +59,6 @@ export default class OnReadyEvent extends DiscordEvent {
         schedule.scheduleJob('0 2 * * *', async () => {
             await manageMemberRoles();
         });
-
-        if (Config.UPDATE_VATGER_CONNECTIONS) {
-            setInterval(vatgerConnections.checkVatgerConnections, 60000);
-        }
 
         if (Config.EVENT_UPDATE) {
             await manageEvents.manageEvents();

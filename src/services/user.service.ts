@@ -1,10 +1,8 @@
-import { GuildMember, PartialGuildMember, User, Utils } from 'discord.js';
+import { GuildMember } from 'discord.js';
 import userModel, { UserDocument } from '../models/user.model';
-import axios from "axios";
-import { findGuildMemberByDiscordID } from "../utils/findGuildMember";
-import { Config } from "../core/config";
 import { getValidUpdateOpsFromNestedObject } from '../utils/nestedObjects';
 import vatgerApiService from './vatgerApiService';
+import vatsimApiService from './vatsimApiService';
 
 async function getAllUsers() {
     try {
@@ -15,24 +13,25 @@ async function getAllUsers() {
     }
 }
 
-async function updateCid(
-    user: GuildMember | PartialGuildMember,
-    cid: number
-): Promise<void> {
-    await userModel.findOneAndUpdate(
-        { discordId: user.id },
-        {
-            $set: {
-                cid: cid,
-            },
+async function upsertUser(user: GuildMember): Promise<UserDocument> {
+    const id = await vatsimApiService.getCIDFromDiscordID(user.id);
+
+    const _user = await userModel.findOneAndUpdate({
+        id: user.id,
+      }, {
+        $set: {
+            discordId: id,
         },
-        { upsert: true }
-    );
+      }, {
+        new: true,
+        upsert: true,
+      });
+
+      return _user;
 }
 
 async function updateUser(user: GuildMember, changes: Partial<UserDocument>) {
     try {
-        console.log('run update user');
         const _user = await getUserByDiscordId(user.id);
 
         const changeOps = getValidUpdateOpsFromNestedObject(changes);
@@ -43,19 +42,6 @@ async function updateUser(user: GuildMember, changes: Partial<UserDocument>) {
     } catch (error) {
         throw new Error(`Could not update user: ${error}`);
     }
-}
-
-async function addUser(user: User | GuildMember, cid?: Number): Promise<UserDocument> {
-    const _user: UserDocument = new userModel({
-        discordId: user.id,
-        cid: cid ?? null,
-    });
-    try {
-        await _user.save();
-    } catch (error) {
-        throw error;
-    }
-    return _user;
 }
 
 async function getUserByDiscordId(discordId: string) {
@@ -87,13 +73,10 @@ async function getUserByCid(cid: number): Promise<UserDocument> {
 
 async function checkIsVatger(discordId: string) {
     try {
-        console.info('Check is Vatger');
 
         const _user = await userModel.findOne({
             discordId: discordId
         });
-
-        //console.log('user is' , _user);
 
         if (_user) {
 
@@ -105,14 +88,13 @@ async function checkIsVatger(discordId: string) {
         }
 
     } catch (error) {
-        throw new Error(`Could not determine check is VATGER`);
+        throw new Error(`Could not determine check is VATGER for ${discordId}`);
     }
 }
 
 export default {
     getAllUsers,
-    addUser,
-    updateCid,
+    upsertUser,
     checkIsVatger,
     getUserByCid,
     getUserByDiscordId,
