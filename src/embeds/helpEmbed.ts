@@ -18,12 +18,6 @@ export const helpEmbed = () =>
                 value: 'Retrieve ATIS for a specific Aerodrome.',
             },
         ])
-        .addFields([
-            {
-                name: '`/roleselection`',
-                value: 'Select roles to get notifications for.',
-            },
-        ])
         .setTimestamp()
         .setFooter({
             text: Config.BOT_NAME,

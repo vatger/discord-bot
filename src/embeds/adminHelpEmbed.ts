@@ -8,12 +8,6 @@ export const adminHelpEmbed = () =>
         .setTitle('Here is a List of all available admin commands')
         .addFields([
             {
-                name: '`/userinfo (user)`',
-                value: 'Get infos for the seleceted user.',
-            },
-        ])
-        .addFields([
-            {
                 name: '`/purge (number)`',
                 value: 'Deletes the last n messages in this channel.',
             },

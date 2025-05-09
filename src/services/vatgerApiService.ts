@@ -9,6 +9,9 @@ async function getUserDetailsFromVatger(cid: number): Promise<{
     teams: string[]
 }> {
     try {
+        if (!cid) {
+            throw new Error('No CID provided.')
+        }
         const vatgerApiData =
             (await axios.get("http://vatsim-germany.org/api/discord/" + cid, {
                 headers: {

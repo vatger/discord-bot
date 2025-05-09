@@ -12,6 +12,4 @@ httpClient.use(
 );
 httpClient.use(bodyParser.json());
 
-httpClient.post('/member/join', apiController.handleMemberJoin);
-httpClient.post('/member/leave', apiController.handleMemberLeave);
 httpClient.post('/member/update', apiController.updateMember);

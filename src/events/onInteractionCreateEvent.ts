@@ -45,5 +45,19 @@ export default class OnInteractionCreateEvent extends DiscordEvent {
             await CommandList.get(name)?.run(<ButtonInteraction>interaction);
             return;
         }
+
+        if (interaction.isUserContextMenuCommand()) {
+            const name: string = interaction.commandName;
+            console.log('Running User Context Menu Interaction: ', name);
+            await CommandList.get(name)?.run(<CommandInteraction>interaction);
+            return;
+        }
+        
+        if (interaction.isMessageContextMenuCommand()) {    
+            const name: string = interaction.commandName;
+            console.log('Running Message Context Menu Interaction: ', name);
+            await CommandList.get(name)?.run(<CommandInteraction>interaction);
+            return;
+        }
     }
 }
