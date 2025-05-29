@@ -2,13 +2,13 @@ import axios from "axios";
 import { Config } from "../core/config";
 import { VatgerUserData, VatgerUserUpdateData } from "../interfaces/vatgerApi.interface";
 
-async function getUserDetailsFromVatger(cid: number): Promise<VatgerUserData> {
+async function getUserDetailsFromVatger(discord_id: string): Promise<VatgerUserData> {
     try {
-        if (!cid) {
+        if (!discord_id) {
             throw new Error('No CID provided.')
         }
         const vatgerApiData =
-            (await axios.get("http://vatsim-germany.org/api/discord/" + cid, {
+            (await axios.get("http://vatsim-germany.org/api/discord/user" + discord_id, {
                 headers: {
                     Authorization: 'Token ' + Config.HP_TOKEN
                 }
@@ -21,10 +21,10 @@ async function getUserDetailsFromVatger(cid: number): Promise<VatgerUserData> {
     }
 }
 
-async function updateVatgerUser(data: VatgerUserUpdateData): Promise<VatgerUserData> {
+async function updateVatgerUser(discord_id: string): Promise<VatgerUserData> {
     try {
         const vatgerUserData =
-            (await axios.put("http://vatsim-germany.org/api/discord/", data, {
+            (await axios.post("http://vatsim-germany.org/api/discord/user", {discord_id: discord_id}, {
                 headers: {
                     Authorization: 'Token ' + Config.HP_TOKEN
                 }

@@ -1,9 +1,7 @@
 import { Collection, GuildMember, Role, StringSelectMenuInteraction, User } from "discord.js";
 import { DiscordBotClient } from "../core/client";
 import { Config } from "../core/config";
-import vatsimApiService from "./vatsimApiService";
 import vatgerApiService from "./vatgerApiService";
-import { findGuildMemberByDiscordID } from "../utils/findGuildMember";
 import map from "../utils/departmentRolesMap";
 
 /**
@@ -58,17 +56,15 @@ async function _removeUserRoles(
 
 async function manageUserRoles(user: GuildMember) {
         const guild = DiscordBotClient.guilds.cache.get(Config.GUILD_ID);
-        const cid: number | undefined = await vatsimApiService.getCIDFromDiscordID(user.id);
-
-        if (!cid) {
-            throw new Error('Failed to get CID for User ' + user.nickname)
+        
+        const vatgerUserData = await vatgerApiService.getUserDetailsFromVatger(user.id);
+        if (!vatgerUserData) {
+            console.error(`No Vatger User Data found for user: ${user.id}`);
+            return;
         }
-        const vatgerUserData = await vatgerApiService.getUserDetailsFromVatger(cid);
         
         const teams: string[] = vatgerUserData.teams;
         const vatger_fullmember: boolean = vatgerUserData.is_vatger_fullmember;
-        
-        console.log(`Homepage Request for User: ${cid}. Teams: ${teams}`);
         
         
         //const guildMember: GuildMember | undefined = await findGuildMemberByDiscordID(user.id);
@@ -103,7 +99,8 @@ async function manageUserRoles(user: GuildMember) {
         
         const navRole = guildRoles?.filter(r => r.name === 'Nav');
         const mentorRole = guildRoles?.filter(r => r.name === 'Mentor');
-        const eventRole = guildRoles?.filter(r => r.name === 'Event');      
+        const eventRole = guildRoles?.filter(r => r.name === 'Event');
+        const staffRole = guildRoles?.filter(r => r.name === 'VATGER Staff');         
         
         if (navRole) {
             if (roleNamesArray.filter(x => ['EDGG Nav','EDMM Nav','EDWW Nav'].includes(x)).length > 0) {
@@ -124,6 +121,13 @@ async function manageUserRoles(user: GuildMember) {
                 await user.roles.add(eventRole)
             } else {
                 await user.roles.remove(eventRole)
+            }
+        }
+        if (staffRole) {
+            if (roleNamesArray.filter(x => ['EDGG Leitung','EDMM Leitung','EDWW Leitung','Tech Leitung','VATGER Leitung','NAV Leitung','PTD Leitung','PR & Event Leitung','ATD Leitung'].includes(x)).length > 0) {
+                await user.roles.add(staffRole)
+            } else {
+                await user.roles.remove(staffRole)
             }
         }
         
