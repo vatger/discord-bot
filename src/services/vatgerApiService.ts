@@ -8,7 +8,7 @@ async function getUserDetailsFromVatger(discord_id: string): Promise<VatgerUserD
             throw new Error('No CID provided.')
         }
         const vatgerApiData =
-            (await axios.get("http://vatsim-germany.org/api/discord/user" + discord_id, {
+            (await axios.get("http://vatsim-germany.org/api/discord/user/" + discord_id, {
                 headers: {
                     Authorization: 'Token ' + Config.HP_TOKEN
                 }
