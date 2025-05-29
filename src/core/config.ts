@@ -8,10 +8,6 @@ type EnvConfig = {
     AVWX_TOKEN: string;
     VATSIM_DATAFEED_URL: string;
 
-    MONGO_URI: string;
-    MONGO_ENABLE_SSL: boolean;
-    MONGO_ENABLE_SSL_VALIDATION: boolean;
-
     CLIENT_ID: string;
     GUILD_ID: string;
 
@@ -51,11 +47,6 @@ export const Config: EnvConfig = {
         process.env.VATSIM_DATAFEED_URL ??
         'http://data.vatsim.net/v3/vatsim-data.json',
 
-    MONGO_URI: process.env.MONGO_URI ?? '',
-    MONGO_ENABLE_SSL: process.env.MONGO_ENABLE_SSL == 'true',
-    MONGO_ENABLE_SSL_VALIDATION:
-        process.env.MONGO_ENABLE_SSL_VALIDATION == 'true',
-
     CLIENT_ID: process.env.CLIENT_ID ?? '',
     GUILD_ID: process.env.GUILD_ID ?? '',
 
@@ -86,6 +77,6 @@ export const Config: EnvConfig = {
     EVENT_UPDATE: process.env.EVENT_UPDATE == 'true',
     EVENT_UPDATE_CRON: process.env.EVENT_UPDATE_CRON ?? '0 */3 0 0 0',
 
-    STAFFING_REQUEST: process.env.STAFFING_REQUEST === 'true' ?? false,
+    STAFFING_REQUEST: process.env.STAFFING_REQUEST === 'true',
     STAFFING_REQUEST_CHANNEL_ID: process.env.STAFFING_REQUEST_CHANNEL_ID ?? ''
 };
