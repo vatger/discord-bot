@@ -55,6 +55,8 @@ async function _removeUserRoles(
 }
 
 async function manageUserRoles(user: GuildMember) {
+    try {
+    
         const guild = DiscordBotClient.guilds.cache.get(Config.GUILD_ID);
         
         const vatgerUserData = await vatgerApiService.getUserDetailsFromVatger(user.id);
@@ -131,7 +133,12 @@ async function manageUserRoles(user: GuildMember) {
             }
         }
         
+    } catch (error) {
+        console.error(`Error managing user roles for ${user.id}:`, error);
+        return;
+        
     }
+}
     
 
  export default {

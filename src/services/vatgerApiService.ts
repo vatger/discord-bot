@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Config } from "../core/config";
-import { VatgerUserData, VatgerUserUpdateData } from "../interfaces/vatgerApi.interface";
+import { VatgerUserData } from "../interfaces/vatgerApi.interface";
 
 async function getUserDetailsFromVatger(discord_id: string): Promise<VatgerUserData> {
     try {
