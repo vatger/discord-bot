@@ -124,7 +124,7 @@ async function manageUserRoles(user: GuildMember) {
             }
         }
         if (staffRole) {
-            if (roleNamesArray.filter(x => ['EDGG Leitung','EDMM Leitung','EDWW Leitung','Tech Leitung','VATGER Leitung','NAV Leitung','PTD Leitung','PR & Event Leitung','ATD Leitung'].includes(x)).length > 0) {
+            if (roleNamesArray.filter(x => ['EDGG Leitung','EDMM Leitung','EDWW Leitung','Tech Leitung','VATGER Leitung','NAV Leitung','PTD Leitung','PR & Event Leitung','ATD Leitung', 'Pilotenvertretung'].includes(x)).length > 0) {
                 await user.roles.add(staffRole)
             } else {
                 await user.roles.remove(staffRole)
