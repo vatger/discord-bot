@@ -1,6 +1,6 @@
 import { GuildMember, Role } from "discord.js";
 import { Config } from "../core/config";
-import vatgerApiService from "./vatgerApiService";
+import {getHomepageUser} from "./vatgerApiService";
 import { getAllDiscordRolesForHp, getDiscordRolesForHpName } from '../utils/rolesMapping';
 
 /**
@@ -49,7 +49,7 @@ export async function syncUserRoles(member: GuildMember, vatgerTeams: string[]) 
 }
 
 async function manageUserRoles(user: GuildMember) {
-        const vatgerUserData = await vatgerApiService.updateVatgerUser(user.id);
+        const vatgerUserData = await getHomepageUser(user.id);
         if (!vatgerUserData) {
             console.error(`No Vatger User Data found for user: ${user.id}`);
             return;
