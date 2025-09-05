@@ -1,7 +1,6 @@
-import vatgerApiService from '../services/vatgerApiService';
+import {pushDiscordUser} from '../services/vatgerApiService';
 import DiscordEvent from '../types/Event';
 import { Events, GuildMember } from 'discord.js';
-import { sleep } from '../utils/sleep';
 
 export default class OnGuildMemberAddEvent extends DiscordEvent {
     constructor() {
@@ -9,7 +8,6 @@ export default class OnGuildMemberAddEvent extends DiscordEvent {
     }
 
     async run(user: GuildMember) {
-        await vatgerApiService.pushDiscordUser(user.id);
-        await sleep(5000);
+        await pushDiscordUser(user.id);
     }
 }
