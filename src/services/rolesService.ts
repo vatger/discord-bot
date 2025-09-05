@@ -49,7 +49,7 @@ export async function syncUserRoles(member: GuildMember, vatgerTeams: string[]) 
 }
 
 async function manageUserRoles(user: GuildMember) {
-        const vatgerUserData = await vatgerApiService.getUserDetailsFromVatger(user.id);
+        const vatgerUserData = await vatgerApiService.updateVatgerUser(user.id);
         if (!vatgerUserData) {
             console.error(`No Vatger User Data found for user: ${user.id}`);
             return;
