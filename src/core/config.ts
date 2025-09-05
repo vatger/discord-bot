@@ -30,7 +30,6 @@ type EnvConfig = {
     HP_TOKEN: string;
 
     PING_GROUPS: string[];
-    MANAGEABLE_GROUPS: string[];
 
     EVENT_UPDATE: boolean;
     EVENT_UPDATE_CRON: string;
@@ -72,7 +71,6 @@ export const Config: EnvConfig = {
     HP_TOKEN: process.env.HP_TOKEN ?? '',
 
     PING_GROUPS: ['EDDH', 'EDDB', 'EDDV', 'EDDL', 'EDDK', 'EDDF', 'EDDS', 'EDDP', 'EDDN', 'EDDM', 'CTR EDWW', 'CTR EDGG', 'CTR EDMM', 'Minor EDWW', 'Minor EDGG', 'Minor EDMM', 'ECFMP EDWW', 'ECFMP EDGG', 'ECFMP EDMM'],
-    MANAGEABLE_GROUPS: ['EDWW Mentor', 'EDGG Mentor', 'EDMM Mentor', 'S1 Mentor', 'Mentor', 'EDWW Nav', 'EDGG Nav', 'EDMM Nav', 'NAV', 'EDWW Event', 'EDGG Event', 'EDMM Event', 'Event', 'PTD Trainer', 'PMP Mentor'],
 
     EVENT_UPDATE: process.env.EVENT_UPDATE == 'true',
     EVENT_UPDATE_CRON: process.env.EVENT_UPDATE_CRON ?? '0 */3 0 0 0',
