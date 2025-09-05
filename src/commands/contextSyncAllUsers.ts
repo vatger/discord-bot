@@ -2,13 +2,13 @@ import { ApplicationCommandType, ContextMenuCommandBuilder, ContextMenuCommandIn
 import SlashCommand from '../types/Command';
 import { Config } from '../core/config';
 import { DiscordBotClient } from '../core/client';
-import vatgerApiService from '../services/vatgerApiService';
+import { pushDiscordUser } from '../services/vatgerApiService';
 import { successEmbed } from '../embeds/default/successEmbed';
 import { dangerEmbed } from '../embeds/default/dangerEmbed';
 
 export default class ContextSyncAllUsers extends SlashCommand {
     constructor() {
-        super('Sync all users with Homepage');
+        super('Push all users to Homepage');
     }
 
     async run(interaction: ContextMenuCommandInteraction) {
@@ -31,21 +31,18 @@ export default class ContextSyncAllUsers extends SlashCommand {
 
             let memberCount = 0;
             for (const member of filteredMemberList) {
-                console.log(`Syncing member ${member[1].user.username}`);
-                
-                await vatgerApiService.updateVatgerUser(member[1].user.id)
-               
-
+                console.log(`Pushing member ${member[1].user.username}`);
+                await pushDiscordUser(member[1].user.id)
                 memberCount++;
             }
             await interaction.followUp({
-                embeds: [successEmbed('Sync done', null, `Synced ${memberCount} users with VATGER.`)],
+                embeds: [successEmbed('Push done', null, `Pushed ${memberCount} users to VATGER.`)],
                 ephemeral: true,
             });
 
         } catch (e: any) {
             await interaction.followUp({
-                embeds: [dangerEmbed('Sync failed', e.message)],
+                embeds: [dangerEmbed('Push failed', e.message)],
                 ephemeral: true,
             });
             return;

@@ -11,7 +11,7 @@ export default class ContextSyncUser extends SlashCommand {
         try {
             if (!interaction.isUserContextMenuCommand()) return;
             
-            const user = await interaction.guild?.members.cache.get(interaction.targetUser.id)
+            const user = interaction.guild?.members.cache.get(interaction.targetUser.id)
 
             if (!user) {
                 await interaction.reply({
