@@ -32,7 +32,3 @@ jobs:
         run: |
           docker build --pull -t ${{ env.REGISTRY }}/vatger/discord-bot:dev .
           docker push ${{ env.REGISTRY }}/vatger/discord-bot:dev
-
-      - name: Redeploy Container (Portainer)
-        run: |
-          curl -X POST "${{ secrets.PORTAINER_REDEPLOY_URI}}"
