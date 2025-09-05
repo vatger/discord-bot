@@ -1,7 +1,7 @@
 import { Role } from 'discord.js';
-import * as fs from 'fs';
 import { DiscordBotClient } from '../core/client';
 import { Config } from '../core/config';
+import file from '../configs/roleMappings.json';
 
 
 export function findDiscordRole(roleQuery: string): Role | null {
@@ -18,9 +18,16 @@ interface RoleMapping {
     discord_names: string[];
 }
 
+function loadConfig(): RoleMapping[] {
+    try {
+        return file as RoleMapping[];
+    } catch (error) {
+        throw new Error(`Error on loading config: ${error}`)
+    }
+}
+
 export function getDiscordRolesForHpName(hpName: string): Role[] {
-    const raw = fs.readFileSync("../configs/roleMappings.json", "utf-8");
-    const data: RoleMapping[] = JSON.parse(raw);
+    const data: RoleMapping[] = loadConfig();
     const entry = data.find(
         (e) => e.hp_name.toLowerCase() === hpName.toLowerCase()
     );
@@ -28,9 +35,7 @@ export function getDiscordRolesForHpName(hpName: string): Role[] {
 }
 
 export function getAllDiscordRolesForHp(): Role[] {
-    const raw = fs.readFileSync("../configs/roleMappings.json", "utf-8");
-    const data: RoleMapping[] = JSON.parse(raw);
-
+    const data: RoleMapping[] = loadConfig();
     const allRoles: Role[] = data.flatMap(entry =>
         entry.discord_names
             .map(findDiscordRole)
