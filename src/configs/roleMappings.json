@@ -1,72 +1,122 @@
 [
   {
     "hp_name": "Tech Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "Tech Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "Tech Leitung" ]
   },
   {
     "hp_name": "EDWW Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "EDWW Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "EDWW Leitung" ]
   },
   {
     "hp_name": "EDGG Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "EDGG Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "EDGG Leitung" ]
   },
   {
     "hp_name": "EDMM Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "EDMM Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "EDMM Leitung" ]
   },
   {
     "hp_name": "VATGER Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "VATGER Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "VATGER Leitung"]
   },
   {
     "hp_name": "ATD Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "ATD Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "ATD Leitung" ]
   },
   {
     "hp_name": "PTD Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "PTD Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "PTD Leitung" ]
   },
   {
     "hp_name": "NAV Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "NAV Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "NAV Leitung" ]
   },
   {
     "hp_name": "Event Leitung",
-    "discord_names": [
-      "VATGER Staff",
-      "Event Leitung"
-    ]
+    "discord_names": [ "VATGER Staff", "Event Leitung" ]
   },
   {
     "hp_name": "Pilotenvertretung",
-    "discord_names": [
-      "VATGER Staff",
-      "Pilotenvertretung"
-    ]
+    "discord_names": [ "VATGER Staff", "Pilotenvertretung" ]
+  },
+  {
+    "hp_name": "ATD Pruefer",
+    "discord_names": [ "Mentor" ]
+  },
+  {
+    "hp_name": "EDWW Mentor",
+    "discord_names": [ "Mentor", "EDWW Mentor" ]
+  },
+  {
+    "hp_name": "EDGG Mentor",
+    "discord_names": [ "Mentor", "EDGG Mentor" ]
+  },
+  {
+    "hp_name": "EDMM Mentor",
+    "discord_names": [ "Mentor", "EDMM Mentor" ]
+  },
+  {
+    "hp_name": "PTD Trainer",
+    "discord_names": [ "PTD Trainer"]
+  },
+  {
+    "hp_name": "EDWW Nav",
+    "discord_names": [ "Nav", "EDWW Nav" ]
+  },
+  {
+    "hp_name": "EDGG Nav",
+    "discord_names": [ "Nav", "EDGG Nav" ]
+  },
+  {
+    "hp_name": "EDMM Nav",
+    "discord_names": [ "Nav", "EDMM Nav" ]
+  },
+  {
+    "hp_name": "EDWW Event",
+    "discord_names": [ "Event", "EDWW Event" ]
+  },
+  {
+    "hp_name": "EDGG Event",
+    "discord_names": [ "Event", "EDGG Event" ]
+  },
+  {
+    "hp_name": "EDMM Event",
+    "discord_names": [ "Event", "EDMM Event" ]
+  },
+  {
+    "hp_name": "PMP Mentor",
+    "discord_names": [ "PMP Mentor" ]
+  },
+  {
+    "hp_name": "Schiedsstelle",
+    "discord_names": [ "Schiedsstelle" ]
+  },
+  {
+    "hp_name": "Chief of Section",
+    "discord_names": [ ]
+  },
+  {
+    "hp_name": "Event FIR Leiter",
+    "discord_names": [ ]
+  },
+  {
+    "hp_name": "Tech Team",
+    "discord_names": [ "Tech Team" ]
+  },
+  {
+    "hp_name": "S1 Mentor",
+    "discord_names": [ "Mentor", "S1 Mentor" ]
+  },
+  {
+    "hp_name": "EDXX Event",
+    "discord_names": [ "Event" ]
+  },
+  {
+    "hp_name": "Tourensystem",
+    "discord_names": [ ]
+  },
+  {
+    "hp_name": "EDXX Nav",
+    "discord_names": [ "Nav" ]
   }
 ]
