@@ -60,10 +60,7 @@ export const vcEmbed = new EmbedBuilder().setColor('Green').addFields([
 export const botEmbed = new EmbedBuilder().setColor('Green').addFields([
     {
         name: `🤖**Bot Commands**`,
-        value:
-            'If you want to know what bot commands are available to you, simply type ' +
-            '`/help`' +
-            ' in any channel.',
+        value: 'If you want to know what bot commands are available to you, simply type ' + '`/help`' + ' in any channel.',
     },
 ]);
 
@@ -88,11 +85,4 @@ export const ticketEmbed = new EmbedBuilder()
         iconURL: DiscordBotClient.user?.displayAvatarURL({ forceStatic: true }),
     });
 
-export const rulesEmbeds = [
-    welcomeEmbed,
-    ruleEmbed,
-    additionalEmbed,
-    vcEmbed,
-    botEmbed,
-    ticketEmbed,
-];
+export const rulesEmbeds = [welcomeEmbed, ruleEmbed, additionalEmbed, vcEmbed, botEmbed, ticketEmbed];

@@ -42,9 +42,7 @@ export const Config: EnvConfig = {
     BOT_NAME: process.env.BOT_NAME ?? 'VATSIM Germany',
     BOT_TOKEN: process.env.BOT_TOKEN ?? '',
     AVWX_TOKEN: process.env.AVWX_TOKEN ?? '',
-    VATSIM_DATAFEED_URL:
-        process.env.VATSIM_DATAFEED_URL ??
-        'http://data.vatsim.net/v3/vatsim-data.json',
+    VATSIM_DATAFEED_URL: process.env.VATSIM_DATAFEED_URL ?? 'http://data.vatsim.net/v3/vatsim-data.json',
 
     CLIENT_ID: process.env.CLIENT_ID ?? '',
     GUILD_ID: process.env.GUILD_ID ?? '',
@@ -63,18 +61,35 @@ export const Config: EnvConfig = {
 
     CLEANUP_CHANNEL_IDS: process.env.CLEANUP_CHANNEL_IDS ?? '',
 
-    API_PORT:
-        Number(process.env.API_PORT) == Number.NaN
-            ? 8000
-            : Number(process.env.API_PORT),
+    API_PORT: Number(process.env.API_PORT) == Number.NaN ? 8000 : Number(process.env.API_PORT),
 
     HP_TOKEN: process.env.HP_TOKEN ?? '',
 
-    PING_GROUPS: ['EDDH', 'EDDB', 'EDDV', 'EDDL', 'EDDK', 'EDDF', 'EDDS', 'EDDP', 'EDDN', 'EDDM', 'CTR EDWW', 'CTR EDGG', 'CTR EDMM', 'Minor EDWW', 'Minor EDGG', 'Minor EDMM', 'ECFMP EDWW', 'ECFMP EDGG', 'ECFMP EDMM'],
+    PING_GROUPS: [
+        'EDDH',
+        'EDDB',
+        'EDDV',
+        'EDDL',
+        'EDDK',
+        'EDDF',
+        'EDDS',
+        'EDDP',
+        'EDDN',
+        'EDDM',
+        'CTR EDWW',
+        'CTR EDGG',
+        'CTR EDMM',
+        'Minor EDWW',
+        'Minor EDGG',
+        'Minor EDMM',
+        'ECFMP EDWW',
+        'ECFMP EDGG',
+        'ECFMP EDMM',
+    ],
 
     EVENT_UPDATE: process.env.EVENT_UPDATE == 'true',
     EVENT_UPDATE_CRON: process.env.EVENT_UPDATE_CRON ?? '0 */3 0 0 0',
 
     STAFFING_REQUEST: process.env.STAFFING_REQUEST === 'true',
-    STAFFING_REQUEST_CHANNEL_ID: process.env.STAFFING_REQUEST_CHANNEL_ID ?? ''
+    STAFFING_REQUEST_CHANNEL_ID: process.env.STAFFING_REQUEST_CHANNEL_ID ?? '',
 };

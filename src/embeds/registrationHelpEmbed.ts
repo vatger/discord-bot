@@ -12,5 +12,4 @@ export const registrationHelpEmbed = new EmbedBuilder()
             name: '**How to get the VATGER-Member role?**',
             value: `If there was an error in assigning the role or you joined VATSIM Germany at a later time, just use the \`/register\` command to apply for the role again.`,
         },
-        
     ]);

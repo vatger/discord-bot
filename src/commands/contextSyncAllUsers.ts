@@ -14,7 +14,7 @@ export default class ContextSyncAllUsers extends SlashCommand {
     async run(interaction: ContextMenuCommandInteraction) {
         try {
             if (!interaction.isUserContextMenuCommand()) return;
-            
+
             await interaction.deferReply({ ephemeral: true });
 
             const guild = DiscordBotClient.guilds.cache.get(Config.GUILD_ID);
@@ -25,21 +25,18 @@ export default class ContextSyncAllUsers extends SlashCommand {
                 throw new Error('Failed to fetch members from Discord');
             }
 
-            const filteredMemberList = discordMembersList.filter(
-                e => !e.user.bot
-            );
+            const filteredMemberList = discordMembersList.filter(e => !e.user.bot);
 
             let memberCount = 0;
             for (const member of filteredMemberList) {
                 console.log(`Pushing member ${member[1].user.username}`);
-                await pushDiscordUser(member[1].user.id)
+                await pushDiscordUser(member[1].user.id);
                 memberCount++;
             }
             await interaction.followUp({
                 embeds: [successEmbed('Push done', null, `Pushed ${memberCount} users to VATGER.`)],
                 ephemeral: true,
             });
-
         } catch (e: any) {
             await interaction.followUp({
                 embeds: [dangerEmbed('Push failed', e.message)],
@@ -47,14 +44,9 @@ export default class ContextSyncAllUsers extends SlashCommand {
             });
             return;
         }
-
     }
 
-
     build(): any {
-        return new ContextMenuCommandBuilder()
-            .setName(this.name)
-            .setType(ApplicationCommandType.User);
-
+        return new ContextMenuCommandBuilder().setName(this.name).setType(ApplicationCommandType.User);
     }
 }

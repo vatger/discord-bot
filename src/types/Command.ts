@@ -1,8 +1,4 @@
-import {
-    CommandInteraction,
-    StringSelectMenuInteraction,
-    ButtonInteraction, RoleSelectMenuInteraction,
-} from 'discord.js';
+import { CommandInteraction, StringSelectMenuInteraction, ButtonInteraction, RoleSelectMenuInteraction } from 'discord.js';
 
 export default class SlashCommand {
     name: string;
@@ -11,13 +7,7 @@ export default class SlashCommand {
         this.name = name;
     }
 
-    async run(
-        interaction:
-            | CommandInteraction
-            | StringSelectMenuInteraction
-            | RoleSelectMenuInteraction
-            | ButtonInteraction
-    ) {
+    async run(interaction: CommandInteraction | StringSelectMenuInteraction | RoleSelectMenuInteraction | ButtonInteraction) {
         throw new Error('Interaction Handler not implemented');
     }
 

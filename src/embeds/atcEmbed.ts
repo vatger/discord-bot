@@ -7,7 +7,7 @@ export const atcEmbed = (
     title: string | null,
     description: string | null,
     footer: EmbedFooterOptions | null,
-    timestamp: number | Date | null | undefined
+    timestamp: number | Date | null | undefined,
 ) =>
     new EmbedBuilder()
         .setColor(color)

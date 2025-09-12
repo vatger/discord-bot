@@ -8,7 +8,7 @@ export const httpClient = express();
 httpClient.use(
     cors({
         origin: '*',
-    })
+    }),
 );
 httpClient.use(bodyParser.json());
 
