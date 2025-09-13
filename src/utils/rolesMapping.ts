@@ -31,7 +31,10 @@ export function getDiscordRolesForHpName(hpName: string): Role[] {
 
 export function getAllDiscordRolesForHp(): Role[] {
     const data: RoleMapping[] = loadConfig();
-    const allRoles: Role[] = data.flatMap(entry => entry.discord_names.map(findDiscordRole).filter((r): r is Role => r !== null));
+    const allRoles: Role[] = data
+        .flatMap(entry => entry.discord_names
+            .map(findDiscordRole)
+            .filter((r): r is Role => r !== null));
 
     // Deduplicate by role ID
     return Array.from(new Map(allRoles.map(role => [role.id, role])).values());
