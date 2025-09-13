@@ -11,8 +11,9 @@ type EnvConfig = {
     CLIENT_ID: string;
     GUILD_ID: string;
 
-    MODERATOR_CHANNEL_ID: string;
+    REGISTERED_ROLE_ID: string;
 
+    MODERATOR_CHANNEL_ID: string;
     BOT_STATUS_CHANNEL_ID: string;
     WELCOME_CHANNEL_ID: string;
     ATC_NOTIFY_CHANNEL_ID: string;
@@ -45,12 +46,14 @@ export const Config: EnvConfig = {
     CLIENT_ID: process.env.CLIENT_ID ?? '',
     GUILD_ID: process.env.GUILD_ID ?? '',
 
+    REGISTERED_ROLE_ID: process.env.REGISTERED_ROLE_ID ?? '',
+
     MODERATOR_CHANNEL_ID: process.env.MODERATOR_CHANNEL_ID ?? '',
     REGISTRATION_HELP_CHANNEL_ID: process.env.REGISTRATION_HELP_CHANNEL_ID ?? '',
-
     BOT_STATUS_CHANNEL_ID: process.env.BOT_STATUS_CHANNEL_ID ?? '',
     WELCOME_CHANNEL_ID: process.env.WELCOME_CHANNEL_ID ?? '',
     ATC_NOTIFY_CHANNEL_ID: process.env.ATC_NOTIFY_CHANNEL_ID ?? '',
+
     UPDATE_RULES: process.env.UPDATE_RULES ?? 'false',
     UPDATE_REGISTRATION_HELP: process.env.UPDATE_REGISTRATION_HELP ?? 'false',
     UPDATE_VATGER_CONNECTIONS: process.env.UPDATE_VATGER_CONNECTIONS === 'true',
