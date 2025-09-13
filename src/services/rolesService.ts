@@ -1,5 +1,4 @@
 import { GuildMember, Role } from 'discord.js';
-import { Config } from '../core/config';
 import { getHomepageUser, VatgerUserData } from './vatgerApiService';
 import { getAllDiscordRolesForHp, getDiscordRolesForHpName } from '../utils/rolesMapping';
 
@@ -40,15 +39,13 @@ export async function syncUserRoles(member: GuildMember, vatgerTeams: string[]) 
 
 async function manageUserRoles(user: GuildMember) {
     const vatgerUserData: VatgerUserData = await getHomepageUser(user.id);
+    var vatgerTeams = vatgerUserData.teams;
 
-    const { teams: vatgerTeams, is_vatger_fullmember: isVatgerFullMember } = vatgerUserData;
-
-    if (isVatgerFullMember) {
-        await user.roles.add(Config.VATGER_MEMBER_ROLE_ID);
-        console.log(`Added VATGER Role to ${user.id}`);
-    } else {
-        await user.roles.remove(Config.VATGER_MEMBER_ROLE_ID);
-        console.log(`Removed VATGER Role from ${user.id}`);
+    if (vatgerUserData.is_guest) {
+        vatgerTeams.push("VATGER_DETAILS_IS_GUEST")
+    }
+    if (vatgerUserData.is_vatger_member) {
+        vatgerTeams.push("VATGER_DETAILS_IS_VATGER_MEMBER")
     }
 
     await syncUserRoles(user, vatgerTeams);

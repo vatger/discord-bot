@@ -1,5 +1,13 @@
 [
   {
+    "hp_name": "VATGER_DETAILS_IS_GUEST",
+    "dicord_names" : [ "Registered Guest" ]
+  },
+  {
+    "hp_name": "VATGER_DETAILS_IS_VATGER_MEMBER",
+    "dicord_names" : [ "Registered Guest", "Registered Member"]
+  },
+  {
     "hp_name": "Tech Leitung",
     "discord_names": [ "VATGER Staff", "Tech Leitung" ]
   },

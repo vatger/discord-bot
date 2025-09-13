@@ -4,8 +4,9 @@ import { Config } from '../core/config';
 export interface VatgerUserData {
     discord_id: string;
     vatsim_id: string | null;
+    is_guest: boolean;
     is_vatger_member: boolean;
-    is_vatger_fullmember: boolean;
+    fir_name: string | null;
     atc_rating: number | null;
     pilot_rating: number | null;
     teams: string[];
@@ -15,8 +16,9 @@ function getEmptyVatgerUserData(discord_id: string): VatgerUserData {
     return {
         discord_id,
         vatsim_id: null,
+        is_guest: false,
         is_vatger_member: false,
-        is_vatger_fullmember: false,
+        fir_name: null,
         atc_rating: null,
         pilot_rating: null,
         teams: [],

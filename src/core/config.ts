@@ -11,8 +11,6 @@ type EnvConfig = {
     CLIENT_ID: string;
     GUILD_ID: string;
 
-    REGISTERED_ROLE_ID: string;
-    VATGER_MEMBER_ROLE_ID: string;
     MODERATOR_CHANNEL_ID: string;
 
     BOT_STATUS_CHANNEL_ID: string;
@@ -47,8 +45,6 @@ export const Config: EnvConfig = {
     CLIENT_ID: process.env.CLIENT_ID ?? '',
     GUILD_ID: process.env.GUILD_ID ?? '',
 
-    REGISTERED_ROLE_ID: process.env.REGISTERED_ROLE_ID ?? '',
-    VATGER_MEMBER_ROLE_ID: process.env.VATGER_MEMBER_ROLE_ID ?? '',
     MODERATOR_CHANNEL_ID: process.env.MODERATOR_CHANNEL_ID ?? '',
     REGISTRATION_HELP_CHANNEL_ID: process.env.REGISTRATION_HELP_CHANNEL_ID ?? '',
 
