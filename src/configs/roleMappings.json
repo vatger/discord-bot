@@ -126,5 +126,9 @@
   {
     "hp_name": "EDXX Nav",
     "discord_names": [ "Nav" ]
-  }
+  },
+  {
+    "hp_name": "Developer",
+    "discord_names": [ "Developer" ]
+  },
 ]
