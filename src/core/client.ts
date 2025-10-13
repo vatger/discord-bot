@@ -1,10 +1,4 @@
-import {
-    ActivityType,
-    Channel,
-    Client,
-    GatewayIntentBits,
-    TextChannel,
-} from 'discord.js';
+import { ActivityType, Channel, Client, GatewayIntentBits, TextChannel } from 'discord.js';
 import { Config } from './config';
 import { onlineEmbed } from '../embeds/onlineEmbed';
 
@@ -35,9 +29,7 @@ function setClientActivity() {
 }
 
 async function sendOnlineMessage() {
-    const channel: Channel | null = await DiscordBotClient.channels.fetch(
-        Config.BOT_STATUS_CHANNEL_ID
-    );
+    const channel: Channel | null = await DiscordBotClient.channels.fetch(Config.BOT_STATUS_CHANNEL_ID);
 
     if (channel == null) {
         console.error('Bot Status Channel not found');

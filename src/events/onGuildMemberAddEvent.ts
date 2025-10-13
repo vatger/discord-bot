@@ -1,4 +1,4 @@
-import vatgerApiService from '../services/vatgerApiService';
+import { pushDiscordUser } from '../services/vatgerApiService';
 import DiscordEvent from '../types/Event';
 import { Events, GuildMember } from 'discord.js';
 
@@ -8,8 +8,6 @@ export default class OnGuildMemberAddEvent extends DiscordEvent {
     }
 
     async run(user: GuildMember) {
-        
-        await vatgerApiService.updateVatgerUser(user.id);
-        
+        await pushDiscordUser(user.id);
     }
 }

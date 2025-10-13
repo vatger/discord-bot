@@ -19,8 +19,6 @@ export default class HelpCommand extends SlashCommand {
     }
 
     build(): any {
-        return new SlashCommandBuilder()
-            .setName(this.name)
-            .setDescription('Get a list of commands provided by our Bot');
+        return new SlashCommandBuilder().setName(this.name).setDescription('Get a list of commands provided by our Bot');
     }
 }

@@ -67,9 +67,12 @@ export default class OnReadyEvent extends DiscordEvent {
             const alertCooldown: Record<string, number> = {};
             const config = await loadConfig();
 
-            setInterval(async () => {
-                await staffingRequest.checkStaffingAlerts(config, alertCooldown);
-            }, 15 * 1000 * 60);
+            setInterval(
+                async () => {
+                    await staffingRequest.checkStaffingAlerts(config, alertCooldown);
+                },
+                15 * 1000 * 60,
+            );
         }
     }
 }

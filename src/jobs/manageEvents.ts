@@ -10,19 +10,25 @@ import {
     GuildScheduledEventPrivacyLevel,
     GuildScheduledEventStatus,
 } from 'discord.js';
-import {NodeHtmlMarkdown} from 'node-html-markdown';
-import {VatsimEvent} from "../interfaces/vatsimEvent.interface";
+import { NodeHtmlMarkdown } from 'node-html-markdown';
+import { VatsimEvent } from '../interfaces/vatsimEvent.interface';
 
 async function manageEvents(): Promise<void> {
     try {
-        const relevantEvents: VatsimEvent[] = await vatsimEventsService.getRelevantEvents(dayjs().startOf('day').toDate(), dayjs().endOf('day').toDate());
+        const relevantEvents: VatsimEvent[] = await vatsimEventsService.getRelevantEvents(
+            dayjs().startOf('day').toDate(),
+            dayjs().endOf('day').toDate(),
+        );
 
         const guild: Guild = await DiscordBotClient.guilds.fetch(Config.GUILD_ID);
         const discordEvents: Collection<string, GuildScheduledEvent<GuildScheduledEventStatus>> = await guild.scheduledEvents.fetch();
 
         for (const event of discordEvents) {
             try {
-                if (!relevantEvents.find(relEvent => relEvent.name === event[1].name) && event[1].creator?.id === DiscordBotClient.user?.id) {
+                if (
+                    !relevantEvents.find(relEvent => relEvent.name === event[1].name) &&
+                    event[1].creator?.id === DiscordBotClient.user?.id
+                ) {
                     await guild.scheduledEvents.delete(event[0]);
                 }
             } catch (error: any) {
@@ -40,7 +46,7 @@ async function manageEvents(): Promise<void> {
                         scheduledEndTime: dayjs(event.end_time).toISOString(),
                         privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
                         entityType: GuildScheduledEventEntityType.External,
-                        entityMetadata: {location: vatsimEventsService.getEventLocation(event) ?? event.type},
+                        entityMetadata: { location: vatsimEventsService.getEventLocation(event) ?? event.type },
                         description:
                             NodeHtmlMarkdown.translate(event.description).length < 1000
                                 ? NodeHtmlMarkdown.translate(event.description)
@@ -57,7 +63,7 @@ async function manageEvents(): Promise<void> {
                     await guild.scheduledEvents.edit(discordEvent, {
                         scheduledStartTime: dayjs(event.start_time).toISOString(),
                         scheduledEndTime: dayjs(event.end_time).toISOString(),
-                        entityMetadata: {location: vatsimEventsService.getEventLocation(event) ?? event.type},
+                        entityMetadata: { location: vatsimEventsService.getEventLocation(event) ?? event.type },
                         description:
                             NodeHtmlMarkdown.translate(event.description).length < 1000
                                 ? NodeHtmlMarkdown.translate(event.description)

@@ -3,9 +3,7 @@ import { DatafeedAtis } from '../interfaces/dataFeedAtis.interface';
 
 async function getRawDataFeed() {
     try {
-        const response = await axios.get(
-            'https://data.vatsim.net/v3/vatsim-data.json'
-        );
+        const response = await axios.get('https://data.vatsim.net/v3/vatsim-data.json');
 
         return response.data;
     } catch (error) {
@@ -15,9 +13,7 @@ async function getRawDataFeed() {
 
 async function getPilotsFromDataFeed() {
     try {
-        const response = await axios.get(
-            'https://status.vatger.de/datafeed/pilots'
-        );
+        const response = await axios.get('https://status.vatger.de/datafeed/pilots');
 
         return response.data.data;
     } catch (error) {
@@ -25,9 +21,7 @@ async function getPilotsFromDataFeed() {
     }
 }
 
-async function getAtis(
-    icao: string | undefined
-): Promise<DatafeedAtis | undefined> {
+async function getAtis(icao: string | undefined): Promise<DatafeedAtis | undefined> {
     if (icao)
         try {
             const dataFeed = await getRawDataFeed();
@@ -49,5 +43,5 @@ async function getAtis(
 export default {
     getAtis,
     getRawDataFeed,
-    getPilotsFromDataFeed
+    getPilotsFromDataFeed,
 };

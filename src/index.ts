@@ -6,14 +6,8 @@ import DiscordEvent from './types/Event';
 import Init from './core/init';
 import { httpClient } from './http/httpClient';
 
-export const CommandList: Collection<string, Command> = new Collection<
-    string,
-    Command
->();
-export const EventList: Collection<string, DiscordEvent> = new Collection<
-    string,
-    DiscordEvent
->();
+export const CommandList: Collection<string, Command> = new Collection<string, Command>();
+export const EventList: Collection<string, DiscordEvent> = new Collection<string, DiscordEvent>();
 
 Promise.all([Init.loadCommands(), Init.loadEvents()]).then(() => {
     let commands: string[] = [];
@@ -26,7 +20,6 @@ Promise.all([Init.loadCommands(), Init.loadEvents()]).then(() => {
     console.log('Events: ', Array.from(EventList.keys()));
 
     DiscordBotClient.login(Config.BOT_TOKEN).then(async () => {
-
         console.info('Logged In!');
 
         httpClient.listen(Config.API_PORT, '0.0.0.0', () => {

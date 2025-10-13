@@ -4,7 +4,6 @@ import { GuildMember } from 'discord.js';
 import { findGuildMemberByDiscordID } from '../utils/findGuildMember';
 
 async function updateMember(req: Request, res: Response) {
-        
     const guildMember: GuildMember | undefined = await findGuildMemberByDiscordID(req.body.discord_id);
 
     if (!guildMember) {
@@ -17,5 +16,5 @@ async function updateMember(req: Request, res: Response) {
 }
 
 export default {
-    updateMember
+    updateMember,
 };

@@ -1,4 +1,4 @@
-import { ApplicationCommandType, CommandInteraction, ContextMenuCommandBuilder, ContextMenuCommandInteraction, GuildMember } from 'discord.js';
+import { ApplicationCommandType, ContextMenuCommandBuilder, ContextMenuCommandInteraction } from 'discord.js';
 import SlashCommand from '../types/Command';
 import rolesService from '../services/rolesService';
 
@@ -10,18 +10,18 @@ export default class ContextSyncUser extends SlashCommand {
     async run(interaction: ContextMenuCommandInteraction) {
         try {
             if (!interaction.isUserContextMenuCommand()) return;
-            
-            const user = await interaction.guild?.members.cache.get(interaction.targetUser.id)
+
+            const user = interaction.guild?.members.cache.get(interaction.targetUser.id);
 
             if (!user) {
                 await interaction.reply({
                     content: 'Sync failed. User not found.',
-                    ephemeral: true
-                })
+                    ephemeral: true,
+                });
                 return;
             }
 
-            await rolesService.manageUserRoles(user)
+            await rolesService.manageUserRoles(user);
 
             await interaction.reply({
                 content: `Synced user with ID: ${user.nickname}`,
@@ -29,16 +29,13 @@ export default class ContextSyncUser extends SlashCommand {
             });
         } catch (error) {
             await interaction.reply({
-                content: 'Sync failed. User not found. Reason: ' + error,
-                ephemeral: true
-            })
+                content: 'Sync failed. Reason: ' + error,
+                ephemeral: true,
+            });
         }
     }
 
     build(): any {
-        return new ContextMenuCommandBuilder()
-            .setName(this.name)
-            .setType(ApplicationCommandType.User);
-
+        return new ContextMenuCommandBuilder().setName(this.name).setType(ApplicationCommandType.User);
     }
 }

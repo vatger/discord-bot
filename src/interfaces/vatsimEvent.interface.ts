@@ -12,7 +12,6 @@ export interface VatsimEvent {
     short_description: string;
     description: string;
     banner: string;
-
 }
 
 export interface VatsimEventOrganizer {
@@ -20,7 +19,6 @@ export interface VatsimEventOrganizer {
     division: string;
     subdivision: string;
     organised_by_vatsim: boolean;
-
 }
 
 export interface VatsimEventAirport {

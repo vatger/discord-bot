@@ -25,7 +25,7 @@ async function getRelevantEvents(start_time: Date, end_time: Date) {
 
         return vatsimEvents.filter(
             (event: VatsimEvent) =>
-                dayjs(event.start_time).isAfter(start_time) && dayjs(event.end_time).isBefore(end_time) && isGermanEvent(event)
+                dayjs(event.start_time).isAfter(start_time) && dayjs(event.end_time).isBefore(end_time) && isGermanEvent(event),
         );
     } catch (error: any) {
         throw new Error(`Failed to retrieve relevant events ${error}`);
